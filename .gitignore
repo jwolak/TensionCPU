@@ -52,10 +52,10 @@
 .gdb_*
 
 #direcory
-TinyNetPerf/Build/CMakeCache.txt
-TinyNetPerf/Build/CMakeFiles/
-TinyNetPerf/Build/Makefile
-TinyNetPerf/Build/cmake_install.cmake
+TensionCPU/Build/CMakeCache.txt
+TensionCPU/Build/CMakeFiles/
+TensionCPU/Build/Makefile
+TensionCPU/Build/cmake_install.cmake
 
 UnitTests/Build/CMakeCache.txt
 UnitTests/Build/CMakeFiles/
