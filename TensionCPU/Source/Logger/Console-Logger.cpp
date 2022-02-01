@@ -1,5 +1,5 @@
 /*
- * Logger.h
+ * Console-Logger.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,64 +37,6 @@
  *
  */
 
-#ifndef SOURCE_LOGGER_LOGGER_H_
-#define SOURCE_LOGGER_LOGGER_H_
-
-#include <memory>
-
-#include "ILogger.h"
-#include "File-Logger.h"
 #include "Console-Logger.h"
 
-namespace tension_cpu {
-namespace logger {
 
-class Logger : public ILogger {
- public:
-  Logger() {}
-  //TODO Logger dstr define
-  void LoggerCleaner() {
-  }
-
-  bool EnableLogging(LogLevelType) override;
-  bool DisableLogging(LogLevelType) override;
-  bool SetLoggingLevel(LogLevelType) override;
-  LogLevelType GetLoggingLevel() override;
-  bool SetLoggingOutputType(LogOutputType) override;
-  LogOutputType GetLoggingOutputType() override;
-
-  void Error(const char*) override;
-  void Error(std::string&) override;
-  void Error(std::ostringstream&) override;
-
-  void Warning(const char*) override;
-  void Warning(std::string&) override;
-  void Warning(std::ostringstream&) override;
-
-  void Info(const char*) override;
-  void Info(std::string&) override;
-  void Info(std::ostringstream&) override;
-
-  void Trace(const char*) override;
-  void Trace(std::string&) override;
-  void Trace(std::ostringstream&) override;
-
-  void Debug(const char*) override;
-  void Debug(std::string&) override;
-  void Debug(std::ostringstream&) override;
-
- private:
-  LogLevelType log_level_type_;
-  LogOutputType log_output_type_;
-/*  Logger(const Logger &obj) {}
-  void operator=(const Logger &obj) {}*/
-  static std::unique_ptr<Logger> logger_instance_; /*static Logger*          logger_instance;*/
-  std::unique_ptr<IFileLogger> file_logger_;
-  std::unique_ptr<IConsoleLogger> console_logger_;
-
-};
-
-} /*namespace logger*/
-} /*namespace tension_cpu*/
-
-#endif /* SOURCE_LOGGER_LOGGER_H_ */
