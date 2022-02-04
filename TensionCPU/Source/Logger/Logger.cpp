@@ -40,41 +40,12 @@
 #include "Logger.h"
 
 
-bool tension_cpu::logger::Logger::EnableLogging(LogLevelType log_level_type) {
+void tension_cpu::logger::Logger::SetLoggingLevel(LogLevelType log_level_type) {
 
-  return false;
 }
 
-
-bool tension_cpu::logger::Logger::DisableLogging(LogLevelType log_level_type) {
-
-  return false;
+void tension_cpu::logger::Logger::SetLoggingOutputType(LogOutputType log_output_type) {
 }
-
-
-bool tension_cpu::logger::Logger::SetLoggingLevel(LogLevelType log_level_type) {
-
-  return false;
-}
-
-
-tension_cpu::logger::LogLevelType tension_cpu::logger::Logger::GetLoggingLevel() {
-
-  return LogLevelType::DISABLE_LOG;
-}
-
-
-bool tension_cpu::logger::Logger::SetLoggingOutputType(LogOutputType log_output_type) {
-
-  return false;
-}
-
-
-tension_cpu::logger::LogOutputType tension_cpu::logger::Logger::GetLoggingOutputType() {
-
-  return LogOutputType::NO_LOG;
-}
-
 
 void tension_cpu::logger::Logger::Error(const char* message) {}
 

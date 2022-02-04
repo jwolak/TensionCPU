@@ -51,12 +51,8 @@ namespace logger {
 class ILogger {
  public:
   virtual ~ILogger() = default;
-  virtual bool EnableLogging(LogLevelType) = 0;
-  virtual bool DisableLogging(LogLevelType) = 0;
-  virtual bool SetLoggingLevel(LogLevelType) = 0;
-  virtual LogLevelType GetLoggingLevel() = 0;
-  virtual bool SetLoggingOutputType(LogOutputType) = 0;
-  virtual LogOutputType GetLoggingOutputType() = 0;
+  virtual void SetLoggingLevel(LogLevelType) = 0;
+  virtual void SetLoggingOutputType(LogOutputType) = 0;
 
   virtual void Error(const char*) = 0;
   virtual void Error(std::string&) = 0;

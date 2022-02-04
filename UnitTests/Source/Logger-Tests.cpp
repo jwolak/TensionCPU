@@ -49,12 +49,36 @@ namespace {}
 
 class LoggerTests :public ::testing::Test {
  public:
-  LoggerTests() {}
+  LoggerTests() : logger_level(new tension_cpu::logger::LoggerLevel),
+                  logger(new tension_cpu::logger::Logger(logger_level)) {}
 
-  std::shared_ptr<tension_cpu::logger::ILogger> logger;
+  std::shared_ptr<tension_cpu::logger::LoggerLevel> logger_level;
+  std::unique_ptr<tension_cpu::logger::ILogger> logger;
 };
 
-TEST_F(LoggerTests, EnableLogging_Test) {
+TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_DISABLE_LOG) {
+  logger->SetLoggingLevel(tension_cpu::logger::LogLevelType::DISABLE_LOG);
+  ASSERT_EQ(logger_level->log_level_type, tension_cpu::logger::LogLevelType::DISABLE_LOG);
+}
+
+TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_LOG_LEVEL_INFO) {
+  logger->SetLoggingLevel(tension_cpu::logger::LogLevelType::LOG_LEVEL_INFO);
+  ASSERT_EQ(logger_level->log_level_type, tension_cpu::logger::LogLevelType::LOG_LEVEL_INFO);
+}
+
+TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_LOG_LEVEL_TRACE) {
+  logger->SetLoggingLevel(tension_cpu::logger::LogLevelType::LOG_LEVEL_TRACE);
+  ASSERT_EQ(logger_level->log_level_type, tension_cpu::logger::LogLevelType::LOG_LEVEL_TRACE);
+}
+
+TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_LOG_LEVEL_DEBUG) {
+  logger->SetLoggingLevel(tension_cpu::logger::LogLevelType::LOG_LEVEL_DEBUG);
+  ASSERT_EQ(logger_level->log_level_type, tension_cpu::logger::LogLevelType::LOG_LEVEL_DEBUG);
+}
+
+TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_ENABLE_LOG) {
+  logger->SetLoggingLevel(tension_cpu::logger::LogLevelType::ENABLE_LOG);
+  ASSERT_EQ(logger_level->log_level_type, tension_cpu::logger::LogLevelType::ENABLE_LOG);
 }
 
 } /*namespace tests_logger*/

@@ -1,5 +1,5 @@
 /*
- * Logger.h
+ * ILogger-Level.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,59 +37,21 @@
  *
  */
 
-#ifndef SOURCE_LOGGER_LOGGER_H_
-#define SOURCE_LOGGER_LOGGER_H_
+#ifndef SOURCE_LOGGER_ILOGGER_LEVEL_H_
+#define SOURCE_LOGGER_ILOGGER_LEVEL_H_
 
-#include <memory>
-
-#include "ILogger.h"
-#include "File-Logger.h"
-#include "Console-Logger.h"
-#include "Logger-Level.h"
+#include "Log-Level-Type.h"
 
 namespace tension_cpu {
 namespace logger {
 
-class Logger : public ILogger {
+class ILoggerLevel {
  public:
-  Logger(std::shared_ptr<ILoggerLevel> logger_level) : logger_level_ (logger_level) {}
-  ~Logger() {};
-  void LoggerCleaner() {}
-  void SetLoggingLevel(LogLevelType) override;
-  void SetLoggingOutputType(LogOutputType) override;
-
-  void Error(const char*) override;
-  void Error(std::string&) override;
-  void Error(std::ostringstream&) override;
-
-  void Warning(const char*) override;
-  void Warning(std::string&) override;
-  void Warning(std::ostringstream&) override;
-
-  void Info(const char*) override;
-  void Info(std::string&) override;
-  void Info(std::ostringstream&) override;
-
-  void Trace(const char*) override;
-  void Trace(std::string&) override;
-  void Trace(std::ostringstream&) override;
-
-  void Debug(const char*) override;
-  void Debug(std::string&) override;
-  void Debug(std::ostringstream&) override;
-
- private:
-  std::shared_ptr<ILoggerLevel> logger_level_;
-  LogOutputType log_output_type_;
-/*  Logger(const Logger &obj) {}
-  void operator=(const Logger &obj) {}*/
-  static std::unique_ptr<Logger> logger_instance_; /*static Logger*          logger_instance;*/
-  std::unique_ptr<IFileLogger> file_logger_;
-  std::unique_ptr<IConsoleLogger> console_logger_;
-
+  virtual ~ILoggerLevel() = default;
+  virtual void SetLevel(LogLevelType) = 0;
 };
 
-} /*namespace logger*/
-} /*namespace tension_cpu*/
+} /* namespace logger */
+} /* namespace tension_cpu */
 
-#endif /* SOURCE_LOGGER_LOGGER_H_ */
+#endif /* SOURCE_LOGGER_ILOGGER_LEVEL_H_ */
