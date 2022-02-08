@@ -40,53 +40,53 @@
 #include "Logger.h"
 
 
-void tension_cpu::logger::Logger::SetLoggingLevel(LogLevelType log_level_type) {
+void logger::Logger::SetLoggingLevel(LogLevelType log_level_type) {
 
 }
 
-void tension_cpu::logger::Logger::SetLoggingOutputType(LogOutputType log_output_type) {
+void logger::Logger::SetLoggingOutputType(LogOutputType log_output_type) {
 }
 
-void tension_cpu::logger::Logger::Error(const char* message) {}
+void logger::Logger::Error(const char* message) {}
 
 
-void tension_cpu::logger::Logger::Error(std::string& message) {}
+void logger::Logger::Error(std::string& message) {}
 
 
-void tension_cpu::logger::Logger::Error(std::ostringstream& message) {}
+void logger::Logger::Error(std::ostringstream& message) {}
 
 
-void tension_cpu::logger::Logger::Warning(const char* message) {}
+void logger::Logger::Warning(const char* message) {}
 
 
-void tension_cpu::logger::Logger::Warning(std::string& message) {}
+void logger::Logger::Warning(std::string& message) {}
 
 
-void tension_cpu::logger::Logger::Warning(std::ostringstream& message) {}
+void logger::Logger::Warning(std::ostringstream& message) {}
 
 
-void tension_cpu::logger::Logger::Info(const char* message) {}
+void logger::Logger::Info(const char* message) {}
 
 
-void tension_cpu::logger::Logger::Info(std::string& message) {}
+void logger::Logger::Info(std::string& message) {}
 
 
-void tension_cpu::logger::Logger::Info(std::ostringstream& message) {}
+void logger::Logger::Info(std::ostringstream& message) {}
 
 
-void tension_cpu::logger::Logger::Trace(const char* message) {}
+void logger::Logger::Trace(const char* message) {}
 
 
-void tension_cpu::logger::Logger::Trace(std::string& message) {}
+void logger::Logger::Trace(std::string& message) {}
 
 
-void tension_cpu::logger::Logger::Trace(std::ostringstream& message) {}
+void logger::Logger::Trace(std::ostringstream& message) {}
 
 
-void tension_cpu::logger::Logger::Debug(const char* message) {}
+void logger::Logger::Debug(const char* message) {}
 
 
-void tension_cpu::logger::Logger::Debug(std::string& message) {}
+void logger::Logger::Debug(std::string& message) {}
 
 
-void tension_cpu::logger::Logger::Debug(std::ostringstream& message) {}
+void logger::Logger::Debug(std::ostringstream& message) {}

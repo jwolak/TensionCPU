@@ -45,7 +45,6 @@
 #include "IFile-Logger.h"
 #include "ILogs-File-Access-Guard.h"
 
-namespace tension_cpu {
 namespace logger {
 
 class FileLogger : public IFileLogger {
@@ -61,6 +60,5 @@ class FileLogger : public IFileLogger {
 };
 
 } /*namespace logger*/
-} /*namespace tension_cpu*/
 
 #endif /* SOURCE_LOGGER_FILE_LOGGER_H_ */

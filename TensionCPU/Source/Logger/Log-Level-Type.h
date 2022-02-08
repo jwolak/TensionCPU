@@ -40,7 +40,6 @@
 #ifndef SOURCE_LOGGER_LOG_LEVEL_TYPE_H_
 #define SOURCE_LOGGER_LOG_LEVEL_TYPE_H_
 
-namespace tension_cpu {
 namespace logger {
 
 enum class LogLevelType {
@@ -52,8 +51,5 @@ enum class LogLevelType {
 };
 
 } /* namespace logger */
-} /* namespace tension_cpu */
-
-
 
 #endif /* SOURCE_LOGGER_LOG_LEVEL_TYPE_H_ */

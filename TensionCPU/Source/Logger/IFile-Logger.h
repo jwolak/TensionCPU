@@ -42,7 +42,6 @@
 
 #include <string>
 
-namespace tension_cpu {
 namespace logger {
 
 class IFileLogger {
@@ -54,6 +53,5 @@ class IFileLogger {
 };
 
 } /*namespace logger*/
-} /*namespace tension_cpu*/
 
 #endif /* SOURCE_LOGGER_IFILE_LOGGER_H_ */

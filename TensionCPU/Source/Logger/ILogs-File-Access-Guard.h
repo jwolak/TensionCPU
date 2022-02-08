@@ -40,7 +40,6 @@
 #ifndef SOURCE_ILOGS_FILE_ACCESS_GUARD_H_
 #define SOURCE_ILOGS_FILE_ACCESS_GUARD_H_
 
-namespace tension_cpu {
 namespace logger {
 
   class ILogsFileAccessGuard {
@@ -51,7 +50,6 @@ namespace logger {
   };
 
 } /*namespace logger*/
-} /*namespace tension_cpu*/
 
 
 #endif /* SOURCE_ILOGS_FILE_ACCESS_GUARD_H_ */

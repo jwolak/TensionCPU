@@ -45,7 +45,6 @@
 #include "Log-Level-Type.h"
 #include "Log-Output-Type.h"
 
-namespace tension_cpu {
 namespace logger {
 
 class ILogger {
@@ -76,7 +75,6 @@ class ILogger {
 };
 
 } /*namespace logger*/
-} /*namespace tension_cpu */
 
 
 #endif /* SOURCE_LOGGER_ILOGGER_H_ */

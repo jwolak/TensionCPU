@@ -47,7 +47,6 @@
 #include "Console-Logger.h"
 #include "Logger-Level.h"
 
-namespace tension_cpu {
 namespace logger {
 
 class Logger : public ILogger {
@@ -90,6 +89,5 @@ class Logger : public ILogger {
 };
 
 } /*namespace logger*/
-} /*namespace tension_cpu*/
 
 #endif /* SOURCE_LOGGER_LOGGER_H_ */
