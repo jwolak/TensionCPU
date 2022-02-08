@@ -63,15 +63,7 @@ class Logger : public ILogger {
 
   void Warning(const char*) override;
   void Warning(std::string&) override;
-  void Warning(std::ostringstream&) override;
-
-  void Info(const char*) override;
-  void Info(std::string&) override;
-  void Info(std::ostringstream&) override;
-
-  void Trace(const char*) override;
-  void Trace(std::string&) override;
-  void Trace(std::ostringstream&) override;
+  void Warning(std::ostringstream&) override;;
 
   void Debug(const char*) override;
   void Debug(std::string&) override;

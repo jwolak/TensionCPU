@@ -61,14 +61,6 @@ class ILogger {
   virtual void Warning(std::string&) = 0;
   virtual void Warning(std::ostringstream&) = 0;
 
-  virtual void Info(const char*) = 0;
-  virtual void Info(std::string&) = 0;
-  virtual void Info(std::ostringstream&) = 0;
-
-  virtual void Trace(const char*) = 0;
-  virtual void Trace(std::string&) = 0;
-  virtual void Trace(std::ostringstream&) = 0;
-
   virtual void Debug(const char*) = 0;
   virtual void Debug(std::string&) = 0;
   virtual void Debug(std::ostringstream&) = 0;

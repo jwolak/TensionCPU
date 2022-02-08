@@ -65,24 +65,6 @@ void logger::Logger::Warning(std::string& message) {}
 void logger::Logger::Warning(std::ostringstream& message) {}
 
 
-void logger::Logger::Info(const char* message) {}
-
-
-void logger::Logger::Info(std::string& message) {}
-
-
-void logger::Logger::Info(std::ostringstream& message) {}
-
-
-void logger::Logger::Trace(const char* message) {}
-
-
-void logger::Logger::Trace(std::string& message) {}
-
-
-void logger::Logger::Trace(std::ostringstream& message) {}
-
-
 void logger::Logger::Debug(const char* message) {}
 
 

@@ -45,7 +45,11 @@
 
 namespace tests_logger {
 
-namespace {}
+namespace {
+enum class TestLogLevelType {
+  UNKNOWN_LOG_LEVEL       = 6,
+};
+}
 
 class LoggerTests :public ::testing::Test {
  public:
@@ -61,14 +65,14 @@ TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_DISABLE_LOG) {
   ASSERT_EQ(logger_level->log_level_type, logger::LogLevelType::DISABLE_LOG);
 }
 
-TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_LOG_LEVEL_INFO) {
-  logger->SetLoggingLevel(logger::LogLevelType::LOG_LEVEL_INFO);
-  ASSERT_EQ(logger_level->log_level_type, logger::LogLevelType::LOG_LEVEL_INFO);
+TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_LOG_LEVEL_ERROR) {
+  logger->SetLoggingLevel(logger::LogLevelType::LOG_LEVEL_ERROR);
+  ASSERT_EQ(logger_level->log_level_type, logger::LogLevelType::LOG_LEVEL_ERROR);
 }
 
-TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_LOG_LEVEL_TRACE) {
-  logger->SetLoggingLevel(logger::LogLevelType::LOG_LEVEL_TRACE);
-  ASSERT_EQ(logger_level->log_level_type, logger::LogLevelType::LOG_LEVEL_TRACE);
+TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_LOG_LEVEL_WARNING) {
+  logger->SetLoggingLevel(logger::LogLevelType::LOG_LEVEL_WARNING);
+  ASSERT_EQ(logger_level->log_level_type, logger::LogLevelType::LOG_LEVEL_WARNING);
 }
 
 TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_LOG_LEVEL_DEBUG) {
@@ -76,9 +80,9 @@ TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_LOG_LEVEL_DEBUG) {
   ASSERT_EQ(logger_level->log_level_type, logger::LogLevelType::LOG_LEVEL_DEBUG);
 }
 
-TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_ENABLE_LOG) {
-  logger->SetLoggingLevel(logger::LogLevelType::ENABLE_LOG);
-  ASSERT_EQ(logger_level->log_level_type, logger::LogLevelType::ENABLE_LOG);
+TEST_F(LoggerTests, SetLoggingLevel_Sets_UNKNOWN_LOG_LEVEL_And_LOG_LEVEL_ERROR_Is_Set) {
+  logger->SetLoggingLevel(static_cast<logger::LogLevelType>(TestLogLevelType::UNKNOWN_LOG_LEVEL));
+  ASSERT_EQ(logger_level->log_level_type, logger::LogLevelType::LOG_LEVEL_ERROR);
 }
 
 } /*namespace tests_logger*/

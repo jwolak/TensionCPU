@@ -44,10 +44,9 @@ namespace logger {
 
 enum class LogLevelType {
   DISABLE_LOG       = 1,
-  LOG_LEVEL_INFO    = 2,
-  LOG_LEVEL_TRACE   = 4,
-  LOG_LEVEL_DEBUG   = 5,
-  ENABLE_LOG        = 6,
+  LOG_LEVEL_ERROR   = 2,
+  LOG_LEVEL_WARNING = 3,
+  LOG_LEVEL_DEBUG   = 4,
 };
 
 } /* namespace logger */
