@@ -47,28 +47,6 @@ void logger::Logger::SetLoggingLevel(LogLevelType log_level_type) {
 void logger::Logger::SetLoggingOutput(LogOutputType log_output_type) {
 }
 
-void logger::Logger::Error(const char* message) {}
-
-
-void logger::Logger::Error(std::string& message) {}
-
-
-void logger::Logger::Error(std::ostringstream& message) {}
-
-
-void logger::Logger::Warning(const char* message) {}
-
-
-void logger::Logger::Warning(std::string& message) {}
-
-
-void logger::Logger::Warning(std::ostringstream& message) {}
-
-
-void logger::Logger::Debug(const char* message) {}
-
-
-void logger::Logger::Debug(std::string& message) {}
-
-
-void logger::Logger::Debug(std::ostringstream& message) {}
+void logger::Logger::Error(const char* format, ...) {}
+void logger::Logger::Warning(const char* format, ...) {}
+void logger::Logger::Debug(const char* format, ...) {}

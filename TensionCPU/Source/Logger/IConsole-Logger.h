@@ -40,16 +40,12 @@
 #ifndef SOURCE_LOGGER_ICONSOLE_LOGGER_H_
 #define SOURCE_LOGGER_ICONSOLE_LOGGER_H_
 
-#include <string>
-
 namespace logger {
 
 class IConsoleLogger {
  public:
   virtual ~IConsoleLogger() = default;
-  virtual void LogMessage(const char*) = 0;
-  virtual void LogMessage(std::string&) = 0;
-  virtual void LogMessage(std::ostringstream&) = 0;
+  virtual void LogMessage(const char*, ...) = 0;
 };
 
 } /*namespace logger*/

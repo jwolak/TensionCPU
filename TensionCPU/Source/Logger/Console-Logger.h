@@ -47,9 +47,7 @@ namespace logger {
 class ConsoleLogger : public IConsoleLogger {
   ConsoleLogger();
   ~ConsoleLogger() = default;
-  void LogMessage(const char*) override;
-  void LogMessage(std::string&) override;
-  void LogMessage(std::ostringstream&) override;
+  void LogMessage(const char*, ...) override;
 };
 
 } /*namespace logger*/

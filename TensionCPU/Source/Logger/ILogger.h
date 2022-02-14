@@ -53,17 +53,10 @@ class ILogger {
   virtual void SetLoggingLevel(LogLevelType) = 0;
   virtual void SetLoggingOutput(LogOutputType) = 0;
 
-  virtual void Error(const char*) = 0;
-  virtual void Error(std::string&) = 0;
-  virtual void Error(std::ostringstream&) = 0;
+  virtual void Error(const char*, ...) = 0;
+  virtual void Warning(const char*, ...) = 0;
+  virtual void Debug(const char*, ...) = 0;
 
-  virtual void Warning(const char*) = 0;
-  virtual void Warning(std::string&) = 0;
-  virtual void Warning(std::ostringstream&) = 0;
-
-  virtual void Debug(const char*) = 0;
-  virtual void Debug(std::string&) = 0;
-  virtual void Debug(std::ostringstream&) = 0;
 };
 
 } /*namespace logger*/
