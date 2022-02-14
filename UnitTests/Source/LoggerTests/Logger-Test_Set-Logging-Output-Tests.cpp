@@ -42,25 +42,48 @@
 
 #include <memory>
 
-#include "../../TensionCPU/Source/Logger/Logger.h"
+#include "../../../TensionCPU/Source/Logger/Logger.h"
 
 namespace test_logger_set_logging_output_tests{
 
 namespace {
+enum class UnknownOutputType {
+  UNKNOWN_OUTPUT  = 5
+};
 }
 
 class SetLoggingOutputTests :public ::testing::Test {
  public:
-  SetLoggingOutputTests() : logger_level(new logger::LoggerLevel),
-                  logger(new logger::Logger(logger_level)) {}
+  SetLoggingOutputTests()
+      :
+      logger_level(new logger::LoggerLevel),
+      logger_output(new logger::LoggerOutput),
+      logger(new logger::Logger(logger_level, logger_output)) {
+  }
 
   std::shared_ptr<logger::LoggerLevel> logger_level;
-  std::unique_ptr<logger::ILogger> logger;
+  std::shared_ptr<logger::LoggerOutput> logger_output;
+  std::unique_ptr<logger::Logger> logger;
 };
 
 TEST_F(SetLoggingOutputTests, SetLoggingOutput_Sets_Successfully_CONSOLE) {
   logger->SetLoggingOutput(logger::LogOutputType::CONSOLE);
-  ASSERT_EQ(logger_level->log_level_type, logger::LogLevelType::DISABLE_LOG);
+  ASSERT_EQ(logger_output->logger_output_type, logger::LogOutputType::CONSOLE);
+}
+
+TEST_F(SetLoggingOutputTests, SetLoggingOutput_Sets_Successfully_FILE_LOG) {
+  logger->SetLoggingOutput(logger::LogOutputType::FILE_LOG);
+  ASSERT_EQ(logger_output->logger_output_type, logger::LogOutputType::FILE_LOG);
+}
+
+TEST_F(SetLoggingOutputTests, SetLoggingOutput_Sets_Successfully_FILE_AND_CONSOLE) {
+  logger->SetLoggingOutput(logger::LogOutputType::FILE_AND_CONSOLE);
+  ASSERT_EQ(logger_output->logger_output_type, logger::LogOutputType::FILE_AND_CONSOLE);
+}
+
+TEST_F(SetLoggingOutputTests, SetLoggingOutput_Sets_UNKNOWN_OUTPUT_And_FILE_AND_CONSOLE_Is_Set) {
+  logger->SetLoggingOutput(static_cast<logger::LogOutputType>(UnknownOutputType::UNKNOWN_OUTPUT));
+  ASSERT_EQ(logger_output->logger_output_type, logger::LogOutputType::FILE_AND_CONSOLE);
 }
 
 } /*namespace test_logger_set_logging_output_tests*/

@@ -1,5 +1,5 @@
 /*
- * Logger.h
+ * Logger-Output.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,56 +37,6 @@
  *
  */
 
-#ifndef SOURCE_LOGGER_LOGGER_H_
-#define SOURCE_LOGGER_LOGGER_H_
-
-#include <memory>
-
-#include "ILogger.h"
-#include "File-Logger.h"
-#include "Console-Logger.h"
-#include "Logger-Level.h"
 #include "Logger-Output.h"
 
-namespace logger {
 
-class Logger : public ILogger {
- public:
-  Logger(std::shared_ptr<ILoggerLevel> logger_level,
-         std::shared_ptr<ILoggerOutput> logger_output)
-      :
-      logger_level_(logger_level),
-      logger_output_(logger_output) {
-  }
-  ~Logger() {};
-  void LoggerCleaner() {}
-  void SetLoggingLevel(LogLevelType) override;
-  void SetLoggingOutput(LogOutputType) override;
-
-  void Error(const char*) override;
-  void Error(std::string&) override;
-  void Error(std::ostringstream&) override;
-
-  void Warning(const char*) override;
-  void Warning(std::string&) override;
-  void Warning(std::ostringstream&) override;;
-
-  void Debug(const char*) override;
-  void Debug(std::string&) override;
-  void Debug(std::ostringstream&) override;
-
- private:
-  std::shared_ptr<ILoggerLevel> logger_level_;
-  std::shared_ptr<ILoggerOutput> logger_output_;
-/*  LogOutputType log_output_type_;*/
-/*  Logger(const Logger &obj) {}
-  void operator=(const Logger &obj) {}*/
-  static std::unique_ptr<Logger> logger_instance_; /*static Logger*          logger_instance;*/
-  std::unique_ptr<IFileLogger> file_logger_;
-  std::unique_ptr<IConsoleLogger> console_logger_;
-
-};
-
-} /*namespace logger*/
-
-#endif /* SOURCE_LOGGER_LOGGER_H_ */

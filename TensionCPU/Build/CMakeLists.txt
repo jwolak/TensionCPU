@@ -11,6 +11,7 @@ add_executable(TensionCPU.x86
 ../Source/Logger/IFile-Logger.h
 ../Source/Logger/IConsole-Logger.h
 ../Source/Logger/ILogger-Level.h
+../Source/Logger/ILogger-Output.h
 
 #headers
 ../Source/Logger/Logger.h
@@ -20,6 +21,7 @@ add_executable(TensionCPU.x86
 ../Source/Logger/File-Logger.h
 ../Source/Logger/Console-Logger.h
 ../Source/Logger/Logger-Level.h
+../Source/Logger/Logger-Output.h
 
 #source
 ../Source/Logger/Logger.cpp
@@ -27,4 +29,5 @@ add_executable(TensionCPU.x86
 ../Source/Logger/File-Logger.cpp
 ../Source/Logger/Console-Logger.cpp
 ../Source/Logger/Logger-Level.cpp
+../Source/Logger/Logger-Output.cpp
 )

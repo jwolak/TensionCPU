@@ -41,7 +41,7 @@
 
 #include <memory>
 
-#include "../../TensionCPU/Source/Logger/Logger.cpp"
+#include "../../../TensionCPU/Source/Logger/Logger.cpp"
 
 namespace test_logger_set_logging_level_tests {
 
@@ -53,10 +53,15 @@ enum class TestLogLevelType {
 
 class LoggerTests :public ::testing::Test {
  public:
-  LoggerTests() : logger_level(new logger::LoggerLevel),
-                  logger(new logger::Logger(logger_level)) {}
+  LoggerTests()
+      :
+      logger_level(new logger::LoggerLevel),
+      logger_output(new logger::LoggerOutput),
+      logger(new logger::Logger(logger_level, logger_output)) {
+  }
 
   std::shared_ptr<logger::LoggerLevel> logger_level;
+  std::shared_ptr<logger::LoggerOutput> logger_output;
   std::unique_ptr<logger::ILogger> logger;
 };
 
