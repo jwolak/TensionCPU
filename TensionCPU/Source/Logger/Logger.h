@@ -55,7 +55,7 @@ class Logger : public ILogger {
   ~Logger() {};
   void LoggerCleaner() {}
   void SetLoggingLevel(LogLevelType) override;
-  void SetLoggingOutputType(LogOutputType) override;
+  void SetLoggingOutput(LogOutputType) override;
 
   void Error(const char*) override;
   void Error(std::string&) override;

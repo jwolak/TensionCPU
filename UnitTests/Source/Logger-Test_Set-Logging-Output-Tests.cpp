@@ -1,5 +1,5 @@
 /*
- * Logger-Tests.cpp
+ * Logger-Test_Set-Logging-Output-Tests.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,53 +37,31 @@
  *
  */
 
+
 #include <gtest/gtest.h>
 
 #include <memory>
 
-#include "../../TensionCPU/Source/Logger/Logger.cpp"
+#include "../../TensionCPU/Source/Logger/Logger.h"
 
-namespace tests_logger {
+namespace test_logger_set_logging_output_tests{
 
 namespace {
-enum class TestLogLevelType {
-  UNKNOWN_LOG_LEVEL       = 6,
-};
 }
 
-class LoggerTests :public ::testing::Test {
+class SetLoggingOutputTests :public ::testing::Test {
  public:
-  LoggerTests() : logger_level(new logger::LoggerLevel),
+  SetLoggingOutputTests() : logger_level(new logger::LoggerLevel),
                   logger(new logger::Logger(logger_level)) {}
 
   std::shared_ptr<logger::LoggerLevel> logger_level;
   std::unique_ptr<logger::ILogger> logger;
 };
 
-TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_DISABLE_LOG) {
-  logger->SetLoggingLevel(logger::LogLevelType::DISABLE_LOG);
+TEST_F(SetLoggingOutputTests, SetLoggingOutput_Sets_Successfully_CONSOLE) {
+  logger->SetLoggingOutput(logger::LogOutputType::CONSOLE);
   ASSERT_EQ(logger_level->log_level_type, logger::LogLevelType::DISABLE_LOG);
 }
 
-TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_LOG_LEVEL_ERROR) {
-  logger->SetLoggingLevel(logger::LogLevelType::LOG_LEVEL_ERROR);
-  ASSERT_EQ(logger_level->log_level_type, logger::LogLevelType::LOG_LEVEL_ERROR);
-}
-
-TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_LOG_LEVEL_WARNING) {
-  logger->SetLoggingLevel(logger::LogLevelType::LOG_LEVEL_WARNING);
-  ASSERT_EQ(logger_level->log_level_type, logger::LogLevelType::LOG_LEVEL_WARNING);
-}
-
-TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_LOG_LEVEL_DEBUG) {
-  logger->SetLoggingLevel(logger::LogLevelType::LOG_LEVEL_DEBUG);
-  ASSERT_EQ(logger_level->log_level_type, logger::LogLevelType::LOG_LEVEL_DEBUG);
-}
-
-TEST_F(LoggerTests, SetLoggingLevel_Sets_UNKNOWN_LOG_LEVEL_And_LOG_LEVEL_ERROR_Is_Set) {
-  logger->SetLoggingLevel(static_cast<logger::LogLevelType>(TestLogLevelType::UNKNOWN_LOG_LEVEL));
-  ASSERT_EQ(logger_level->log_level_type, logger::LogLevelType::LOG_LEVEL_ERROR);
-}
-
-} /*namespace tests_logger*/
+} /*namespace test_logger_set_logging_output_tests*/
 

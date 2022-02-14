@@ -51,7 +51,7 @@ class ILogger {
  public:
   virtual ~ILogger() = default;
   virtual void SetLoggingLevel(LogLevelType) = 0;
-  virtual void SetLoggingOutputType(LogOutputType) = 0;
+  virtual void SetLoggingOutput(LogOutputType) = 0;
 
   virtual void Error(const char*) = 0;
   virtual void Error(std::string&) = 0;

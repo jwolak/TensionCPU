@@ -43,9 +43,9 @@
 namespace logger {
 
 enum class LogOutputType {
-  NO_LOG   = 1,
-  CONSOLE  = 2,
-  FILE_LOG = 3,
+  CONSOLE           = 1,
+  FILE_LOG          = 2,
+  FILE_AND_CONSOLE  = 3,
 };
 
 } /* namespace logger */

@@ -44,7 +44,7 @@ void logger::Logger::SetLoggingLevel(LogLevelType log_level_type) {
 
 }
 
-void logger::Logger::SetLoggingOutputType(LogOutputType log_output_type) {
+void logger::Logger::SetLoggingOutput(LogOutputType log_output_type) {
 }
 
 void logger::Logger::Error(const char* message) {}
