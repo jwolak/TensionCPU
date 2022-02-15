@@ -49,9 +49,9 @@ namespace equinox_logger {
 
 class FileLogger : public IFileLogger {
  public:
-  FileLogger();
-  ~FileLogger();
-  void LogMessage(const char*, ...) override;
+  FileLogger() {};
+  ~FileLogger() = default;
+  void LogMessage(const char*, ...) override {};
 
  private:
   std::unique_ptr<ILogsFileAccessGuard> logs_file_access_guard_;

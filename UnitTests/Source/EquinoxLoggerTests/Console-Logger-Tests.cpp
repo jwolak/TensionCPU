@@ -1,5 +1,5 @@
 /*
- * Console-Logger.h
+ * Console-Logger-Tests.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,20 +37,31 @@
  *
  */
 
-#ifndef SOURCE_EQUINOXLOGGER_CONSOLE_LOGGER_H_
-#define SOURCE_EQUINOXLOGGER_CONSOLE_LOGGER_H_
+#include <gtest/gtest.h>
 
-#include "../EquinoxLogger/IConsole-Logger.h"
+#include <memory>
+#include <string>
 
-namespace equinox_logger {
+#include "../../../TensionCPU/Source/EquinoxLogger/Console-Logger.cpp"
 
-class ConsoleLogger : public IConsoleLogger {
+namespace console_logger_tests {
+
+namespace {
+const std::string kTestLogMessage = "Test log message";
+}
+
+class ConsoleLoggerTests : public ::testing::Test {
  public:
-  ConsoleLogger() {};
-  ~ConsoleLogger() = default;
-  void LogMessage(const char*, ...) override {};
+  ConsoleLoggerTests()
+      :
+      console_logger(new equinox_logger::ConsoleLogger) {
+  }
+
+  std::unique_ptr<equinox_logger::IConsoleLogger> console_logger;
 };
 
-} /*namespace equinox_logger*/
+TEST_F (ConsoleLoggerTests, Call_LogMessage_And_No_Throw_Occurs) {
+  ASSERT_NO_THROW(console_logger->LogMessage("%s", kTestLogMessage));
+}
 
-#endif /* SOURCE_EQUINOXLOGGER_CONSOLE_LOGGER_H_ */
+} /*console_logger_tests*/
