@@ -1,5 +1,5 @@
 /*
- * ILogger-Level.h
+ * Logger-Output.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,19 +37,6 @@
  *
  */
 
-#ifndef SOURCE_LOGGER_ILOGGER_LEVEL_H_
-#define SOURCE_LOGGER_ILOGGER_LEVEL_H_
+#include "../EquinoxLogger/Logger-Output.h"
 
-#include "Log-Level-Type.h"
 
-namespace logger {
-
-class ILoggerLevel {
- public:
-  virtual ~ILoggerLevel() = default;
-  virtual void SetLevel(LogLevelType) = 0;
-};
-
-} /* namespace logger */
-
-#endif /* SOURCE_LOGGER_ILOGGER_LEVEL_H_ */

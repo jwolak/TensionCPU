@@ -1,5 +1,5 @@
 /*
- * Logger-Level.h
+ * IConsole-Logger.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,22 +37,17 @@
  *
  */
 
-#ifndef SOURCE_LOGGER_LOGGER_LEVEL_H_
-#define SOURCE_LOGGER_LOGGER_LEVEL_H_
+#ifndef SOURCE_EQUINOXLOGGER_ICONSOLE_LOGGER_H_
+#define SOURCE_EQUINOXLOGGER_ICONSOLE_LOGGER_H_
 
-#include "ILogger-Level.h"
+namespace equinox_logger {
 
-namespace logger {
-
-class LoggerLevel : public ILoggerLevel {
+class IConsoleLogger {
  public:
-  ~LoggerLevel() {}
-  void SetLevel(LogLevelType) override {};
-
- public:
-  LogLevelType log_level_type;
+  virtual ~IConsoleLogger() = default;
+  virtual void LogMessage(const char*, ...) = 0;
 };
 
-} /* namespace logger */
+} /*namespace equinox_logger*/
 
-#endif /* SOURCE_LOGGER_LOGGER_LEVEL_H_ */
+#endif /* SOURCE_EQUINOXLOGGER_ICONSOLE_LOGGER_H_ */

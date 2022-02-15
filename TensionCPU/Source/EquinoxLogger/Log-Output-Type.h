@@ -1,5 +1,5 @@
 /*
- * Logs-File-Access-Guard.cpp
+ * Log-Output-Type.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,6 +37,17 @@
  *
  */
 
-#include "ILogs-File-Access-Guard.h"
+#ifndef SOURCE_EQUINOXLOGGER_LOG_OUTPUT_TYPE_H_
+#define SOURCE_EQUINOXLOGGER_LOG_OUTPUT_TYPE_H_
 
+namespace equinox_logger {
 
+enum class LogOutputType {
+  CONSOLE           = 1,
+  FILE_LOG          = 2,
+  FILE_AND_CONSOLE  = 3,
+};
+
+} /* namespace equinox_logger */
+
+#endif /* SOURCE_EQUINOXLOGGER_LOG_OUTPUT_TYPE_H_ */

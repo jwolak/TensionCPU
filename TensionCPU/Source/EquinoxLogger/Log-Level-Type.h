@@ -1,5 +1,5 @@
 /*
- * Logger-Output.h
+ * Log-Level-Type.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,22 +37,18 @@
  *
  */
 
-#ifndef SOURCE_LOGGER_LOGGER_OUTPUT_H_
-#define SOURCE_LOGGER_LOGGER_OUTPUT_H_
+#ifndef SOURCE_EQUINOXLOGGER_LOG_LEVEL_TYPE_H_
+#define SOURCE_EQUINOXLOGGER_LOG_LEVEL_TYPE_H_
 
-#include "ILogger-Output.h"
+namespace equinox_logger {
 
-namespace logger {
-
-class LoggerOutput : public ILoggerOutput {
- public:
-  ~LoggerOutput() {}
-  void SetOutput(LogOutputType) override {};
-
- public:
-  LogOutputType logger_output_type;
+enum class LogLevelType {
+  DISABLE_LOG       = 1,
+  LOG_LEVEL_ERROR   = 2,
+  LOG_LEVEL_WARNING = 3,
+  LOG_LEVEL_DEBUG   = 4,
 };
 
-} /*namespace logger*/
+} /* namespace equinox_logger */
 
-#endif /* SOURCE_LOGGER_LOGGER_OUTPUT_H_ */
+#endif /* SOURCE_EQUINOXLOGGER_LOG_LEVEL_TYPE_H_ */

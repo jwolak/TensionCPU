@@ -1,5 +1,5 @@
 /*
- * IConsole-Logger.h
+ * Console-Logger.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,17 +37,19 @@
  *
  */
 
-#ifndef SOURCE_LOGGER_ICONSOLE_LOGGER_H_
-#define SOURCE_LOGGER_ICONSOLE_LOGGER_H_
+#ifndef SOURCE_EQUINOXLOGGER_CONSOLE_LOGGER_H_
+#define SOURCE_EQUINOXLOGGER_CONSOLE_LOGGER_H_
 
-namespace logger {
+#include "../EquinoxLogger/IConsole-Logger.h"
 
-class IConsoleLogger {
- public:
-  virtual ~IConsoleLogger() = default;
-  virtual void LogMessage(const char*, ...) = 0;
+namespace equinox_logger {
+
+class ConsoleLogger : public IConsoleLogger {
+  ConsoleLogger();
+  ~ConsoleLogger() = default;
+  void LogMessage(const char*, ...) override;
 };
 
-} /*namespace logger*/
+} /*namespace equinox_logger*/
 
-#endif /* SOURCE_LOGGER_ICONSOLE_LOGGER_H_ */
+#endif /* SOURCE_EQUINOXLOGGER_CONSOLE_LOGGER_H_ */

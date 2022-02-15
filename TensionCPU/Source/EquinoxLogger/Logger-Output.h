@@ -1,5 +1,5 @@
 /*
- * ILogger-Output.h
+ * Logger-Output.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,21 +37,22 @@
  *
  */
 
-#ifndef SOURCE_LOGGER_ILOGGER_OUTPUT_H_
-#define SOURCE_LOGGER_ILOGGER_OUTPUT_H_
+#ifndef SOURCE_EQUINOXLOGGER_LOGGER_OUTPUT_H_
+#define SOURCE_EQUINOXLOGGER_LOGGER_OUTPUT_H_
 
-#include "Log-Output-Type.h"
+#include "../EquinoxLogger/ILogger-Output.h"
 
-namespace logger {
+namespace equinox_logger {
 
-class ILoggerOutput {
+class LoggerOutput : public ILoggerOutput {
  public:
-  virtual ~ILoggerOutput() = default;
-  virtual void SetOutput(LogOutputType) = 0;
+  ~LoggerOutput() {}
+  void SetOutput(LogOutputType) override {};
+
+ public:
+  LogOutputType logger_output_type;
 };
 
-} /*namespace logger*/
+} /*namespace equinox_logger*/
 
-
-
-#endif /* SOURCE_LOGGER_ILOGGER_OUTPUT_H_ */
+#endif /* SOURCE_EQUINOXLOGGER_LOGGER_OUTPUT_H_ */

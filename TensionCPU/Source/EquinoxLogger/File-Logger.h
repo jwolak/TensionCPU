@@ -1,5 +1,5 @@
 /*
- * Logger-Output.cpp
+ * File-Logger.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,6 +37,26 @@
  *
  */
 
-#include "Logger-Output.h"
+#ifndef SOURCE_EQUINOXLOGGER_FILE_LOGGER_H_
+#define SOURCE_EQUINOXLOGGER_FILE_LOGGER_H_
 
+#include <memory>
 
+#include "../EquinoxLogger/IFile-Logger.h"
+#include "../EquinoxLogger/ILogs-File-Access-Guard.h"
+
+namespace equinox_logger {
+
+class FileLogger : public IFileLogger {
+ public:
+  FileLogger();
+  ~FileLogger();
+  void LogMessage(const char*, ...) override;
+
+ private:
+  std::unique_ptr<ILogsFileAccessGuard> logs_file_access_guard_;
+};
+
+} /*namespace equinox_logger*/
+
+#endif /* SOURCE_EQUINOXLOGGER_FILE_LOGGER_H_ */

@@ -1,5 +1,5 @@
 /*
- * IFile-Logger.h
+ * Logs-File-Access-Guard.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,17 +37,27 @@
  *
  */
 
-#ifndef SOURCE_LOGGER_IFILE_LOGGER_H_
-#define SOURCE_LOGGER_IFILE_LOGGER_H_
+#ifndef SOURCE_EQUINOXLOGGER_LOGS_FILE_ACCESS_GUARD_H_
+#define SOURCE_EQUINOXLOGGER_LOGS_FILE_ACCESS_GUARD_H_
 
-namespace logger {
+#include <pthread.h>
 
-class IFileLogger {
+#include "../EquinoxLogger/ILogs-File-Access-Guard.h"
+
+namespace equinox_logger {
+
+class LogsFileAccessGuard : public ILogsFileAccessGuard {
  public:
-  virtual ~IFileLogger() = default;
-  virtual void LogMessage(const char*, ...) = 0;
+  LogsFileAccessGuard();
+  ~LogsFileAccessGuard();
+  bool EnableAccessGuard();
+  bool DisableAccessGuard();
+
+ private:
+  pthread_mutexattr_t     mutex_attr_t;
+  pthread_mutex_t         mutex_t;
 };
 
-} /*namespace logger*/
+} /*namespace equinox_logger*/
 
-#endif /* SOURCE_LOGGER_IFILE_LOGGER_H_ */
+#endif /* SOURCE_EQUINOXLOGGER_LOGS_FILE_ACCESS_GUARD_H_ */

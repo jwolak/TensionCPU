@@ -1,5 +1,5 @@
 /*
- * Console-Logger.h
+ * Logger-Level.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,19 +37,6 @@
  *
  */
 
-#ifndef SOURCE_LOGGER_CONSOLE_LOGGER_H_
-#define SOURCE_LOGGER_CONSOLE_LOGGER_H_
 
-#include "IConsole-Logger.h"
+#include "../EquinoxLogger/Logger-Level.h"
 
-namespace logger {
-
-class ConsoleLogger : public IConsoleLogger {
-  ConsoleLogger();
-  ~ConsoleLogger() = default;
-  void LogMessage(const char*, ...) override;
-};
-
-} /*namespace logger*/
-
-#endif /* SOURCE_LOGGER_CONSOLE_LOGGER_H_ */

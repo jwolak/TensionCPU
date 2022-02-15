@@ -1,5 +1,5 @@
 /*
- * Logger.cpp
+ * ILogger-Output.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,16 +37,21 @@
  *
  */
 
-#include "Logger.h"
+#ifndef SOURCE_EQUINOXLOGGER_ILOGGER_OUTPUT_H_
+#define SOURCE_EQUINOXLOGGER_ILOGGER_OUTPUT_H_
+
+#include "../EquinoxLogger/Log-Output-Type.h"
+
+namespace equinox_logger {
+
+class ILoggerOutput {
+ public:
+  virtual ~ILoggerOutput() = default;
+  virtual void SetOutput(LogOutputType) = 0;
+};
+
+} /*namespace equinox_logger*/
 
 
-void logger::Logger::SetLoggingLevel(LogLevelType log_level_type) {
 
-}
-
-void logger::Logger::SetLoggingOutput(LogOutputType log_output_type) {
-}
-
-void logger::Logger::Error(const char* format, ...) {}
-void logger::Logger::Warning(const char* format, ...) {}
-void logger::Logger::Debug(const char* format, ...) {}
+#endif /* SOURCE_EQUINOXLOGGER_ILOGGER_OUTPUT_H_ */

@@ -1,5 +1,5 @@
 /*
- * File-Logger.cpp
+ * Console-Logger.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,6 +37,6 @@
  *
  */
 
-#include "File-Logger.h"
+#include "../EquinoxLogger/Console-Logger.h"
 
 

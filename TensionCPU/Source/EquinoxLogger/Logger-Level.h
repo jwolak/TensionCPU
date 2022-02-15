@@ -1,5 +1,5 @@
 /*
- * ILogger.h
+ * Logger-Level.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,29 +37,22 @@
  *
  */
 
-#ifndef SOURCE_LOGGER_ILOGGER_H_
-#define SOURCE_LOGGER_ILOGGER_H_
+#ifndef SOURCE_EQUINOXLOGGER_LOGGER_LEVEL_H_
+#define SOURCE_EQUINOXLOGGER_LOGGER_LEVEL_H_
 
-#include <string>
+#include "../EquinoxLogger/ILogger-Level.h"
 
-#include "Log-Level-Type.h"
-#include "Log-Output-Type.h"
+namespace equinox_logger {
 
-namespace logger {
-
-class ILogger {
+class LoggerLevel : public ILoggerLevel {
  public:
-  virtual ~ILogger() = default;
-  virtual void SetLoggingLevel(LogLevelType) = 0;
-  virtual void SetLoggingOutput(LogOutputType) = 0;
+  ~LoggerLevel() {}
+  void SetLevel(LogLevelType) override {};
 
-  virtual void Error(const char*, ...) = 0;
-  virtual void Warning(const char*, ...) = 0;
-  virtual void Debug(const char*, ...) = 0;
-
+ public:
+  LogLevelType log_level_type;
 };
 
-} /*namespace logger*/
+} /* namespace equinox_logger */
 
-
-#endif /* SOURCE_LOGGER_ILOGGER_H_ */
+#endif /* SOURCE_EQUINOXLOGGER_LOGGER_LEVEL_H_ */

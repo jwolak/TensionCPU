@@ -1,5 +1,5 @@
 /*
- * Logger-Level.cpp
+ * File-Logger.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,6 +37,6 @@
  *
  */
 
+#include "../EquinoxLogger/File-Logger.h"
 
-#include "Logger-Level.h"
 

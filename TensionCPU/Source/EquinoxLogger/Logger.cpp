@@ -1,5 +1,5 @@
 /*
- * ILogs-File-Access-Guard.h
+ * Logger.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,19 +37,16 @@
  *
  */
 
-#ifndef SOURCE_ILOGS_FILE_ACCESS_GUARD_H_
-#define SOURCE_ILOGS_FILE_ACCESS_GUARD_H_
-
-namespace logger {
-
-  class ILogsFileAccessGuard {
-   public:
-    virtual ~ILogsFileAccessGuard() = default;
-    virtual bool EnableAccessGuard() = 0;
-    virtual bool DisableAccessGuard() = 0;
-  };
-
-} /*namespace logger*/
+#include "../EquinoxLogger/Logger.h"
 
 
-#endif /* SOURCE_ILOGS_FILE_ACCESS_GUARD_H_ */
+void equinox_logger::Logger::SetLoggingLevel(LogLevelType log_level_type) {
+
+}
+
+void equinox_logger::Logger::SetLoggingOutput(LogOutputType log_output_type) {
+}
+
+void equinox_logger::Logger::Error(const char* format, ...) {}
+void equinox_logger::Logger::Warning(const char* format, ...) {}
+void equinox_logger::Logger::Debug(const char* format, ...) {}

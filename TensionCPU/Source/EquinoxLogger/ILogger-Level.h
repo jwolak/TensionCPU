@@ -1,5 +1,5 @@
 /*
- * Console-Logger.cpp
+ * ILogger-Level.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,6 +37,19 @@
  *
  */
 
-#include "Console-Logger.h"
+#ifndef SOURCE_EQUINOXLOGGER_ILOGGER_LEVEL_H_
+#define SOURCE_EQUINOXLOGGER_ILOGGER_LEVEL_H_
 
+#include "../EquinoxLogger/Log-Level-Type.h"
 
+namespace equinox_logger {
+
+class ILoggerLevel {
+ public:
+  virtual ~ILoggerLevel() = default;
+  virtual void SetLevel(LogLevelType) = 0;
+};
+
+} /* namespace equinox_logger */
+
+#endif /* SOURCE_EQUINOXLOGGER_ILOGGER_LEVEL_H_ */

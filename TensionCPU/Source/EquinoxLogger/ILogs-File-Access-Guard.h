@@ -1,5 +1,5 @@
 /*
- * Log-Level-Type.h
+ * ILogs-File-Access-Guard.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,18 +37,19 @@
  *
  */
 
-#ifndef SOURCE_LOGGER_LOG_LEVEL_TYPE_H_
-#define SOURCE_LOGGER_LOG_LEVEL_TYPE_H_
+#ifndef SOURCE_ILOGS_FILE_ACCESS_GUARD_H_
+#define SOURCE_ILOGS_FILE_ACCESS_GUARD_H_
 
-namespace logger {
+namespace equinox_logger {
 
-enum class LogLevelType {
-  DISABLE_LOG       = 1,
-  LOG_LEVEL_ERROR   = 2,
-  LOG_LEVEL_WARNING = 3,
-  LOG_LEVEL_DEBUG   = 4,
-};
+  class ILogsFileAccessGuard {
+   public:
+    virtual ~ILogsFileAccessGuard() = default;
+    virtual bool EnableAccessGuard() = 0;
+    virtual bool DisableAccessGuard() = 0;
+  };
 
-} /* namespace logger */
+} /*namespace equinox_logger*/
 
-#endif /* SOURCE_LOGGER_LOG_LEVEL_TYPE_H_ */
+
+#endif /* SOURCE_ILOGS_FILE_ACCESS_GUARD_H_ */

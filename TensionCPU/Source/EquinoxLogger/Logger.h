@@ -1,5 +1,5 @@
 /*
- * File-Logger.h
+ * Logger.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,26 +37,45 @@
  *
  */
 
-#ifndef SOURCE_LOGGER_FILE_LOGGER_H_
-#define SOURCE_LOGGER_FILE_LOGGER_H_
+#ifndef SOURCE_EQUINOXLOGGER_LOGGER_H_
+#define SOURCE_EQUINOXLOGGER_LOGGER_H_
 
 #include <memory>
 
-#include "IFile-Logger.h"
-#include "ILogs-File-Access-Guard.h"
+#include "../EquinoxLogger/Console-Logger.h"
+#include "../EquinoxLogger/File-Logger.h"
+#include "../EquinoxLogger/ILogger.h"
+#include "../EquinoxLogger/Logger-Level.h"
+#include "../EquinoxLogger/Logger-Output.h"
 
-namespace logger {
+namespace equinox_logger {
 
-class FileLogger : public IFileLogger {
+class Logger : public ILogger {
  public:
-  FileLogger();
-  ~FileLogger();
-  void LogMessage(const char*, ...) override;
+  Logger(std::shared_ptr<ILoggerLevel> logger_level,
+         std::shared_ptr<ILoggerOutput> logger_output)
+      :
+      logger_level_(logger_level),
+      logger_output_(logger_output){
+  }
+
+  void SetLoggingLevel(LogLevelType) override;
+  void SetLoggingOutput(LogOutputType) override;
+
+  void Error(const char*, ...) override;
+  void Warning(const char*, ...) override;
+  void Debug(const char*, ...) override;
 
  private:
-  std::unique_ptr<ILogsFileAccessGuard> logs_file_access_guard_;
+  std::shared_ptr<ILoggerLevel> logger_level_;
+  std::shared_ptr<ILoggerOutput> logger_output_;
+
+/*static std::unique_ptr<Logger> logger_instance_;*/
+  std::unique_ptr<IFileLogger> file_logger_;
+  std::unique_ptr<IConsoleLogger> console_logger_;
+
 };
 
-} /*namespace logger*/
+} /*namespace equinox_logger*/
 
-#endif /* SOURCE_LOGGER_FILE_LOGGER_H_ */
+#endif /* SOURCE_EQUINOXLOGGER_LOGGER_H_ */
