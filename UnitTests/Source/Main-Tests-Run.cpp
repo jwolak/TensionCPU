@@ -3,10 +3,8 @@
 #include <gtest/gtest.h>
 #include "gmock/gmock.h"
 
-/*
-#include "LoggerTests/Logger-Test_Set-Logging-Level-Tests.cpp"
-#include "LoggerTests/Logger-Test_Set-Logging-Output-Tests.cpp"
-*/
+#include "LoggerTests/Logger-Level-Tests.cpp"
+#include "LoggerTests/Logger-Output-Tests.cpp"
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);

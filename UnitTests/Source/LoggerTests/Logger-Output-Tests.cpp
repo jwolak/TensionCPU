@@ -1,5 +1,5 @@
 /*
- * Logger-Test_Set-Logging-Output-Tests.cpp
+ * Logger-Output-Tests.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -42,9 +42,9 @@
 
 #include <memory>
 
-#include "../../../TensionCPU/Source/EquinoxLogger/Logger.h"
+#include "../../../TensionCPU/Source/EquinoxLogger/Logger-Output.h"
 
-namespace test_logger_set_logging_output_tests{
+namespace logger_output_tests{
 
 namespace {
 enum class UnknownOutputType {
@@ -52,37 +52,32 @@ enum class UnknownOutputType {
 };
 }
 
-class SetLoggingOutputTests :public ::testing::Test {
+class LoggerOutputTests :public ::testing::Test {
  public:
-  SetLoggingOutputTests()
+  LoggerOutputTests()
       :
-      logger_level(new equinox_logger::LoggerLevel),
-      logger_output(new equinox_logger::LoggerOutput),
-      logger(new equinox_logger::Logger(logger_level, logger_output)) {
-  }
+      logger_output(new equinox_logger::LoggerOutput) {}
 
-  std::shared_ptr<equinox_logger::LoggerLevel> logger_level;
-  std::shared_ptr<equinox_logger::LoggerOutput> logger_output;
-  std::unique_ptr<equinox_logger::Logger> logger;
+  std::unique_ptr<equinox_logger::LoggerOutput> logger_output;
 };
 
-TEST_F(SetLoggingOutputTests, SetLoggingOutput_Sets_Successfully_CONSOLE) {
-  logger->SetLoggingOutput(equinox_logger::LogOutputType::CONSOLE);
+TEST_F(LoggerOutputTests, SetLoggingOutput_Sets_Successfully_CONSOLE) {
+  logger_output->SetOutput(equinox_logger::LogOutputType::CONSOLE);
   ASSERT_EQ(logger_output->logger_output_type, equinox_logger::LogOutputType::CONSOLE);
 }
 
-TEST_F(SetLoggingOutputTests, SetLoggingOutput_Sets_Successfully_FILE_LOG) {
-  logger->SetLoggingOutput(equinox_logger::LogOutputType::FILE_LOG);
+TEST_F(LoggerOutputTests, SetLoggingOutput_Sets_Successfully_FILE_LOG) {
+  logger_output->SetOutput(equinox_logger::LogOutputType::FILE_LOG);
   ASSERT_EQ(logger_output->logger_output_type, equinox_logger::LogOutputType::FILE_LOG);
 }
 
-TEST_F(SetLoggingOutputTests, SetLoggingOutput_Sets_Successfully_FILE_AND_CONSOLE) {
-  logger->SetLoggingOutput(equinox_logger::LogOutputType::FILE_AND_CONSOLE);
+TEST_F(LoggerOutputTests, SetLoggingOutput_Sets_Successfully_FILE_AND_CONSOLE) {
+  logger_output->SetOutput(equinox_logger::LogOutputType::FILE_AND_CONSOLE);
   ASSERT_EQ(logger_output->logger_output_type, equinox_logger::LogOutputType::FILE_AND_CONSOLE);
 }
 
-TEST_F(SetLoggingOutputTests, SetLoggingOutput_Sets_UNKNOWN_OUTPUT_And_FILE_AND_CONSOLE_Is_Set) {
-  logger->SetLoggingOutput(static_cast<equinox_logger::LogOutputType>(UnknownOutputType::UNKNOWN_OUTPUT));
+TEST_F(LoggerOutputTests, SetLoggingOutput_Sets_UNKNOWN_OUTPUT_And_FILE_AND_CONSOLE_Is_Set) {
+  logger_output->SetOutput(static_cast<equinox_logger::LogOutputType>(UnknownOutputType::UNKNOWN_OUTPUT));
   ASSERT_EQ(logger_output->logger_output_type, equinox_logger::LogOutputType::FILE_AND_CONSOLE);
 }
 

@@ -1,5 +1,5 @@
 /*
- * Logger-Test_Set-Logging-Level-Tests.cpp
+ * Logger-Level-Tests.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -41,9 +41,9 @@
 
 #include <memory>
 
-#include "../../../TensionCPU/Source/EquinoxLogger/Logger.cpp"
+#include "../../../TensionCPU/Source/EquinoxLogger/Logger-Level.cpp"
 
-namespace test_logger_set_logging_level_tests {
+namespace logger_level_tests {
 
 namespace {
 enum class TestLogLevelType {
@@ -51,42 +51,38 @@ enum class TestLogLevelType {
 };
 }
 
-class LoggerTests :public ::testing::Test {
+class LoggerLevelTests :public ::testing::Test {
  public:
-  LoggerTests()
+  LoggerLevelTests()
       :
-      logger_level(new equinox_logger::LoggerLevel),
-      logger_output(new equinox_logger::LoggerOutput),
-      logger(new equinox_logger::Logger(logger_level, logger_output)) {
+      logger_level(new equinox_logger::LoggerLevel) {
   }
 
-  std::shared_ptr<equinox_logger::LoggerLevel> logger_level;
-  std::shared_ptr<equinox_logger::LoggerOutput> logger_output;
-  std::unique_ptr<equinox_logger::ILogger> logger;
+  std::unique_ptr<equinox_logger::LoggerLevel> logger_level;
 };
 
-TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_DISABLE_LOG) {
-  logger->SetLoggingLevel(equinox_logger::LogLevelType::DISABLE_LOG);
+TEST_F(LoggerLevelTests, SetLoggingLevel_Sets_Successfully_DISABLE_LOG) {
+  logger_level->SetLevel(equinox_logger::LogLevelType::DISABLE_LOG);
   ASSERT_EQ(logger_level->log_level_type, equinox_logger::LogLevelType::DISABLE_LOG);
 }
 
-TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_LOG_LEVEL_ERROR) {
-  logger->SetLoggingLevel(equinox_logger::LogLevelType::LOG_LEVEL_ERROR);
+TEST_F(LoggerLevelTests, SetLoggingLevel_Sets_Successfully_LOG_LEVEL_ERROR) {
+  logger_level->SetLevel(equinox_logger::LogLevelType::LOG_LEVEL_ERROR);
   ASSERT_EQ(logger_level->log_level_type, equinox_logger::LogLevelType::LOG_LEVEL_ERROR);
 }
 
-TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_LOG_LEVEL_WARNING) {
-  logger->SetLoggingLevel(equinox_logger::LogLevelType::LOG_LEVEL_WARNING);
+TEST_F(LoggerLevelTests, SetLoggingLevel_Sets_Successfully_LOG_LEVEL_WARNING) {
+  logger_level->SetLevel(equinox_logger::LogLevelType::LOG_LEVEL_WARNING);
   ASSERT_EQ(logger_level->log_level_type, equinox_logger::LogLevelType::LOG_LEVEL_WARNING);
 }
 
-TEST_F(LoggerTests, SetLoggingLevel_Sets_Successfully_LOG_LEVEL_DEBUG) {
-  logger->SetLoggingLevel(equinox_logger::LogLevelType::LOG_LEVEL_DEBUG);
+TEST_F(LoggerLevelTests, SetLoggingLevel_Sets_Successfully_LOG_LEVEL_DEBUG) {
+  logger_level->SetLevel(equinox_logger::LogLevelType::LOG_LEVEL_DEBUG);
   ASSERT_EQ(logger_level->log_level_type, equinox_logger::LogLevelType::LOG_LEVEL_DEBUG);
 }
 
-TEST_F(LoggerTests, SetLoggingLevel_Sets_UNKNOWN_LOG_LEVEL_And_LOG_LEVEL_ERROR_Is_Set) {
-  logger->SetLoggingLevel(static_cast<equinox_logger::LogLevelType>(TestLogLevelType::UNKNOWN_LOG_LEVEL));
+TEST_F(LoggerLevelTests, SetLoggingLevel_Sets_UNKNOWN_LOG_LEVEL_And_LOG_LEVEL_ERROR_Is_Set) {
+  logger_level->SetLevel(static_cast<equinox_logger::LogLevelType>(TestLogLevelType::UNKNOWN_LOG_LEVEL));
   ASSERT_EQ(logger_level->log_level_type, equinox_logger::LogLevelType::LOG_LEVEL_ERROR);
 }
 
