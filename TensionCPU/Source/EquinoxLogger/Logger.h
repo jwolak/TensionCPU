@@ -41,38 +41,44 @@
 #define SOURCE_EQUINOXLOGGER_LOGGER_H_
 
 #include <memory>
+#include <mutex>
 
 #include "../EquinoxLogger/Console-Logger.h"
 #include "../EquinoxLogger/File-Logger.h"
-#include "../EquinoxLogger/ILogger.h"
 #include "../EquinoxLogger/Logger-Level.h"
 #include "../EquinoxLogger/Logger-Output.h"
 
 namespace equinox_logger {
 
-class Logger : public ILogger {
+class Logger {
  public:
-  Logger(std::shared_ptr<ILoggerLevel> logger_level,
-         std::shared_ptr<ILoggerOutput> logger_output)
-      :
-      logger_level_(logger_level),
-      logger_output_(logger_output){
-  }
+  void SetLoggingLevel(LogLevelType);
+  void SetLoggingOutput(LogOutputType);
 
-  void SetLoggingLevel(LogLevelType) override;
-  void SetLoggingOutput(LogOutputType) override;
+  void Error(const char*, ...);
+  void Warning(const char*, ...);
+  void Debug(const char*, ...);
 
-  void Error(const char*, ...) override;
-  void Warning(const char*, ...) override;
-  void Debug(const char*, ...) override;
+  Logger(Logger &object_logger) = delete;   /* no clone */
+  void operator=(const Logger &) = delete;  /* no copy assign */
+
+  static Logger* GetInstance();
+
+ protected:
+  Logger(){}
+
+ public:
+  ~Logger(){}
 
  private:
-  std::shared_ptr<ILoggerLevel> logger_level_;
-  std::shared_ptr<ILoggerOutput> logger_output_;
-
-/*static std::unique_ptr<Logger> logger_instance_;*/
+  std::unique_ptr<ILoggerLevel> logger_level_;
+  std::unique_ptr<ILoggerOutput> logger_output_;
   std::unique_ptr<IFileLogger> file_logger_;
   std::unique_ptr<IConsoleLogger> console_logger_;
+
+ private:
+  static Logger* logger_instance_;
+  static std::mutex logger_instance_mutex_;
 
 };
 

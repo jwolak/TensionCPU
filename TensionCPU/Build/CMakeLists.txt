@@ -6,7 +6,6 @@ add_executable(TensionCPU.x86
 ../Source/main.cpp 
 
 #interfaces
-../Source/EquinoxLogger/ILogger.h
 ../Source/EquinoxLogger/ILogs-File-Access-Guard.h
 ../Source/EquinoxLogger/IFile-Logger.h
 ../Source/EquinoxLogger/IConsole-Logger.h

@@ -39,14 +39,24 @@
 
 #include "../EquinoxLogger/Logger.h"
 
+equinox_logger::Logger* equinox_logger::Logger::logger_instance_{nullptr};
+std::mutex equinox_logger::Logger::logger_instance_mutex_;
 
-void equinox_logger::Logger::SetLoggingLevel(LogLevelType log_level_type) {
+void equinox_logger::Logger::SetLoggingLevel(LogLevelType log_level_type) {}
 
-}
-
-void equinox_logger::Logger::SetLoggingOutput(LogOutputType log_output_type) {
-}
+void equinox_logger::Logger::SetLoggingOutput(LogOutputType log_output_type) {}
 
 void equinox_logger::Logger::Error(const char* format, ...) {}
 void equinox_logger::Logger::Warning(const char* format, ...) {}
 void equinox_logger::Logger::Debug(const char* format, ...) {}
+
+equinox_logger::Logger* equinox_logger::Logger::GetInstance() {
+  std::lock_guard<std::mutex> lock(equinox_logger::Logger::logger_instance_mutex_);
+
+  if (equinox_logger::Logger::logger_instance_ == nullptr)
+  {
+    equinox_logger::Logger::logger_instance_ = new equinox_logger::Logger();
+  }
+
+  return equinox_logger::Logger::logger_instance_;
+}
