@@ -64,4 +64,25 @@ TEST_F (ConsoleLoggerTests, Call_LogMessage_And_No_Throw_Occurs) {
   ASSERT_NO_THROW(console_logger->LogMessage("%s", kTestLogMessage));
 }
 
+using namespace std;
+
+TEST_F(ConsoleLoggerTests, Console_test) {
+
+  streambuf * cout_strbuf(cout.rdbuf());
+  ostringstream output;
+  cout.rdbuf(output.rdbuf());
+
+  cout << "Hello there" << endl;
+
+  console_logger->LogMessage("%s", kTestLogMessage);
+
+  cout.rdbuf(cout_strbuf);
+  /*cerr << "our stringstream now contains: " << output.str();*/
+
+  ASSERT_EQ(output.str(), kTestLogMessage);
+
+
+
+}
+
 } /*console_logger_tests*/
