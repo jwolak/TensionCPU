@@ -48,6 +48,19 @@
 #include "../EquinoxLogger/Logger-Level.h"
 #include "../EquinoxLogger/Logger-Output.h"
 
+#define LOG_ERROR(x, ...)     equinox_logger::Logger::GetInstance()->Error(x, __VA_ARGS__)
+#define LOG_WARNING(x, ...)   equinox_logger::Logger::GetInstance()->Warning(x, __VA_ARGS__)
+#define LOG_DEBUG(x, ...)     equinox_logger::Logger::GetInstance()->Debug(x, __VA_ARGS__)
+
+#define ENABLE_DEBUG_LOG  equinox_logger::Logger::GetInstance()->SetLoggingLevel(equinox_logger::Logger::LogLevelType::LOG_LEVEL_DEBUG)
+#define ENABLE_WARNING_LOG  equinox_logger::Logger::GetInstance()->SetLoggingLevel(equinox_logger::Logger::LogLevelType::LOG_LEVEL_WARNING)
+#define ENABLE_ERROR_LOG  equinox_logger::Logger::GetInstance()->SetLoggingLevel(equinox_logger::Logger::LogLevelType::LOG_LEVEL_ERROR)
+#define DISABLE_LOGGER    equinox_logger::Logger::GetInstance()->SetLoggingLevel(equinox_logger::Logger::LogLevelType::DISABLE_LOG)
+
+#define LOG_TO_CONSOLE equinox_logger::Logger::GetInstance()->SetLoggingOutput(equinox_logger::Logger::LogLevelType::CONSOLE)
+#define LOG_TO_FILE equinox_logger::Logger::GetInstance()->SetLoggingOutput(equinox_logger::Logger::LogLevelType::FILE_LOG)
+#define LOG_TO_FILE_AND_CONSOLE equinox_logger::Logger::GetInstance()->SetLoggingOutput(equinox_logger::Logger::LogLevelType::FILE_AND_CONSOLE)
+
 namespace equinox_logger {
 
 class Logger {
@@ -59,15 +72,14 @@ class Logger {
   void Warning(const char*, ...);
   void Debug(const char*, ...);
 
+ public:
+  static Logger* GetInstance();
+
   Logger(Logger &object_logger) = delete;   /* no clone */
   void operator=(const Logger &) = delete;  /* no copy assign */
 
-  static Logger* GetInstance();
-
  protected:
   Logger(){}
-
- public:
   ~Logger(){}
 
  private:
