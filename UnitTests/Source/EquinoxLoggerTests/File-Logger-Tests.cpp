@@ -41,6 +41,10 @@
 
 #include <memory>
 #include <string>
+#include <chrono>
+#include <ctime>
+#include <fstream>
+#include <sstream>
 
 #include "../../../TensionCPU/Source/EquinoxLogger/File-Logger.cpp"
 
@@ -48,6 +52,7 @@ namespace file_logger_tests {
 
 namespace {
 const std::string kTestLogMessage = "Test log message";
+const std::string kLogFileName = "logs.log";
 }
 
 class FileLoggerTests : public ::testing::Test {
@@ -58,10 +63,30 @@ class FileLoggerTests : public ::testing::Test {
   }
 
   std::unique_ptr<equinox_logger::IFileLogger> file_logger;
+
+  std::string ReadDataFromLogFile(const std::string &file_name) {
+    std::ifstream log_file;
+    log_file.open(file_name);
+    std::string buffer;
+
+    if (log_file.is_open()) {
+      while (log_file) {
+        buffer += log_file.get();
+      }
+    }
+
+    return buffer;
+  }
 };
 
 TEST_F(FileLoggerTests, Call_LogMessage_And_No_Throw_Occurs) {
   ASSERT_NO_THROW(file_logger->LogMessage("%s", kTestLogMessage));
+}
+
+TEST_F(FileLoggerTests, Log_Message_To_File_And_Message_Is_Placed_In_The_File_Successfully) {
+  file_logger->LogMessage("%s", kTestLogMessage);
+  std::string data_from_log_file = ReadDataFromLogFile(kLogFileName);
+  ASSERT_TRUE(data_from_log_file.find(kTestLogMessage) != std::string::npos);
 }
 
 } /*file_logger_tests*/
