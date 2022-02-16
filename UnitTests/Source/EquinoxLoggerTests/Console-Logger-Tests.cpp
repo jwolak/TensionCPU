@@ -47,42 +47,69 @@
 namespace console_logger_tests {
 
 namespace {
-const std::string kTestLogMessage = "Test log message";
+const std::string kTestLogMessage = "Test log message ";
+
+const int kNumberInt = 3;
+const std::string kMessageWithTypeIntSpecificator = kTestLogMessage + "%d";
+const std::string kMessageWithIntNumber = kTestLogMessage + std::to_string(kNumberInt);
+
+const float kNumberFloat = 10.110000;
+const std::string kMessageWithTypeFloatSpecificator = kTestLogMessage + "%f2.6";
+const std::string kMessageWithFloatNumber = kTestLogMessage + std::to_string(kNumberFloat);
 }
 
 class ConsoleLoggerTests : public ::testing::Test {
  public:
   ConsoleLoggerTests()
       :
-      console_logger(new equinox_logger::ConsoleLogger) {
+      console_logger(new equinox_logger::ConsoleLogger),
+      cout_strbuf(std::cout.rdbuf()),
+      string_stream_output() {
   }
 
   std::unique_ptr<equinox_logger::IConsoleLogger> console_logger;
+  std::streambuf *cout_strbuf;
+  std::ostringstream string_stream_output;
+
+  void RedirectStandarOutputToBuffer(std::ostringstream &output) {
+    std::cout.rdbuf(output.rdbuf());
+  }
+
+  void RedirectFromBufferToStandarOutput() {
+    std::cout.rdbuf(cout_strbuf);
+  }
+
 };
 
 TEST_F (ConsoleLoggerTests, Call_LogMessage_And_No_Throw_Occurs) {
   ASSERT_NO_THROW(console_logger->LogMessage("%s", kTestLogMessage));
 }
 
-using namespace std;
+TEST_F(ConsoleLoggerTests, LogMessage_As_Text_To_Console_And_It_Is_Printed_Successfully) {
 
-TEST_F(ConsoleLoggerTests, Console_test) {
-
-  streambuf * cout_strbuf(cout.rdbuf());
-  ostringstream output;
-  cout.rdbuf(output.rdbuf());
-
-  cout << "Hello there" << endl;
-
+  RedirectStandarOutputToBuffer(string_stream_output);
   console_logger->LogMessage("%s", kTestLogMessage);
+  RedirectFromBufferToStandarOutput();
 
-  cout.rdbuf(cout_strbuf);
-  /*cerr << "our stringstream now contains: " << output.str();*/
+  ASSERT_EQ(string_stream_output.str(), kTestLogMessage);
+}
 
-  ASSERT_EQ(output.str(), kTestLogMessage);
+TEST_F(ConsoleLoggerTests, LogMessage_As_Text_With_Int_Number_To_Console_And_It_Is_Printed_Successfully) {
 
+  RedirectStandarOutputToBuffer(string_stream_output);
+  console_logger->LogMessage(kMessageWithTypeIntSpecificator.c_str(), kNumberInt);
+  RedirectFromBufferToStandarOutput();
 
+  ASSERT_EQ(string_stream_output.str(), kMessageWithIntNumber);
+}
 
+TEST_F(ConsoleLoggerTests, LogMessage_As_Text_With_Float_Number_To_Console_And_It_Is_Printed_Successfully) {
+
+  RedirectStandarOutputToBuffer(string_stream_output);
+  console_logger->LogMessage(kMessageWithTypeFloatSpecificator.c_str(), kNumberFloat);
+  RedirectFromBufferToStandarOutput();
+
+  ASSERT_EQ(string_stream_output.str(), kMessageWithFloatNumber);
 }
 
 } /*console_logger_tests*/
