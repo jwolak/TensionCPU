@@ -48,6 +48,11 @@
 
 namespace logs_file_access_guard_tests {
 
+namespace {
+const int32_t kValueForThreadLoop = 1000;
+const int32_t kResultValue = kValueForThreadLoop + kValueForThreadLoop;
+}
+
 
 class LogsFileAccessGuardTests : public ::testing::Test {
  public:
@@ -66,7 +71,7 @@ class LogsFileAccessGuardTests : public ::testing::Test {
 
 void LogsFileAccessGuardTests::ChangeVariableValueToTwo(int32_t *accessible_variable) {
   logs_file_access_guard->EnableAccessGuard();
-  for (int i = 0; i < 1000; ++i) {
+  for (int i = 0; i < kValueForThreadLoop; ++i) {
     *accessible_variable = ++(*accessible_variable);
   }
   logs_file_access_guard->DisableAccessGuard();
@@ -75,7 +80,7 @@ void LogsFileAccessGuardTests::ChangeVariableValueToTwo(int32_t *accessible_vari
 
 void LogsFileAccessGuardTests::ChangeVariableValueToFour(int32_t *accessible_variable) {
   logs_file_access_guard->EnableAccessGuard();
-  for (int i = 0; i < 1000; ++i) {
+  for (int i = 0; i < kValueForThreadLoop; ++i) {
     *accessible_variable = ++(*accessible_variable);
   }
   logs_file_access_guard->DisableAccessGuard();
@@ -92,7 +97,7 @@ TEST_F(LogsFileAccessGuardTests, Lock_Access_To_Variable_And_It_Is_Successful) {
   t4.detach();
   t2.detach();
 
-  ASSERT_EQ(accessible_variable, 2000);
+  ASSERT_EQ(accessible_variable, kResultValue);
 
 }
 
