@@ -1,5 +1,5 @@
 /*
- * Logger-Macros-Tests.cpp
+ * Logger-Log-Message-Macros-Tests.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -61,9 +61,9 @@ const std::string kMessageWithTypeFloatSpecificator = kTestLogMessage + "%f2.6";
 const std::string kMessageWithFloatNumber = kTestLogMessage + std::to_string(kNumberFloat);
 }
 
-class LoggerMacrosTests :public ::testing::Test {
+class LoggerLogMessageMacrosTests :public ::testing::Test {
  public:
-  LoggerMacrosTests() :
+  LoggerLogMessageMacrosTests() :
     cout_strbuf(std::cout.rdbuf()),
     string_stream_output() {}
 
@@ -80,7 +80,7 @@ class LoggerMacrosTests :public ::testing::Test {
 };
 
 
-TEST_F(LoggerMacrosTests, Log_Message_As_ERROR_To_Console_And_Message_Is_Placed_In_The_File_Successfully) {
+TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_ERROR_To_Console_And_Message_Is_Placed_In_The_File_Successfully) {
   RedirectStandarOutputToBuffer(string_stream_output);
   LOG_ERROR("%s", kTestLogMessage);
   RedirectFromBufferToStandarOutput();
@@ -88,7 +88,7 @@ TEST_F(LoggerMacrosTests, Log_Message_As_ERROR_To_Console_And_Message_Is_Placed_
   ASSERT_TRUE(string_stream_output.str().find(kTestLogMessage) != std::string::npos);
 }
 
-TEST_F(LoggerMacrosTests, Log_Message_As_ERROR_To_Console_And_ERROR_Header_Is_Placed_Successfull) {
+TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_ERROR_To_Console_And_ERROR_Header_Is_Placed_Successfull) {
   RedirectStandarOutputToBuffer(string_stream_output);
   LOG_ERROR("%s", kTestLogMessage);
   RedirectFromBufferToStandarOutput();
@@ -96,7 +96,7 @@ TEST_F(LoggerMacrosTests, Log_Message_As_ERROR_To_Console_And_ERROR_Header_Is_Pl
   ASSERT_TRUE(string_stream_output.str().find(kErrorHeader) != std::string::npos);
 }
 
-TEST_F(LoggerMacrosTests, Log_Message_As_WARNING_To_Console_And_Message_Is_Placed_In_The_File_Successfully) {
+TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_WARNING_To_Console_And_Message_Is_Placed_In_The_File_Successfully) {
   RedirectStandarOutputToBuffer(string_stream_output);
   LOG_WARNING("%s", kTestLogMessage);
   RedirectFromBufferToStandarOutput();
@@ -104,7 +104,7 @@ TEST_F(LoggerMacrosTests, Log_Message_As_WARNING_To_Console_And_Message_Is_Place
   ASSERT_TRUE(string_stream_output.str().find(kTestLogMessage) != std::string::npos);
 }
 
-TEST_F(LoggerMacrosTests, Log_Message_As_WARNING_To_Console_And_WARNING_Header_Is_Placed_Successfull) {
+TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_WARNING_To_Console_And_WARNING_Header_Is_Placed_Successfull) {
   RedirectStandarOutputToBuffer(string_stream_output);
   LOG_WARNING("%s", kTestLogMessage);
   RedirectFromBufferToStandarOutput();
@@ -112,7 +112,7 @@ TEST_F(LoggerMacrosTests, Log_Message_As_WARNING_To_Console_And_WARNING_Header_I
   ASSERT_TRUE(string_stream_output.str().find(kWarningHeader) != std::string::npos);
 }
 
-TEST_F(LoggerMacrosTests, Log_Message_As_DEBUG_To_Console_And_Message_Is_Placed_In_The_File_Successfully) {
+TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_DEBUG_To_Console_And_Message_Is_Placed_In_The_File_Successfully) {
   RedirectStandarOutputToBuffer(string_stream_output);
   LOG_DEBUG("%s", kTestLogMessage);
   RedirectFromBufferToStandarOutput();
@@ -120,7 +120,7 @@ TEST_F(LoggerMacrosTests, Log_Message_As_DEBUG_To_Console_And_Message_Is_Placed_
   ASSERT_TRUE(string_stream_output.str().find(kTestLogMessage) != std::string::npos);
 }
 
-TEST_F(LoggerMacrosTests, Log_Message_As_DEBUG_To_Console_And_DEBUG_Header_Is_Placed_Successfull) {
+TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_DEBUG_To_Console_And_DEBUG_Header_Is_Placed_Successfull) {
   RedirectStandarOutputToBuffer(string_stream_output);
   LOG_DEBUG("%s", kTestLogMessage);
   RedirectFromBufferToStandarOutput();
