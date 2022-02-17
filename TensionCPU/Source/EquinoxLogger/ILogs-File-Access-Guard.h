@@ -45,8 +45,8 @@ namespace equinox_logger {
   class ILogsFileAccessGuard {
    public:
     virtual ~ILogsFileAccessGuard() = default;
-    virtual bool EnableAccessGuard() = 0;
-    virtual bool DisableAccessGuard() = 0;
+    virtual void EnableAccessGuard() = 0;
+    virtual void DisableAccessGuard() = 0;
   };
 
 } /*namespace equinox_logger*/

@@ -48,10 +48,10 @@ namespace equinox_logger {
 
 class LogsFileAccessGuard : public ILogsFileAccessGuard {
  public:
-  LogsFileAccessGuard();
-  ~LogsFileAccessGuard();
-  bool EnableAccessGuard();
-  bool DisableAccessGuard();
+  LogsFileAccessGuard(){};
+  ~LogsFileAccessGuard(){};
+  void EnableAccessGuard(){};
+  void DisableAccessGuard(){};
 
  private:
   pthread_mutexattr_t     mutex_attr_t;

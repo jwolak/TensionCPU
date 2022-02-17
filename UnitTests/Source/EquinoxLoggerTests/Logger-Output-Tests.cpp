@@ -42,7 +42,7 @@
 
 #include <memory>
 
-#include "../../../TensionCPU/Source/EquinoxLogger/Logger-Output.h"
+#include "../../../TensionCPU/Source/EquinoxLogger/Logger-Output.cpp"
 
 namespace logger_output_tests{
 

@@ -7,6 +7,7 @@
 #include "EquinoxLoggerTests/Logger-Level-Tests.cpp"
 #include "EquinoxLoggerTests/Logger-Output-Tests.cpp"
 #include "EquinoxLoggerTests/Console-Logger-Tests.cpp"
+#include "EquinoxLoggerTests/Logs-File-Access-Guard-Tests.cpp"
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);

@@ -37,6 +37,6 @@
  *
  */
 
-#include "../EquinoxLogger/ILogs-File-Access-Guard.h"
+#include "../EquinoxLogger/Logs-File-Access-Guard.h"
 
 
