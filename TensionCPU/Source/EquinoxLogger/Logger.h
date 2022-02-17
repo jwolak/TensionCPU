@@ -57,9 +57,9 @@
 #define ENABLE_ERROR_LOG  equinox_logger::Logger::GetInstance()->SetLoggingLevel(equinox_logger::Logger::LogLevelType::LOG_LEVEL_ERROR)
 #define DISABLE_LOGGER    equinox_logger::Logger::GetInstance()->SetLoggingLevel(equinox_logger::Logger::LogLevelType::DISABLE_LOG)
 
-#define LOG_TO_CONSOLE equinox_logger::Logger::GetInstance()->SetLoggingOutput(equinox_logger::Logger::LogLevelType::CONSOLE)
-#define LOG_TO_FILE equinox_logger::Logger::GetInstance()->SetLoggingOutput(equinox_logger::Logger::LogLevelType::FILE_LOG)
-#define LOG_TO_FILE_AND_CONSOLE equinox_logger::Logger::GetInstance()->SetLoggingOutput(equinox_logger::Logger::LogLevelType::FILE_AND_CONSOLE)
+#define ENABLE_LOG_TO_CONSOLE equinox_logger::Logger::GetInstance()->SetLoggingOutput(equinox_logger::Logger::LogLevelType::CONSOLE)
+#define ENABLE_LOG_TO_FILE equinox_logger::Logger::GetInstance()->SetLoggingOutput(equinox_logger::Logger::LogLevelType::FILE_LOG)
+#define ENABLE_LOG_TO_FILE_AND_CONSOLE equinox_logger::Logger::GetInstance()->SetLoggingOutput(equinox_logger::Logger::LogLevelType::FILE_AND_CONSOLE)
 
 namespace equinox_logger {
 
