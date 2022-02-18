@@ -48,7 +48,7 @@ class ConsoleLogger : public IConsoleLogger {
  public:
   ConsoleLogger() {};
   ~ConsoleLogger() = default;
-  void LogMessage(const char*, ...) override {};
+  void LogMessage(std::string& message, LogLevelType message_type) override;
 };
 
 } /*namespace equinox_logger*/

@@ -74,7 +74,14 @@ class Logger {
   void operator=(const Logger &) = delete;  /* no copy assign */
 
  protected:
-  Logger(){}
+  Logger()
+      :
+      logger_level_(new LoggerLevel),
+      logger_output_(new LoggerOutput),
+      file_logger_(new FileLogger),
+      console_logger_(new ConsoleLogger) {
+  }
+
   ~Logger(){}
 
  private:

@@ -43,13 +43,40 @@ equinox_logger::Logger *equinox_logger::Logger::logger_instance_ { nullptr };
 std::mutex equinox_logger::Logger::logger_instance_mutex_;
 
 void equinox_logger::Logger::SetLoggingLevel(LogLevelType log_level_type) {
+  logger_level_->SetLevel(log_level_type);
 }
 
 void equinox_logger::Logger::SetLoggingOutput(LogOutputType log_output_type) {
+  logger_output_->SetOutput(log_output_type);
 }
 
 void equinox_logger::Logger::Error(const char *format, ...) {
+  if (equinox_logger::LogLevelType::LOG_LEVEL_ERROR <= logger_level_->GetLevel()) {
+
+    va_list argp;
+    std::string log_message_buffer;
+
+    va_start(argp, format);
+    vsnprintf((char*) log_message_buffer.c_str(), sizeof(log_message_buffer.c_str()), format, argp);
+
+    switch (logger_output_->GetOutput()) {
+      case equinox_logger::LogOutputType::CONSOLE:
+        console_logger_->LogMessage(log_message_buffer, equinox_logger::LogLevelType::LOG_LEVEL_ERROR);
+        break;
+      case equinox_logger::LogOutputType::FILE_LOG:
+        /*file_logger_->LogMessage();*/
+        break;
+      case equinox_logger::LogOutputType::FILE_AND_CONSOLE:
+      default:
+        console_logger_->LogMessage(log_message_buffer, equinox_logger::LogLevelType::LOG_LEVEL_ERROR);
+        /*file_logger_->LogMessage();*/
+        break;
+    }
+
+    va_end(argp);
+  }
 }
+
 void equinox_logger::Logger::Warning(const char *format, ...) {
 }
 void equinox_logger::Logger::Debug(const char *format, ...) {

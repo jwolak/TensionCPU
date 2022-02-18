@@ -46,8 +46,10 @@ namespace equinox_logger {
 
 class LoggerLevel : public ILoggerLevel {
  public:
+  LoggerLevel() {}
   ~LoggerLevel() {}
   void SetLevel(LogLevelType) override {};
+  LogLevelType GetLevel() override {}
 
  public:
   LogLevelType log_level_type;

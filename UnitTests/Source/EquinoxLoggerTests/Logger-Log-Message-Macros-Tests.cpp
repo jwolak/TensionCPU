@@ -82,7 +82,7 @@ class LoggerLogMessageMacrosTests : public ::testing::Test {
 };
 
 
-TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_ERROR_To_Console_And_Message_Is_Placed_In_The_File_Successfully) {
+TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_ERROR_To_Console_And_It_Is_Successfully) {
   RedirectStandarOutputToBuffer(string_stream_output);
   LOG_ERROR("%s", kTestLogMessage);
   RedirectFromBufferToStandarOutput();
@@ -98,7 +98,15 @@ TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_ERROR_To_Console_And_ERROR_He
   ASSERT_TRUE(string_stream_output.str().find(kErrorHeader) != std::string::npos);
 }
 
-TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_WARNING_To_Console_And_Message_Is_Placed_In_The_File_Successfully) {
+TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_ERROR_With_Integer_Number_To_Console_And_It_Is_Placed_Successfull) {
+  RedirectStandarOutputToBuffer(string_stream_output);
+  LOG_ERROR(kMessageWithTypeIntSpecificator.c_str(), kNumberInt);
+  RedirectFromBufferToStandarOutput();
+
+  ASSERT_TRUE(string_stream_output.str().find(std::to_string(kNumberInt)) != std::string::npos);
+}
+
+TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_WARNING_To_Console_And_It_Is_Successfully) {
   RedirectStandarOutputToBuffer(string_stream_output);
   LOG_WARNING("%s", kTestLogMessage);
   RedirectFromBufferToStandarOutput();
@@ -112,6 +120,14 @@ TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_WARNING_To_Console_And_WARNIN
   RedirectFromBufferToStandarOutput();
 
   ASSERT_TRUE(string_stream_output.str().find(kWarningHeader) != std::string::npos);
+}
+
+TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_WARNING_With_Integer_Number_To_Console_And_It_Is_Placed_Successfull) {
+  RedirectStandarOutputToBuffer(string_stream_output);
+  LOG_WARNING(kMessageWithTypeIntSpecificator.c_str(), kNumberInt);
+  RedirectFromBufferToStandarOutput();
+
+  ASSERT_TRUE(string_stream_output.str().find(std::to_string(kNumberInt)) != std::string::npos);
 }
 
 TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_DEBUG_To_Console_And_Message_Is_Placed_In_The_File_Successfully) {
@@ -128,6 +144,14 @@ TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_DEBUG_To_Console_And_DEBUG_He
   RedirectFromBufferToStandarOutput();
 
   ASSERT_TRUE(string_stream_output.str().find(kDebugHeader) != std::string::npos);
+}
+
+TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_DEBUG_With_Integer_Number_To_Console_And_It_Is_Placed_Successfull) {
+  RedirectStandarOutputToBuffer(string_stream_output);
+  LOG_DEBUG(kMessageWithTypeIntSpecificator.c_str(), kNumberInt);
+  RedirectFromBufferToStandarOutput();
+
+  ASSERT_TRUE(string_stream_output.str().find(std::to_string(kNumberInt)) != std::string::npos);
 }
 
 

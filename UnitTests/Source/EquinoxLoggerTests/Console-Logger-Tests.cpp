@@ -48,14 +48,6 @@ namespace console_logger_tests {
 
 namespace {
 const std::string kTestLogMessage = "Test log message ";
-
-const int kNumberInt = 3;
-const std::string kMessageWithTypeIntSpecificator = kTestLogMessage + "%d";
-const std::string kMessageWithIntNumber = kTestLogMessage + std::to_string(kNumberInt);
-
-const float kNumberFloat = 10.110000;
-const std::string kMessageWithTypeFloatSpecificator = kTestLogMessage + "%f2.6";
-const std::string kMessageWithFloatNumber = kTestLogMessage + std::to_string(kNumberFloat);
 }
 
 class ConsoleLoggerTests : public ::testing::Test {
@@ -82,34 +74,16 @@ class ConsoleLoggerTests : public ::testing::Test {
 };
 
 TEST_F (ConsoleLoggerTests, Call_LogMessage_And_No_Throw_Occurs) {
-  ASSERT_NO_THROW(console_logger->LogMessage("%s", kTestLogMessage));
+  ASSERT_NO_THROW(console_logger->LogMessage(kTestLogMessage));
 }
 
 TEST_F(ConsoleLoggerTests, LogMessage_As_Text_To_Console_And_It_Is_Printed_Successfully) {
 
   RedirectStandarOutputToBuffer(string_stream_output);
-  console_logger->LogMessage("%s", kTestLogMessage);
+  console_logger->LogMessage(kTestLogMessage);
   RedirectFromBufferToStandarOutput();
 
   ASSERT_EQ(string_stream_output.str(), kTestLogMessage);
-}
-
-TEST_F(ConsoleLoggerTests, LogMessage_As_Text_With_Int_Number_To_Console_And_It_Is_Printed_Successfully) {
-
-  RedirectStandarOutputToBuffer(string_stream_output);
-  console_logger->LogMessage(kMessageWithTypeIntSpecificator.c_str(), kNumberInt);
-  RedirectFromBufferToStandarOutput();
-
-  ASSERT_EQ(string_stream_output.str(), kMessageWithIntNumber);
-}
-
-TEST_F(ConsoleLoggerTests, LogMessage_As_Text_With_Float_Number_To_Console_And_It_Is_Printed_Successfully) {
-
-  RedirectStandarOutputToBuffer(string_stream_output);
-  console_logger->LogMessage(kMessageWithTypeFloatSpecificator.c_str(), kNumberFloat);
-  RedirectFromBufferToStandarOutput();
-
-  ASSERT_EQ(string_stream_output.str(), kMessageWithFloatNumber);
 }
 
 } /*console_logger_tests*/

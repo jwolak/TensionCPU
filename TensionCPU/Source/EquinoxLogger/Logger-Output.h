@@ -46,8 +46,10 @@ namespace equinox_logger {
 
 class LoggerOutput : public ILoggerOutput {
  public:
+  LoggerOutput() {}
   ~LoggerOutput() {}
   void SetOutput(LogOutputType) override {};
+  LogOutputType GetOutput() override {}
 
  public:
   LogOutputType logger_output_type;

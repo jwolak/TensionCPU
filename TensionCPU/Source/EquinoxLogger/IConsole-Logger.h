@@ -40,12 +40,19 @@
 #ifndef SOURCE_EQUINOXLOGGER_ICONSOLE_LOGGER_H_
 #define SOURCE_EQUINOXLOGGER_ICONSOLE_LOGGER_H_
 
+#include <string>
+#include <cstdlib>
+#include <cstdarg>
+#include <cstdio>
+
+#include "Log-Level-Type.h"
+
 namespace equinox_logger {
 
 class IConsoleLogger {
  public:
   virtual ~IConsoleLogger() = default;
-  virtual void LogMessage(const char*, ...) = 0;
+  virtual void LogMessage(std::string& message, LogLevelType) = 0;
 };
 
 } /*namespace equinox_logger*/
