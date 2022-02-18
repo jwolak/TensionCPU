@@ -44,7 +44,7 @@
 
 #include "../../../TensionCPU/Source/EquinoxLogger/Logger.cpp"
 
-namespace logger_macros_tests{
+namespace logger_log_macros_tests{
 
 namespace {
 const std::string kTestLogMessage = "Test log message ";
@@ -61,11 +61,13 @@ const std::string kMessageWithTypeFloatSpecificator = kTestLogMessage + "%f2.6";
 const std::string kMessageWithFloatNumber = kTestLogMessage + std::to_string(kNumberFloat);
 }
 
-class LoggerLogMessageMacrosTests :public ::testing::Test {
+class LoggerLogMessageMacrosTests : public ::testing::Test {
  public:
-  LoggerLogMessageMacrosTests() :
-    cout_strbuf(std::cout.rdbuf()),
-    string_stream_output() {}
+  LoggerLogMessageMacrosTests()
+      :
+      cout_strbuf(std::cout.rdbuf()),
+      string_stream_output() {
+  }
 
   std::streambuf *cout_strbuf;
   std::ostringstream string_stream_output;
@@ -129,6 +131,6 @@ TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_DEBUG_To_Console_And_DEBUG_He
 }
 
 
-} /*namespace logger_macros_tests*/
+} /*namespace logger_log_macros_tests*/
 
 
