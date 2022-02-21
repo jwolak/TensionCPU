@@ -60,9 +60,11 @@ void equinox_logger::Logger::LogMessageWithLevelType(equinox_logger::LogLevelTyp
 
     va_list argp;
     std::string log_message_buffer;
+    char msg_buffer [255];
 
     va_start(argp, format);
-    vsnprintf((char*) log_message_buffer.c_str(), sizeof(log_message_buffer.c_str()), format, argp);
+    vsnprintf(msg_buffer, sizeof(msg_buffer), format, argp);
+    log_message_buffer = msg_buffer;
 
     switch (logger_output_->GetOutput()) {
       case equinox_logger::LogOutputType::CONSOLE:

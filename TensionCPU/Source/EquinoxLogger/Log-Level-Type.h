@@ -40,7 +40,13 @@
 #ifndef SOURCE_EQUINOXLOGGER_LOG_LEVEL_TYPE_H_
 #define SOURCE_EQUINOXLOGGER_LOG_LEVEL_TYPE_H_
 
+#include <string>
+
 namespace equinox_logger {
+
+const std::string kErrorMessageHeader = " [ERROR]: ";
+const std::string kWarningMessageHeader = " [WARNING]: ";
+const std::string kErrorDebugHeader = " [DEBUG]: ";
 
 enum class LogLevelType {
   DISABLE_LOG       = 1,

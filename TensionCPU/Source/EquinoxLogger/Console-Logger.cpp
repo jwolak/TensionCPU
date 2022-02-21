@@ -39,6 +39,21 @@
 
 #include "../EquinoxLogger/Console-Logger.h"
 
+#include <iostream>
 
 void equinox_logger::ConsoleLogger::LogMessage(equinox_logger::LogLevelType message_type, std::string& message) const {
+  std::string t_log_message;
+  switch (message_type) {
+    case equinox_logger::LogLevelType::LOG_LEVEL_ERROR:
+      t_log_message = logger_time_->GetTimestamp() +  kErrorMessageHeader + message;
+      break;
+    case equinox_logger::LogLevelType::LOG_LEVEL_WARNING:
+      t_log_message = logger_time_->GetTimestamp() +  kWarningMessageHeader + message;
+      break;
+    case equinox_logger::LogLevelType::LOG_LEVEL_DEBUG:
+      t_log_message = logger_time_->GetTimestamp() +  kErrorDebugHeader + message;
+      break;
+  }
+
+  std::cout << t_log_message << std::endl;
 }

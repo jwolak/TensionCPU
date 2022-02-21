@@ -11,6 +11,7 @@ add_executable(TensionCPU.x86
 ../Source/EquinoxLogger/IConsole-Logger.h
 ../Source/EquinoxLogger/ILogger-Level.h
 ../Source/EquinoxLogger/ILogger-Output.h
+../Source/EquinoxLogger/ILogger-Time.h
 
 #headers
 ../Source/EquinoxLogger/Logger.h
@@ -21,6 +22,7 @@ add_executable(TensionCPU.x86
 ../Source/EquinoxLogger/Console-Logger.h
 ../Source/EquinoxLogger/Logger-Level.h
 ../Source/EquinoxLogger/Logger-Output.h
+../Source/EquinoxLogger/Logger-Time.h
 
 #source
 ../Source/EquinoxLogger/Logger.cpp
@@ -29,4 +31,5 @@ add_executable(TensionCPU.x86
 ../Source/EquinoxLogger/Console-Logger.cpp
 ../Source/EquinoxLogger/Logger-Level.cpp
 ../Source/EquinoxLogger/Logger-Output.cpp
+../Source/EquinoxLogger/Logger-Time.cpp
 )

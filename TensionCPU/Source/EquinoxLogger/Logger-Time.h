@@ -1,5 +1,5 @@
 /*
- * Console-Logger-Tests.cpp
+ * Logger-Time.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,56 +37,26 @@
  *
  */
 
-#include <gtest/gtest.h>
+#ifndef SOURCE_LOGGER_TIME_H_
+#define SOURCE_LOGGER_TIME_H_
 
-#include <memory>
-#include <string>
+#include "ILogger-Time.h"
 
-#include "../../../TensionCPU/Source/EquinoxLogger/Console-Logger.cpp"
-#include "../../../TensionCPU/Source/EquinoxLogger/Logger-Time.cpp"
+namespace equinox_logger {
 
-namespace console_logger_tests {
-
-namespace {
-std::string kTestLogMessage = "Test log message ";
-}
-
-class ConsoleLoggerTests : public ::testing::Test {
+class LoggerTime : public ILoggerTime {
  public:
-  ConsoleLoggerTests()
+  LoggerTime()
       :
-      logger_time(new equinox_logger::LoggerTime),
-      console_logger(new equinox_logger::ConsoleLogger(logger_time)),
-      cout_strbuf(std::cout.rdbuf()),
-      string_stream_output() {
+      timestamp_ { } {
   }
 
-  std::shared_ptr<equinox_logger::ILoggerTime> logger_time;
-  std::unique_ptr<equinox_logger::IConsoleLogger> console_logger;
-  std::streambuf *cout_strbuf;
-  std::ostringstream string_stream_output;
+  std::string GetTimestamp() const override;
 
-  void RedirectStandarOutputToBuffer(std::ostringstream &output) {
-    std::cout.rdbuf(output.rdbuf());
-  }
-
-  void RedirectFromBufferToStandarOutput() {
-    std::cout.rdbuf(cout_strbuf);
-  }
-
+ private:
+  std::string timestamp_;
 };
 
-TEST_F (ConsoleLoggerTests, Call_LogMessage_And_No_Throw_Occurs) {
-  ASSERT_NO_THROW(console_logger->LogMessage(equinox_logger::LogLevelType::LOG_LEVEL_ERROR, kTestLogMessage));
-}
+} /*namespace equinox_logger*/
 
-TEST_F(ConsoleLoggerTests, LogMessage_As_Text_To_Console_And_It_Is_Printed_Successfully) {
-
-  RedirectStandarOutputToBuffer(string_stream_output);
-  console_logger->LogMessage(equinox_logger::LogLevelType::LOG_LEVEL_ERROR, kTestLogMessage);
-  RedirectFromBufferToStandarOutput();
-
-  ASSERT_TRUE(string_stream_output.str().find(kTestLogMessage) != std::string::npos);
-}
-
-} /*console_logger_tests*/
+#endif /* SOURCE_LOGGER_TIME_H_ */

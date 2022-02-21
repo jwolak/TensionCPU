@@ -42,13 +42,20 @@
 
 #include "../EquinoxLogger/IConsole-Logger.h"
 
+#include <memory>
+
+#include "../EquinoxLogger/Logger-Time.h"
+
 namespace equinox_logger {
 
 class ConsoleLogger : public IConsoleLogger {
  public:
-  ConsoleLogger() {};
+  ConsoleLogger(std::shared_ptr<ILoggerTime> logger_time) : logger_time_{logger_time} {}
   ~ConsoleLogger() = default;
   void LogMessage(LogLevelType message_type, std::string& message) const override;
+
+ private:
+  std::shared_ptr<ILoggerTime> logger_time_;
 };
 
 } /*namespace equinox_logger*/

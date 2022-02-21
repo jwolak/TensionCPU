@@ -75,8 +75,9 @@ class Logger {
       :
       logger_level_(new LoggerLevel),
       logger_output_(new LoggerOutput),
+      logger_time_ (new LoggerTime),
       file_logger_(new FileLogger),
-      console_logger_(new ConsoleLogger) {
+      console_logger_(new ConsoleLogger(logger_time_)) {
   }
 
   ~Logger(){}
@@ -84,6 +85,7 @@ class Logger {
  private:
   std::unique_ptr<ILoggerLevel> logger_level_;
   std::unique_ptr<ILoggerOutput> logger_output_;
+  std::shared_ptr<ILoggerTime> logger_time_;
   std::unique_ptr<IFileLogger> file_logger_;
   std::unique_ptr<IConsoleLogger> console_logger_;
 

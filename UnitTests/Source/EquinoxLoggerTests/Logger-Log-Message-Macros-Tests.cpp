@@ -84,15 +84,16 @@ class LoggerLogMessageMacrosTests : public ::testing::Test {
 
 TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_ERROR_To_Console_And_It_Is_Successfully) {
   RedirectStandarOutputToBuffer(string_stream_output);
-  LOG_ERROR("%s", kTestLogMessage);
+  LOG_ERROR("%s", kTestLogMessage.c_str());
   RedirectFromBufferToStandarOutput();
 
+  /*ASSERT_EQ(string_stream_output.str(), kTestLogMessage);*/
   ASSERT_TRUE(string_stream_output.str().find(kTestLogMessage) != std::string::npos);
 }
 
 TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_ERROR_To_Console_And_ERROR_Header_Is_Placed_Successfull) {
   RedirectStandarOutputToBuffer(string_stream_output);
-  LOG_ERROR("%s", kTestLogMessage);
+  LOG_ERROR("%s", kTestLogMessage.c_str());
   RedirectFromBufferToStandarOutput();
 
   ASSERT_TRUE(string_stream_output.str().find(kErrorHeader) != std::string::npos);
@@ -116,7 +117,7 @@ TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_WARNING_To_Console_And_It_Is_
 
 TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_WARNING_To_Console_And_WARNING_Header_Is_Placed_Successfull) {
   RedirectStandarOutputToBuffer(string_stream_output);
-  LOG_WARNING("%s", kTestLogMessage);
+  LOG_WARNING("%s", kTestLogMessage.c_str());
   RedirectFromBufferToStandarOutput();
 
   ASSERT_TRUE(string_stream_output.str().find(kWarningHeader) != std::string::npos);
@@ -132,7 +133,7 @@ TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_WARNING_With_Integer_Number_T
 
 TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_DEBUG_To_Console_And_Message_Is_Placed_In_The_File_Successfully) {
   RedirectStandarOutputToBuffer(string_stream_output);
-  LOG_DEBUG("%s", kTestLogMessage);
+  LOG_DEBUG("%s", kTestLogMessage.c_str());
   RedirectFromBufferToStandarOutput();
 
   ASSERT_TRUE(string_stream_output.str().find(kTestLogMessage) != std::string::npos);
@@ -140,7 +141,7 @@ TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_DEBUG_To_Console_And_Message_
 
 TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_DEBUG_To_Console_And_DEBUG_Header_Is_Placed_Successfull) {
   RedirectStandarOutputToBuffer(string_stream_output);
-  LOG_DEBUG("%s", kTestLogMessage);
+  LOG_DEBUG("%s", kTestLogMessage.c_str());
   RedirectFromBufferToStandarOutput();
 
   ASSERT_TRUE(string_stream_output.str().find(kDebugHeader) != std::string::npos);

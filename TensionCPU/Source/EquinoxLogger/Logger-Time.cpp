@@ -1,5 +1,5 @@
 /*
- * Console-Logger-Tests.cpp
+ * Logger-Time.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,56 +37,18 @@
  *
  */
 
-#include <gtest/gtest.h>
+#include "Logger-Time.h"
 
-#include <memory>
-#include <string>
+#include <chrono>
+#include <ctime>
 
-#include "../../../TensionCPU/Source/EquinoxLogger/Console-Logger.cpp"
-#include "../../../TensionCPU/Source/EquinoxLogger/Logger-Time.cpp"
+std::string equinox_logger::LoggerTime::GetTimestamp() const {
+  std::chrono::system_clock::time_point sys_clock_time_point;
 
-namespace console_logger_tests {
+  sys_clock_time_point = std::chrono::system_clock::now();
+  std::time_t t = std::chrono::system_clock::to_time_t(sys_clock_time_point);
+  std::string timestamp_ = std::ctime(&t);
+  timestamp_.resize(timestamp_.size() - 1);
 
-namespace {
-std::string kTestLogMessage = "Test log message ";
+  return timestamp_;
 }
-
-class ConsoleLoggerTests : public ::testing::Test {
- public:
-  ConsoleLoggerTests()
-      :
-      logger_time(new equinox_logger::LoggerTime),
-      console_logger(new equinox_logger::ConsoleLogger(logger_time)),
-      cout_strbuf(std::cout.rdbuf()),
-      string_stream_output() {
-  }
-
-  std::shared_ptr<equinox_logger::ILoggerTime> logger_time;
-  std::unique_ptr<equinox_logger::IConsoleLogger> console_logger;
-  std::streambuf *cout_strbuf;
-  std::ostringstream string_stream_output;
-
-  void RedirectStandarOutputToBuffer(std::ostringstream &output) {
-    std::cout.rdbuf(output.rdbuf());
-  }
-
-  void RedirectFromBufferToStandarOutput() {
-    std::cout.rdbuf(cout_strbuf);
-  }
-
-};
-
-TEST_F (ConsoleLoggerTests, Call_LogMessage_And_No_Throw_Occurs) {
-  ASSERT_NO_THROW(console_logger->LogMessage(equinox_logger::LogLevelType::LOG_LEVEL_ERROR, kTestLogMessage));
-}
-
-TEST_F(ConsoleLoggerTests, LogMessage_As_Text_To_Console_And_It_Is_Printed_Successfully) {
-
-  RedirectStandarOutputToBuffer(string_stream_output);
-  console_logger->LogMessage(equinox_logger::LogLevelType::LOG_LEVEL_ERROR, kTestLogMessage);
-  RedirectFromBufferToStandarOutput();
-
-  ASSERT_TRUE(string_stream_output.str().find(kTestLogMessage) != std::string::npos);
-}
-
-} /*console_logger_tests*/
