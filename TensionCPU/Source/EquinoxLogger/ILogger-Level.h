@@ -48,7 +48,7 @@ class ILoggerLevel {
  public:
   virtual ~ILoggerLevel() = default;
   virtual void SetLevel(LogLevelType) = 0;
-  virtual LogLevelType GetLevel() = 0;
+  virtual LogLevelType GetLevel() const = 0;
 };
 
 } /* namespace equinox_logger */

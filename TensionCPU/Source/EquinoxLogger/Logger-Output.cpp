@@ -39,4 +39,13 @@
 
 #include "../EquinoxLogger/Logger-Output.h"
 
+void equinox_logger::LoggerOutput::SetOutput(equinox_logger::LogOutputType log_output) {
+  if (log_output < equinox_logger::LogOutputType::CONSOLE || log_output > equinox_logger::LogOutputType::FILE_AND_CONSOLE) {
+    log_output = equinox_logger::LogOutputType::FILE_AND_CONSOLE;
+  } else
+    logger_output_type = log_output;
+}
 
+equinox_logger::LogOutputType equinox_logger::LoggerOutput::GetOutput() const {
+  return logger_output_type;
+}

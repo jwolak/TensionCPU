@@ -49,7 +49,7 @@ namespace equinox_logger {
 class IConsoleLogger {
  public:
   virtual ~IConsoleLogger() = default;
-  virtual void LogMessage(std::string& message, LogLevelType) = 0;
+  virtual void LogMessage(std::string& message, LogLevelType) const = 0;
 };
 
 } /*namespace equinox_logger*/

@@ -40,3 +40,13 @@
 
 #include "../EquinoxLogger/Logger-Level.h"
 
+void equinox_logger::LoggerLevel::SetLevel(equinox_logger::LogLevelType log_level) {
+  if (log_level < equinox_logger::LogLevelType::DISABLE_LOG || log_level > equinox_logger::LogLevelType::LOG_LEVEL_DEBUG) {
+    log_level_type = equinox_logger::LogLevelType::LOG_LEVEL_ERROR;
+  } else
+    log_level_type = log_level;
+}
+
+equinox_logger::LogLevelType equinox_logger::LoggerLevel::GetLevel() const {
+  return log_level_type;
+}

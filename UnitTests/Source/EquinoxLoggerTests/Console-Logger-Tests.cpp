@@ -47,7 +47,7 @@
 namespace console_logger_tests {
 
 namespace {
-const std::string kTestLogMessage = "Test log message ";
+std::string kTestLogMessage = "Test log message ";
 }
 
 class ConsoleLoggerTests : public ::testing::Test {
@@ -74,13 +74,13 @@ class ConsoleLoggerTests : public ::testing::Test {
 };
 
 TEST_F (ConsoleLoggerTests, Call_LogMessage_And_No_Throw_Occurs) {
-  ASSERT_NO_THROW(console_logger->LogMessage(kTestLogMessage));
+  ASSERT_NO_THROW(console_logger->LogMessage(kTestLogMessage, equinox_logger::LogLevelType::LOG_LEVEL_ERROR));
 }
 
 TEST_F(ConsoleLoggerTests, LogMessage_As_Text_To_Console_And_It_Is_Printed_Successfully) {
 
   RedirectStandarOutputToBuffer(string_stream_output);
-  console_logger->LogMessage(kTestLogMessage);
+  console_logger->LogMessage(kTestLogMessage, equinox_logger::LogLevelType::LOG_LEVEL_ERROR);
   RedirectFromBufferToStandarOutput();
 
   ASSERT_EQ(string_stream_output.str(), kTestLogMessage);

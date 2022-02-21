@@ -48,7 +48,7 @@ class ILoggerOutput {
  public:
   virtual ~ILoggerOutput() = default;
   virtual void SetOutput(LogOutputType) = 0;
-  virtual LogOutputType GetOutput() = 0;
+  virtual LogOutputType GetOutput() const = 0;
 };
 
 } /*namespace equinox_logger*/

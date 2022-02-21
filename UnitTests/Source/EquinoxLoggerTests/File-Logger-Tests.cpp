@@ -47,11 +47,12 @@
 #include <sstream>
 
 #include "../../../TensionCPU/Source/EquinoxLogger/File-Logger.cpp"
+#include "../../../TensionCPU/Source/EquinoxLogger/Log-Level-Type.h"
 
 namespace file_logger_tests {
 
 namespace {
-const std::string kTestLogMessage = "Test log message";
+std::string kTestLogMessage = "Test log message";
 const std::string kLogFileName = "logs.log";
 }
 
@@ -80,11 +81,11 @@ class FileLoggerTests : public ::testing::Test {
 };
 
 TEST_F(FileLoggerTests, Call_LogMessage_And_No_Throw_Occurs) {
-  ASSERT_NO_THROW(file_logger->LogMessage("%s", kTestLogMessage));
+  ASSERT_NO_THROW(file_logger->LogMessage(kTestLogMessage, equinox_logger::LogLevelType::LOG_LEVEL_ERROR));
 }
 
 TEST_F(FileLoggerTests, Log_Message_To_File_And_Message_Is_Placed_In_The_File_Successfully) {
-  file_logger->LogMessage("%s", kTestLogMessage);
+  file_logger->LogMessage(kTestLogMessage, equinox_logger::LogLevelType::LOG_LEVEL_ERROR);
   std::string data_from_log_file = ReadDataFromLogFile(kLogFileName);
   ASSERT_TRUE(data_from_log_file.find(kTestLogMessage) != std::string::npos);
 }
