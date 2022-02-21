@@ -51,7 +51,7 @@ class FileLogger : public IFileLogger {
  public:
   FileLogger() {};
   ~FileLogger() = default;
-  void LogMessage(const char*, ...) override {};
+  void LogMessage(std::string& message, LogLevelType) override {};
 
  private:
   std::unique_ptr<ILogsFileAccessGuard> logs_file_access_guard_;

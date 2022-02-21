@@ -40,12 +40,16 @@
 #ifndef SOURCE_EQUINOXLOGGER_IFILE_LOGGER_H_
 #define SOURCE_EQUINOXLOGGER_IFILE_LOGGER_H_
 
+#include <string>
+
+#include "Log-Level-Type.h"
+
 namespace equinox_logger {
 
 class IFileLogger {
  public:
   virtual ~IFileLogger() = default;
-  virtual void LogMessage(const char*, ...) = 0;
+  virtual void LogMessage(std::string& message, LogLevelType) = 0;
 };
 
 } /*namespace equinox_logger*/

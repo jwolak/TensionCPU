@@ -41,9 +41,6 @@
 #define SOURCE_EQUINOXLOGGER_ICONSOLE_LOGGER_H_
 
 #include <string>
-#include <cstdlib>
-#include <cstdarg>
-#include <cstdio>
 
 #include "Log-Level-Type.h"
 

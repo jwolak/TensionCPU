@@ -48,12 +48,11 @@
 #include "../EquinoxLogger/Logger-Level.h"
 #include "../EquinoxLogger/Logger-Output.h"
 
-#define LOG_ERROR(x, ...)     equinox_logger::Logger::GetInstance()->Error(x, __VA_ARGS__)
-#define LOG_WARNING(x, ...)   equinox_logger::Logger::GetInstance()->Warning(x, __VA_ARGS__)
-#define LOG_DEBUG(x, ...)     equinox_logger::Logger::GetInstance()->Debug(x, __VA_ARGS__)
+#define LOG_ERROR(x, ...)     equinox_logger::Logger::GetInstance()->LogMessageWithLevelType(equinox_logger::LogLevelType::LOG_LEVEL_ERROR, x, __VA_ARGS__)
+#define LOG_WARNING(x, ...)   equinox_logger::Logger::GetInstance()->LogMessageWithLevelType(equinox_logger::LogLevelType::LOG_LEVEL_WARNING, x, __VA_ARGS__)
+#define LOG_DEBUG(x, ...)     equinox_logger::Logger::GetInstance()->LogMessageWithLevelType(equinox_logger::LogLevelType::LOG_LEVEL_DEBUG, x, __VA_ARGS__)
 
 #define SET_LOG_LEVEL(x)  equinox_logger::Logger::GetInstance()->SetLoggingLevel(x)
-
 #define SET_LOG_LOGGER_OUTPUT(x) equinox_logger::Logger::GetInstance()->SetLoggingOutput(x)
 
 namespace equinox_logger {
@@ -62,15 +61,13 @@ class Logger {
  public:
   void SetLoggingLevel(LogLevelType);
   void SetLoggingOutput(LogOutputType);
-
-  void Error(const char*, ...);
-  void Warning(const char*, ...);
-  void Debug(const char*, ...);
+  void LogMessageWithLevelType(LogLevelType, const char*, ...);
 
  public:
   static Logger* GetInstance();
 
-  Logger(Logger &object_logger) = delete;   /* no clone */
+  Logger(Logger &object_logger) = delete;   /* no clone/copy */
+  Logger(Logger &&object_logger) = delete;  /* no move */
   void operator=(const Logger &) = delete;  /* no copy assign */
 
  protected:
