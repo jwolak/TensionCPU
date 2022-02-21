@@ -40,5 +40,5 @@
 #include "../EquinoxLogger/Console-Logger.h"
 
 
-void equinox_logger::ConsoleLogger::LogMessage(std::string& message, equinox_logger::LogLevelType message_type) const {
+void equinox_logger::ConsoleLogger::LogMessage(equinox_logger::LogLevelType message_type, std::string& message) const {
 }

@@ -86,5 +86,25 @@ TEST_F(LoggerLevelTests, SetLoggingLevel_Sets_UNKNOWN_LOG_LEVEL_And_LOG_LEVEL_ER
   ASSERT_EQ(logger_level->log_level_type, equinox_logger::LogLevelType::LOG_LEVEL_ERROR);
 }
 
+TEST_F(LoggerLevelTests, Set_Logging_Level_Sets_To_DISABLE_LOG_And_GetLevel_Returns_DISABLE_LOG) {
+  logger_level->log_level_type = equinox_logger::LogLevelType::DISABLE_LOG;
+  ASSERT_EQ(logger_level->GetLevel(), equinox_logger::LogLevelType::DISABLE_LOG);
+}
+
+TEST_F(LoggerLevelTests, Set_Logging_Level_Sets_To_LOG_LEVEL_ERROR_And_GetLevel_Returns_LOG_LEVEL_ERROR) {
+  logger_level->log_level_type = equinox_logger::LogLevelType::LOG_LEVEL_ERROR;
+  ASSERT_EQ(logger_level->GetLevel(), equinox_logger::LogLevelType::LOG_LEVEL_ERROR);
+}
+
+TEST_F(LoggerLevelTests, Set_Logging_Level_Sets_To_LOG_LEVEL_WARNING_And_GetLevel_Returns_LOG_LEVEL_WARNING) {
+  logger_level->log_level_type = equinox_logger::LogLevelType::LOG_LEVEL_WARNING;
+  ASSERT_EQ(logger_level->GetLevel(), equinox_logger::LogLevelType::LOG_LEVEL_WARNING);
+}
+
+TEST_F(LoggerLevelTests, Set_Logging_Level_Sets_To_LOG_LEVEL_DEBUG_And_GetLevel_Returns_LOG_LEVEL_DEBUG) {
+  logger_level->log_level_type = equinox_logger::LogLevelType::LOG_LEVEL_DEBUG;
+  ASSERT_EQ(logger_level->GetLevel(), equinox_logger::LogLevelType::LOG_LEVEL_DEBUG);
+}
+
 } /*namespace test_logger_set_logging_level_tests*/
 

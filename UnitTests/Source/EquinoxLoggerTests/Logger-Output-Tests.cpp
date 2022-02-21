@@ -81,5 +81,20 @@ TEST_F(LoggerOutputTests, SetLoggingOutput_Sets_UNKNOWN_OUTPUT_And_FILE_AND_CONS
   ASSERT_EQ(logger_output->logger_output_type, equinox_logger::LogOutputType::FILE_AND_CONSOLE);
 }
 
+TEST_F(LoggerOutputTests, Set_Logger_Output_Type_To_Console_And_GetOutput_Returns_CONSOLE) {
+  logger_output->logger_output_type = equinox_logger::LogOutputType::CONSOLE;
+  ASSERT_EQ(logger_output->GetOutput(), equinox_logger::LogOutputType::CONSOLE);
+}
+
+TEST_F(LoggerOutputTests, Set_Logger_Output_Type_To_Console_And_GetOutput_Returns_FILE_LOG) {
+  logger_output->logger_output_type = equinox_logger::LogOutputType::FILE_LOG;
+  ASSERT_EQ(logger_output->GetOutput(), equinox_logger::LogOutputType::FILE_LOG);
+}
+
+TEST_F(LoggerOutputTests, Set_Logger_Output_Type_To_Console_And_GetOutput_Returns_FILE_AND_CONSOLE) {
+  logger_output->logger_output_type = equinox_logger::LogOutputType::FILE_AND_CONSOLE;
+  ASSERT_EQ(logger_output->GetOutput(), equinox_logger::LogOutputType::FILE_AND_CONSOLE);
+}
+
 } /*namespace test_logger_set_logging_output_tests*/
 

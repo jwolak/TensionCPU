@@ -81,11 +81,11 @@ class FileLoggerTests : public ::testing::Test {
 };
 
 TEST_F(FileLoggerTests, Call_LogMessage_And_No_Throw_Occurs) {
-  ASSERT_NO_THROW(file_logger->LogMessage(kTestLogMessage, equinox_logger::LogLevelType::LOG_LEVEL_ERROR));
+  ASSERT_NO_THROW(file_logger->LogMessage(equinox_logger::LogLevelType::LOG_LEVEL_ERROR, kTestLogMessage));
 }
 
 TEST_F(FileLoggerTests, Log_Message_To_File_And_Message_Is_Placed_In_The_File_Successfully) {
-  file_logger->LogMessage(kTestLogMessage, equinox_logger::LogLevelType::LOG_LEVEL_ERROR);
+  file_logger->LogMessage(equinox_logger::LogLevelType::LOG_LEVEL_ERROR, kTestLogMessage);
   std::string data_from_log_file = ReadDataFromLogFile(kLogFileName);
   ASSERT_TRUE(data_from_log_file.find(kTestLogMessage) != std::string::npos);
 }

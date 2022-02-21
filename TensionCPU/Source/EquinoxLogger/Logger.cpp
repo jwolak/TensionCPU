@@ -66,15 +66,15 @@ void equinox_logger::Logger::LogMessageWithLevelType(equinox_logger::LogLevelTyp
 
     switch (logger_output_->GetOutput()) {
       case equinox_logger::LogOutputType::CONSOLE:
-        console_logger_->LogMessage(log_message_buffer, log_message_level);
+        console_logger_->LogMessage(log_message_level, log_message_buffer);
         break;
       case equinox_logger::LogOutputType::FILE_LOG:
-        file_logger_->LogMessage(log_message_buffer, log_message_level);
+        file_logger_->LogMessage(log_message_level, log_message_buffer);
         break;
       case equinox_logger::LogOutputType::FILE_AND_CONSOLE:
       default:
-        console_logger_->LogMessage(log_message_buffer, log_message_level);
-        file_logger_->LogMessage(log_message_buffer, log_message_level);
+        console_logger_->LogMessage(log_message_level, log_message_buffer);
+        file_logger_->LogMessage(log_message_level, log_message_buffer);
         break;
     }
 
