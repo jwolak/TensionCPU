@@ -79,6 +79,10 @@ class LoggerLogMessageMacrosTests : public ::testing::Test {
   void RedirectFromBufferToStandarOutput() {
     std::cout.rdbuf(cout_strbuf);
   }
+
+  void SetUp() override {
+    SET_LOG_LEVEL(equinox_logger::LogLevelType::LOG_LEVEL_DEBUG);
+  }
 };
 
 
@@ -109,7 +113,7 @@ TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_ERROR_With_Integer_Number_To_
 
 TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_WARNING_To_Console_And_It_Is_Successfully) {
   RedirectStandarOutputToBuffer(string_stream_output);
-  LOG_WARNING("%s", kTestLogMessage);
+  LOG_WARNING("%s", kTestLogMessage.c_str());
   RedirectFromBufferToStandarOutput();
 
   ASSERT_TRUE(string_stream_output.str().find(kTestLogMessage) != std::string::npos);
@@ -154,7 +158,6 @@ TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_DEBUG_With_Integer_Number_To_
 
   ASSERT_TRUE(string_stream_output.str().find(std::to_string(kNumberInt)) != std::string::npos);
 }
-
 
 } /*namespace logger_log_macros_tests*/
 
