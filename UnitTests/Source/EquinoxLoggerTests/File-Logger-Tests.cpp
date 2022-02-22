@@ -53,16 +53,17 @@ namespace file_logger_tests {
 
 namespace {
 std::string kTestLogMessage = "Test log message";
-const std::string kLogFileName = "logs.log";
 }
 
 class FileLoggerTests : public ::testing::Test {
  public:
   FileLoggerTests()
       :
-      file_logger(new equinox_logger::FileLogger) {
+      logger_time(new equinox_logger::LoggerTime),
+      file_logger(new equinox_logger::FileLogger(logger_time)) {
   }
 
+  std::shared_ptr<equinox_logger::ILoggerTime> logger_time;
   std::unique_ptr<equinox_logger::IFileLogger> file_logger;
 
   std::string ReadDataFromLogFile(const std::string &file_name) {
@@ -78,6 +79,10 @@ class FileLoggerTests : public ::testing::Test {
 
     return buffer;
   }
+
+  void TearDown() override {
+    std::remove(equinox_logger::kLogFileName.c_str());
+  }
 };
 
 TEST_F(FileLoggerTests, Call_LogMessage_And_No_Throw_Occurs) {
@@ -86,7 +91,8 @@ TEST_F(FileLoggerTests, Call_LogMessage_And_No_Throw_Occurs) {
 
 TEST_F(FileLoggerTests, Log_Message_To_File_And_Message_Is_Placed_In_The_File_Successfully) {
   file_logger->LogMessage(equinox_logger::LogLevelType::LOG_LEVEL_ERROR, kTestLogMessage);
-  std::string data_from_log_file = ReadDataFromLogFile(kLogFileName);
+  std::string data_from_log_file = ReadDataFromLogFile(equinox_logger::kLogFileName);
+
   ASSERT_TRUE(data_from_log_file.find(kTestLogMessage) != std::string::npos);
 }
 

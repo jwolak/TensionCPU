@@ -148,7 +148,7 @@ TEST_F(LoggerEnableLogLevelsMacrosTests, Enable_WARNING_Log_And_ERROR_Message_Is
 
 TEST_F(LoggerEnableLogLevelsMacrosTests, Enable_WARNING_Log_And_DEBUG_Message_Is_NOT_Printed) {
   RedirectStandarOutputToBuffer(string_stream_output);
-  SET_LOG_LEVEL(equinox_logger::LogLevelType::LOG_LEVEL_DEBUG);
+  SET_LOG_LEVEL(equinox_logger::LogLevelType::LOG_LEVEL_WARNING);
   LOG_DEBUG("%s", kTestLogMessage);
   RedirectFromBufferToStandarOutput();
 

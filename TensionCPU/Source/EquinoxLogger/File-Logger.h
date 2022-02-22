@@ -41,20 +41,35 @@
 #define SOURCE_EQUINOXLOGGER_FILE_LOGGER_H_
 
 #include <memory>
+#include <fstream>
+#include <sstream>
+#include <iostream>
 
 #include "../EquinoxLogger/IFile-Logger.h"
 #include "../EquinoxLogger/ILogs-File-Access-Guard.h"
 
+#include "../EquinoxLogger/Logger-Time.h"
+
 namespace equinox_logger {
+
+const std::string kLogFileName = "logs.log";
 
 class FileLogger : public IFileLogger {
  public:
-  FileLogger() {};
-  ~FileLogger() = default;
-  void LogMessage(LogLevelType, std::string& message) const override {};
+  FileLogger(std::shared_ptr<ILoggerTime> logger_time)
+      :
+      logger_time_ { logger_time },
+      fd_log_file_ { kLogFileName.c_str(), std::ios::out | std::ios::app } {
+  }
+  ~FileLogger() {
+    fd_log_file_.close();
+  }
+  void LogMessage(LogLevelType, std::string &message) override;
 
  private:
   std::unique_ptr<ILogsFileAccessGuard> logs_file_access_guard_;
+  std::shared_ptr<ILoggerTime> logger_time_;
+  std::ofstream fd_log_file_;
 };
 
 } /*namespace equinox_logger*/

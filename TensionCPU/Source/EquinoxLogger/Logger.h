@@ -76,7 +76,7 @@ class Logger {
       logger_level_(new LoggerLevel),
       logger_output_(new LoggerOutput),
       logger_time_ (new LoggerTime),
-      file_logger_(new FileLogger),
+      file_logger_(new FileLogger(logger_time_)),
       console_logger_(new ConsoleLogger(logger_time_)) {
   }
 

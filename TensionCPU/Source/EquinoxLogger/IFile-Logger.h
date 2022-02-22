@@ -49,7 +49,7 @@ namespace equinox_logger {
 class IFileLogger {
  public:
   virtual ~IFileLogger() = default;
-  virtual void LogMessage(LogLevelType, std::string& message) const = 0;
+  virtual void LogMessage(LogLevelType, std::string& message) = 0;
 };
 
 } /*namespace equinox_logger*/
