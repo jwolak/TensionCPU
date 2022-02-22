@@ -46,7 +46,7 @@ namespace equinox_logger {
 
 const std::string kErrorMessageHeader = " [ERROR]: ";
 const std::string kWarningMessageHeader = " [WARNING]: ";
-const std::string kErrorDebugHeader = " [DEBUG]: ";
+const std::string kDebugMessageHeader = " [DEBUG]: ";
 
 enum class LogLevelType {
   DISABLE_LOG       = 1,

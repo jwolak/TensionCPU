@@ -51,7 +51,7 @@ void equinox_logger::ConsoleLogger::LogMessage(equinox_logger::LogLevelType mess
       t_log_message = logger_time_->GetTimestamp() +  kWarningMessageHeader + message;
       break;
     case equinox_logger::LogLevelType::LOG_LEVEL_DEBUG:
-      t_log_message = logger_time_->GetTimestamp() +  kErrorDebugHeader + message;
+      t_log_message = logger_time_->GetTimestamp() +  kDebugMessageHeader + message;
       break;
   }
 

@@ -49,7 +49,7 @@ void equinox_logger::FileLogger::LogMessage(LogLevelType message_type, std::stri
       t_log_message = logger_time_->GetTimestamp() +  kWarningMessageHeader + message;
       break;
     case equinox_logger::LogLevelType::LOG_LEVEL_DEBUG:
-      t_log_message = logger_time_->GetTimestamp() +  kErrorDebugHeader + message;
+      t_log_message = logger_time_->GetTimestamp() +  kDebugMessageHeader + message;
       break;
   }
 

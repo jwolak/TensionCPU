@@ -48,9 +48,6 @@ namespace logger_log_macros_tests{
 
 namespace {
 const std::string kTestLogMessage = "Test log message ";
-const std::string kErrorHeader = "ERROR";
-const std::string kWarningHeader = "WARNING";
-const std::string kDebugHeader = "DEBUG";
 
 const int kNumberInt = 3;
 const std::string kMessageWithTypeIntSpecificator = kTestLogMessage + "%d";
@@ -83,6 +80,10 @@ class LoggerLogMessageMacrosTests : public ::testing::Test {
   void SetUp() override {
     SET_LOG_LEVEL(equinox_logger::LogLevelType::LOG_LEVEL_DEBUG);
   }
+
+  void TearDown() override {
+    std::remove(equinox_logger::kLogFileName.c_str());
+  }
 };
 
 
@@ -100,7 +101,7 @@ TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_ERROR_To_Console_And_ERROR_He
   LOG_ERROR("%s", kTestLogMessage.c_str());
   RedirectFromBufferToStandarOutput();
 
-  ASSERT_TRUE(string_stream_output.str().find(kErrorHeader) != std::string::npos);
+  ASSERT_TRUE(string_stream_output.str().find(equinox_logger::kErrorMessageHeader) != std::string::npos);
 }
 
 TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_ERROR_With_Integer_Number_To_Console_And_It_Is_Placed_Successfull) {
@@ -124,7 +125,7 @@ TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_WARNING_To_Console_And_WARNIN
   LOG_WARNING("%s", kTestLogMessage.c_str());
   RedirectFromBufferToStandarOutput();
 
-  ASSERT_TRUE(string_stream_output.str().find(kWarningHeader) != std::string::npos);
+  ASSERT_TRUE(string_stream_output.str().find(equinox_logger::kWarningMessageHeader) != std::string::npos);
 }
 
 TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_WARNING_With_Integer_Number_To_Console_And_It_Is_Placed_Successfull) {
@@ -148,7 +149,7 @@ TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_DEBUG_To_Console_And_DEBUG_He
   LOG_DEBUG("%s", kTestLogMessage.c_str());
   RedirectFromBufferToStandarOutput();
 
-  ASSERT_TRUE(string_stream_output.str().find(kDebugHeader) != std::string::npos);
+  ASSERT_TRUE(string_stream_output.str().find(equinox_logger::kDebugMessageHeader) != std::string::npos);
 }
 
 TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_DEBUG_With_Integer_Number_To_Console_And_It_Is_Placed_Successfull) {
