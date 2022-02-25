@@ -37,8 +37,16 @@
  *
  */
 
+#include "Logger.h"
 
 int main(void) {
+
+  SET_LOG_LEVEL(equinox_logger::LogLevelType::LOG_LEVEL_DEBUG);
+  SET_LOG_LOGGER_OUTPUT(equinox_logger::LogOutputType::FILE_AND_CONSOLE);
+
+  LOG_ERROR("%s", "Test log");
+  LOG_WARNING("%s %d %f", "Values: ", 4, 3.5f);
+  LOG_DEBUG("Debug text: %f %s", 4.5, "post debug text");
 
 	return 0;
 }

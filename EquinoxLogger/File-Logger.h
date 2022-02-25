@@ -1,5 +1,5 @@
 /*
- * Logs-File-Access-Guard.h
+ * File-Logger.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,27 +37,38 @@
  *
  */
 
-#ifndef SOURCE_EQUINOXLOGGER_LOGS_FILE_ACCESS_GUARD_H_
-#define SOURCE_EQUINOXLOGGER_LOGS_FILE_ACCESS_GUARD_H_
+#ifndef SOURCE_EQUINOXLOGGER_FILE_LOGGER_H_
+#define SOURCE_EQUINOXLOGGER_FILE_LOGGER_H_
 
-#include <pthread.h>
+#include <memory>
+#include <fstream>
+#include <sstream>
+#include <iostream>
 
-#include "../EquinoxLogger/ILogs-File-Access-Guard.h"
+#include "../EquinoxLogger/IFile-Logger.h"
+#include "../EquinoxLogger/Logger-Time.h"
 
 namespace equinox_logger {
 
-class LogsFileAccessGuard : public ILogsFileAccessGuard {
+const std::string kLogFileName = "logs.log";
+
+class FileLogger : public IFileLogger {
  public:
-  LogsFileAccessGuard(){};
-  ~LogsFileAccessGuard(){};
-  void EnableAccessGuard(){};
-  void DisableAccessGuard(){};
+  FileLogger(std::shared_ptr<ILoggerTime> logger_time)
+      :
+      logger_time_ { logger_time },
+      fd_log_file_ { kLogFileName.c_str(), std::ios::out | std::ios::app } {
+  }
+  ~FileLogger() {
+    fd_log_file_.close();
+  }
+  void LogMessage(LogLevelType, std::string &message) override;
 
  private:
-  pthread_mutexattr_t     mutex_attr_t;
-  pthread_mutex_t         mutex_t;
+  std::shared_ptr<ILoggerTime> logger_time_;
+  std::ofstream fd_log_file_;
 };
 
 } /*namespace equinox_logger*/
 
-#endif /* SOURCE_EQUINOXLOGGER_LOGS_FILE_ACCESS_GUARD_H_ */
+#endif /* SOURCE_EQUINOXLOGGER_FILE_LOGGER_H_ */

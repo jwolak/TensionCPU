@@ -44,6 +44,7 @@
 
 #include "../../../TensionCPU/Source/EquinoxLogger/Logger.cpp"
 
+
 namespace logger_log_macros_tests{
 
 namespace {
@@ -84,16 +85,33 @@ class LoggerLogMessageMacrosTests : public ::testing::Test {
   void TearDown() override {
     std::remove(equinox_logger::kLogFileName.c_str());
   }
+
+  std::string ReadDataFromLogFile(const std::string &file_name) {
+    std::ifstream log_file;
+    log_file.open(file_name);
+    std::string buffer;
+
+    if (log_file.is_open()) {
+      while (log_file) {
+        buffer += log_file.get();
+      }
+    }
+
+    return buffer;
+  }
+
 };
 
 
-TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_ERROR_To_Console_And_It_Is_Successfully) {
+TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_ERROR_To_Console_And_File_And_It_Is_Successfully) {
   RedirectStandarOutputToBuffer(string_stream_output);
   LOG_ERROR("%s", kTestLogMessage.c_str());
   RedirectFromBufferToStandarOutput();
 
   /*ASSERT_EQ(string_stream_output.str(), kTestLogMessage);*/
   ASSERT_TRUE(string_stream_output.str().find(kTestLogMessage) != std::string::npos);
+  std::string data_from_log_file = ReadDataFromLogFile(equinox_logger::kLogFileName);
+  ASSERT_TRUE(data_from_log_file.find(kTestLogMessage) != std::string::npos);
 }
 
 TEST_F(LoggerLogMessageMacrosTests, Log_Message_As_ERROR_To_Console_And_ERROR_Header_Is_Placed_Successfull) {

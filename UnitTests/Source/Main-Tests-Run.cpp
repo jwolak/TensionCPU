@@ -8,7 +8,6 @@
 #include "EquinoxLoggerTests/Logger-Level-Tests.cpp"
 #include "EquinoxLoggerTests/Logger-Output-Tests.cpp"
 #include "EquinoxLoggerTests/Logger-Log-Message-Macros-Tests.cpp"
-#include "EquinoxLoggerTests/Logs-File-Access-Guard-Tests.cpp"
 #include "EquinoxLoggerTests/Logger-Enable-Log-Levels-Macros-Tests.cpp"
 
 int main(int argc, char **argv) {
