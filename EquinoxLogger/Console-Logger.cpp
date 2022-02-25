@@ -42,6 +42,7 @@
 #include <iostream>
 
 void equinox_logger::ConsoleLogger::LogMessage(equinox_logger::LogLevelType message_type, std::string& message) const {
+
   std::string t_log_message;
   switch (message_type) {
     case equinox_logger::LogLevelType::LOG_LEVEL_ERROR:

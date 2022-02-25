@@ -57,6 +57,12 @@ TensionCPU/Build/CMakeFiles/
 TensionCPU/Build/Makefile
 TensionCPU/Build/cmake_install.cmake
 
+EquinoxLogger/Build/CMakeCache.txt
+EquinoxLogger/Build/CMakeFiles/
+EquinoxLogger/Build/Makefile
+EquinoxLogger/Build/cmake_install.cmake
+EquinoxLogger/Build/*.a
+
 UnitTests/Build/CMakeCache.txt
 UnitTests/Build/CMakeFiles/
 UnitTests/Build/Makefile

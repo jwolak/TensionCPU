@@ -39,17 +39,17 @@
 
 #include "../EquinoxLogger/File-Logger.h"
 
-void equinox_logger::FileLogger::LogMessage(LogLevelType message_type, std::string& message) {
+void equinox_logger::FileLogger::LogMessage(LogLevelType message_type, std::string &message) {
   std::string t_log_message;
   switch (message_type) {
     case equinox_logger::LogLevelType::LOG_LEVEL_ERROR:
-      t_log_message = logger_time_->GetTimestamp() +  kErrorMessageHeader + message;
+      t_log_message = logger_time_->GetTimestamp() + kErrorMessageHeader + message;
       break;
     case equinox_logger::LogLevelType::LOG_LEVEL_WARNING:
-      t_log_message = logger_time_->GetTimestamp() +  kWarningMessageHeader + message;
+      t_log_message = logger_time_->GetTimestamp() + kWarningMessageHeader + message;
       break;
     case equinox_logger::LogLevelType::LOG_LEVEL_DEBUG:
-      t_log_message = logger_time_->GetTimestamp() +  kDebugMessageHeader + message;
+      t_log_message = logger_time_->GetTimestamp() + kDebugMessageHeader + message;
       break;
   }
 

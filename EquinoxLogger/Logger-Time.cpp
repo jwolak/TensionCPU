@@ -43,6 +43,7 @@
 #include <ctime>
 
 std::string equinox_logger::LoggerTime::GetTimestamp() const {
+
   std::chrono::system_clock::time_point sys_clock_time_point;
 
   sys_clock_time_point = std::chrono::system_clock::now();

@@ -42,6 +42,9 @@
 #include <cstdlib>
 #include <cstdarg>
 #include <cstdio>
+#include <cstdint>
+
+const int32_t kLogMessageBufferSize = 255;
 
 equinox_logger::Logger *equinox_logger::Logger::logger_instance_ { nullptr };
 std::mutex equinox_logger::Logger::logger_instance_mutex_;
@@ -60,7 +63,7 @@ void equinox_logger::Logger::LogMessageWithLevelType(equinox_logger::LogLevelTyp
 
     va_list argp;
     std::string log_message_buffer;
-    char msg_buffer [255];
+    char msg_buffer [kLogMessageBufferSize];
 
     va_start(argp, format);
     vsnprintf(msg_buffer, sizeof(msg_buffer), format, argp);

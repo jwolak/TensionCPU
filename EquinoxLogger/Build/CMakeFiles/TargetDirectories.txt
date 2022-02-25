@@ -1,3 +1,0 @@
-/home/janusz/Documents/TensionCPU/EquinoxLogger/Build/CMakeFiles/edit_cache.dir
-/home/janusz/Documents/TensionCPU/EquinoxLogger/Build/CMakeFiles/rebuild_cache.dir
-/home/janusz/Documents/TensionCPU/EquinoxLogger/Build/CMakeFiles/EquinoxLogger.dir
