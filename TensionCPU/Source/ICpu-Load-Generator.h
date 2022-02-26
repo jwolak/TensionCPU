@@ -1,5 +1,5 @@
 /*
- * TensionCpu.cpp
+ * ICpu-Load-Generator.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,12 +37,19 @@
  *
  */
 
-#include "Tension-Cpu.h"
+#ifndef SOURCE_ICPU_LOAD_GENERATOR_H_
+#define SOURCE_ICPU_LOAD_GENERATOR_H_
 
-#include "Logger.h"
+namespace tension_cpu {
 
-bool tension_cpu::TensionCpu::ParseCmdArguments(int argc, const char* argv[]) {
+class ICpuLoadGenerator {
+ public:
+  virtual ~ICpuLoadGenerator() = default;
+  virtual void Start() = 0;
+};
 
-  LOG_DEBUG("%s, Line: %d, File: %s", "Arguments parsed successfully", __LINE__, __FILE__);
-  return true;
-}
+} /*namespace tension_cpu*/
+
+
+
+#endif /* SOURCE_ICPU_LOAD_GENERATOR_H_ */

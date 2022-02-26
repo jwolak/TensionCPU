@@ -1,5 +1,5 @@
 /*
- * TensionCpu.cpp
+ * Cpu-Load-Generator.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,12 +37,6 @@
  *
  */
 
-#include "Tension-Cpu.h"
 
-#include "Logger.h"
 
-bool tension_cpu::TensionCpu::ParseCmdArguments(int argc, const char* argv[]) {
 
-  LOG_DEBUG("%s, Line: %d, File: %s", "Arguments parsed successfully", __LINE__, __FILE__);
-  return true;
-}

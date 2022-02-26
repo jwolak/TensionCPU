@@ -1,5 +1,5 @@
 /*
- * TensionCpu.cpp
+ * Cpu-Load-Generator.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,12 +37,11 @@
  *
  */
 
-#include "Tension-Cpu.h"
+#ifndef SOURCE_CPU_LOAD_GENERATOR_H_
+#define SOURCE_CPU_LOAD_GENERATOR_H_
 
-#include "Logger.h"
+namespace tension_cpu {
 
-bool tension_cpu::TensionCpu::ParseCmdArguments(int argc, const char* argv[]) {
+} /*namespace tension_cpu*/
 
-  LOG_DEBUG("%s, Line: %d, File: %s", "Arguments parsed successfully", __LINE__, __FILE__);
-  return true;
-}
+#endif /* SOURCE_CPU_LOAD_GENERATOR_H_ */
