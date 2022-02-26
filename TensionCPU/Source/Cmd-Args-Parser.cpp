@@ -1,5 +1,5 @@
 /*
- * ICmd-Arguments.h
+ * Cmd-Args-Parser.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,17 +37,6 @@
  *
  */
 
-#ifndef SOURCE_ICMD_ARGUMENTS_H_
-#define SOURCE_ICMD_ARGUMENTS_H_
 
-namespace tension_cpu {
 
-class ICmdArguments {
- public:
-  virtual ~ICmdArguments() = default;
-  virtual bool ProcessArguments(int, const char*[]) = 0;
-};
 
-} /*namespace tension_cpu*/
-
-#endif /* SOURCE_ICMD_ARGUMENTS_H_ */

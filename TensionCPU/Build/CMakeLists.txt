@@ -9,16 +9,19 @@ add_executable(TensionCPU.x86
 ${SOURCE_FILES_DIR}/main.cpp
 
 #interfaces
+
 ${SOURCE_FILES_DIR}/ITension-Cpu.h
-${SOURCE_FILES_DIR}/ICmd-Arguments.h
+${SOURCE_FILES_DIR}/ICmd-Args-Parser.h
 
 #headers
 ${SOURCE_FILES_DIR}/Tension-Cpu.h
-${SOURCE_FILES_DIR}/ICmd-Arguments.h
+${SOURCE_FILES_DIR}/Cmd-Arguments.h
+${SOURCE_FILES_DIR}/Cmd-Args-Parser.h
 
 #source
 ${SOURCE_FILES_DIR}/Tension-Cpu.cpp
-${SOURCE_FILES_DIR}/ICmd-Arguments.h
+${SOURCE_FILES_DIR}/Cmd-Arguments.cpp
+${SOURCE_FILES_DIR}/Cmd-Args-Parser.cpp
 
 )
 

@@ -1,5 +1,5 @@
 /*
- * Cmd-Arguments.h
+ * Cmd-Args-Parser.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,31 +37,29 @@
  *
  */
 
-#ifndef SOURCE_CMD_ARGUMENTS_H_
-#define SOURCE_CMD_ARGUMENTS_H_
+#ifndef SOURCE_CMD_ARGS_PARSER_H_
+#define SOURCE_CMD_ARGS_PARSER_H_
 
-#include <cstdint>
-#include <sched.h>
+#include "ICmd-Args-Parser.h"
+
+#include <memory>
+
+#include "Cmd-Arguments.h"
 
 namespace tension_cpu {
 
-class CmdArguments {
+class CmdArgsParser : public ICmdArgsParser {
  public:
-  CmdArguments()
-      :
-      scheduling_nice_priotity { 0 },
-      scheduling_policy { SCHED_RR },
-      cpu_load { 100 } {
+  CmdArgsParser(std::shared_ptr<CmdArguments> cmd_arguments) : cmd_arguments_{cmd_arguments} {
   }
-  bool ProcessArguments(int, const char*[]) {
-  }
+  bool ProcessArguments(int, const char*[]) override {};
 
- public:
-  int32_t scheduling_nice_priotity;
-  int32_t scheduling_policy;
-  int32_t cpu_load;
+ private:
+  std::shared_ptr<CmdArguments> cmd_arguments_;
+
 };
 
 } /*namespace tension_cpu*/
 
-#endif /* SOURCE_CMD_ARGUMENTS_H_ */
+
+#endif /* SOURCE_CMD_ARGS_PARSER_H_ */

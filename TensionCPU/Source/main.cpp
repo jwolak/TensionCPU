@@ -37,18 +37,56 @@
  *
  */
 
+#include <memory>
+#include <csignal>
+#include <csetjmp>
+
+#include "Tension-Cpu.h"
 #include "Logger.h"
 
-int main(void) {
+static jmp_buf sigend_jmp_buf;
+
+static void __attribute__ ((noreturn)) sigend_handler(int sig) {
+  LOG_DEBUG("%s %d %s", "Signal", sig, "caught");
+  longjmp(sigend_jmp_buf, 1);
+}
+
+void catch_sigend(void (*handler)(int)) {
+#ifdef SIGINT
+  signal(SIGINT, handler);
+#endif
+#ifdef SIGTERM
+  signal(SIGTERM, handler);
+#endif
+#ifdef SIGHUP
+  signal(SIGHUP, handler);
+#endif
+}
+
+int main(int argc, const char *argv[]) {
 
   SET_LOG_LEVEL(equinox_logger::LogLevelType::LOG_LEVEL_DEBUG);
-  SET_LOG_LOGGER_OUTPUT(equinox_logger::LogOutputType::FILE_AND_CONSOLE);
 
-  LOG_ERROR("%s", "Test log");
-  LOG_WARNING("%s %d %f", "Values: ", 4, 3.5f);
-  LOG_DEBUG("Debug text: %f %s", 4.5, "post debug text");
+  std::unique_ptr<tension_cpu::ITensionCpu> tension_cpu(new tension_cpu::TensionCpu());
 
-	return 0;
+  catch_sigend(sigend_handler);
+  if (setjmp(sigend_jmp_buf)) {
+    tension_cpu->Stop();
+    exit(0);
+  }
+
+  if (true == tension_cpu->ParseCmdArguments(argc, argv)) {
+    LOG_DEBUG("%s", "Parsed cmd arguments successfully");
+    if (false == tension_cpu->Start()) {
+      LOG_ERROR("%s", "Start TesnsionCPU failed");
+      return EXIT_FAILURE;
+    }
+  } else {
+    LOG_ERROR("%s", "Parse cmd arguments failed");
+    return EXIT_FAILURE;
+  }
+
+  return 0;
 }
 
 

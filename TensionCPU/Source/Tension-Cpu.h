@@ -42,17 +42,30 @@
 
 #include "ITension-Cpu.h"
 
+#include <memory>
+
+#include "Cmd-Args-Parser.h"
 
 namespace tension_cpu {
 
 class TensionCpu : public ITensionCpu {
  public:
-  TensionCpu() {}
-  bool ParseCmdArguments(int argc, const char* argv[]) override;
-  bool Start() override {};
-  bool Stop() override {};
+  TensionCpu()
+      :
+      cmd_arguments_ { new CmdArguments },
+      cmd_arg_parser_ { new CmdArgsParser { cmd_arguments_ } } {
+  }
 
+  bool ParseCmdArguments(int argc, const char *argv[]) override;
+  bool Start() override {
+  }
 
+  bool Stop() override {
+  }
+
+ private:
+  std::shared_ptr<CmdArguments> cmd_arguments_;
+  std::unique_ptr<ICmdArgsParser> cmd_arg_parser_;
 };
 
 } /*namespace tension_cpu*/
