@@ -45,7 +45,8 @@ namespace tension_cpu {
 class ICmdArgsParser {
  public:
   virtual ~ICmdArgsParser() = default;
-  virtual bool ProcessArguments(int, const char*[]) = 0;
+  virtual bool ProcessArguments(int, char**) = 0;
+  virtual void PrintHelpMenu() = 0;
 };
 
 } /*namespace tension_cpu*/

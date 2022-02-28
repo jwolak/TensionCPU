@@ -1,5 +1,5 @@
 /*
- * Cmd-Arguments.h
+ * Cmd-Args-Parser-Tests.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,37 +37,31 @@
  *
  */
 
-#ifndef SOURCE_CMD_ARGUMENTS_H_
-#define SOURCE_CMD_ARGUMENTS_H_
+#include "../../../TensionCPU/Source/Cmd-Args-Parser.cpp"
 
-#include <cstdint>
-#include <sched.h>
+#include <gtest/gtest.h>
 
-namespace tension_cpu {
+#include <memory>
+#include <string>
 
-class CmdArguments {
+namespace cmd_args_parser_test {
+
+class CmdArgsParserTests : public ::testing::Test {
  public:
-  CmdArguments()
+  CmdArgsParserTests()
       :
-      scheduling_nice_priotity { 0 },
-      scheduling_policy { SCHED_RR },
-      cpu_load { 0 },
-      time { 0 },
-      peaks { 0 },
-      time_peaks { 0 } {
-  }
-  bool ProcessArguments(int, const char*[]) {
+      cmd_arguments { new tension_cpu::CmdArguments },
+      cmd_args_parser { new tension_cpu::CmdArgsParser { cmd_arguments } } {
   }
 
- public:
-  int32_t scheduling_nice_priotity;
-  int32_t scheduling_policy;
-  int32_t cpu_load;
-  int32_t time;
-  int32_t peaks;
-  int32_t time_peaks;
+  std::shared_ptr<tension_cpu::CmdArguments> cmd_arguments;
+  std::unique_ptr<tension_cpu::ICmdArgsParser> cmd_args_parser;
+
 };
 
-} /*namespace tension_cpu*/
+TEST_F(CmdArgsParserTests, Tets) {
+  cmd_args_parser->PrintHelpMenu();
+}
 
-#endif /* SOURCE_CMD_ARGUMENTS_H_ */
+} /*namespace cmd_args_parser_test*/
+

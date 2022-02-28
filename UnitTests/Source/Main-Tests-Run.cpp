@@ -12,6 +12,7 @@
 #include "EquinoxLoggerTests/Logger-Enable-Log-Levels-Macros-Tests.cpp"
 */
 #include "TensionCpuTests/TensionCpuTests.cpp"
+#include "TensionCpuTests/Cmd-Args-Parser-Tests.cpp"
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);

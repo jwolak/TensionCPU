@@ -43,6 +43,7 @@
 #include "ICmd-Args-Parser.h"
 
 #include <memory>
+#include <string>
 
 #include "Cmd-Arguments.h"
 
@@ -50,9 +51,13 @@ namespace tension_cpu {
 
 class CmdArgsParser : public ICmdArgsParser {
  public:
-  CmdArgsParser(std::shared_ptr<CmdArguments> cmd_arguments) : cmd_arguments_{cmd_arguments} {
+  CmdArgsParser(std::shared_ptr<CmdArguments> cmd_arguments)
+      :
+      cmd_arguments_ { cmd_arguments } {
   }
-  bool ProcessArguments(int, const char*[]) override {};
+  bool ProcessArguments(int, char **) override;
+
+  void PrintHelpMenu() override;
 
  private:
   std::shared_ptr<CmdArguments> cmd_arguments_;
