@@ -1,5 +1,5 @@
 /*
- * Cpu-Load-Generator.h
+ * Timer.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,19 +37,13 @@
  *
  */
 
-#ifndef SOURCE_CPU_LOAD_GENERATOR_H_
-#define SOURCE_CPU_LOAD_GENERATOR_H_
+#include "Timer.h"
 
-#include "ICpu-Load-Generator.h"
+#include "Logger.h"
 
-namespace tension_cpu {
+int32_t tension_cpu::Timer::next_id_ { 0 };
 
-class CpuLoadGenerator : public ICpuLoadGenerator {
- public:
-  CpuLoadGenerator() {}
-  void Start() override {};
-};
-
-} /*namespace tension_cpu*/
-
-#endif /* SOURCE_CPU_LOAD_GENERATOR_H_ */
+void tension_cpu::Timer::Start() {
+  thread_ = std::thread(&tension_cpu::Timer::threadTimerLoop, this);
+  LOG_DEBUG("Timer id: %d started", id_);
+}

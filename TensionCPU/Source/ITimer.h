@@ -1,5 +1,5 @@
 /*
- * Cpu-Load-Generator.h
+ * ITimer.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,19 +37,18 @@
  *
  */
 
-#ifndef SOURCE_CPU_LOAD_GENERATOR_H_
-#define SOURCE_CPU_LOAD_GENERATOR_H_
-
-#include "ICpu-Load-Generator.h"
+#ifndef SOURCE_ITIMER_H_
+#define SOURCE_ITIMER_H_
 
 namespace tension_cpu {
 
-class CpuLoadGenerator : public ICpuLoadGenerator {
+class ITimer {
  public:
-  CpuLoadGenerator() {}
-  void Start() override {};
+  virtual ~ITimer() = default;
+  virtual void Start() = 0;
+  virtual void Stop() = 0;
 };
 
 } /*namespace tension_cpu*/
 
-#endif /* SOURCE_CPU_LOAD_GENERATOR_H_ */
+#endif /* SOURCE_ITIMER_H_ */

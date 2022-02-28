@@ -1,5 +1,5 @@
 /*
- * Cpu-Load-Generator.h
+ * Timer.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,19 +37,63 @@
  *
  */
 
-#ifndef SOURCE_CPU_LOAD_GENERATOR_H_
-#define SOURCE_CPU_LOAD_GENERATOR_H_
+#ifndef SOURCE_TIMER_H_
+#define SOURCE_TIMER_H_
 
-#include "ICpu-Load-Generator.h"
+#include "ITimer.h"
+
+#include <iostream>
+#include <chrono>
+#include <thread>
+#include <functional>
+#include <mutex>
 
 namespace tension_cpu {
 
-class CpuLoadGenerator : public ICpuLoadGenerator {
+class Timer : public ITimer {
  public:
-  CpuLoadGenerator() {}
-  void Start() override {};
+  Timer(std::function<void(void)> callback_f, const std::chrono::seconds period)
+      :
+      callback_func_ { callback_f },
+      period_ { period },
+      thread_ { },
+      id_ { next_id_++ },
+      status_ { true },
+      mutex_ { } {
+  }
+
+  void Start() override;
+
+  void Stop() override {
+    std::lock_guard<std::mutex> lock(mutex_);
+    status_ = false;
+    thread_.join();
+  }
+
+ private:
+
+  void threadTimerLoop() {
+    while (GetStatus()) {
+      std::this_thread::sleep_for(period_);
+      callback_func_();
+    }
+  }
+
+  bool GetStatus() {
+    std::lock_guard<std::mutex> lock(mutex_);
+    return status_;
+  }
+
+  std::function<void(void)> callback_func_;
+  const std::chrono::seconds period_;
+  std::thread thread_;
+  int32_t id_;
+  static int32_t next_id_;
+  bool status_;
+  std::mutex mutex_;
+
 };
 
 } /*namespace tension_cpu*/
 
-#endif /* SOURCE_CPU_LOAD_GENERATOR_H_ */
+#endif /* SOURCE_TIMER_H_ */
