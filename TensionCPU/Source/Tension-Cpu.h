@@ -45,6 +45,9 @@
 #include <memory>
 
 #include "Cmd-Args-Parser.h"
+#include "Cpu-Load-Generator.h"
+#include "Timer.h"
+#include "Logger.h"
 
 namespace tension_cpu {
 
@@ -53,19 +56,37 @@ class TensionCpu : public ITensionCpu {
   TensionCpu()
       :
       cmd_arguments_ { new CmdArguments },
-      cmd_arg_parser_ { new CmdArgsParser { cmd_arguments_ } } {
-  }
+      cmd_arg_parser_ { new CmdArgsParser { cmd_arguments_ } },
+      cpu_load_generator_ {new CpuLoadGenerator { cmd_arguments_ } },
+      timer_ { new Timer {  std::bind(&tension_cpu::TensionCpu::StopLoadGeneratorAfterTimeout, this), cmd_arguments_->time } }
+      {}
 
   bool ParseCmdArguments(int argc, const char *argv[]) override;
+
   bool Start() override {
+    cpu_load_generator_->Start();
+    LOG_DEBUG("%s", "Load generator started");
+
+    return true;
   }
 
   bool Stop() override {
+    cpu_load_generator_->Stop();
+    LOG_DEBUG("%s", "Load generator stopped");
+    return true;
   }
 
  private:
   std::shared_ptr<CmdArguments> cmd_arguments_;
   std::unique_ptr<ICmdArgsParser> cmd_arg_parser_;
+  std::unique_ptr<CpuLoadGenerator> cpu_load_generator_;
+  std::unique_ptr<Timer> timer_;
+
+  void StopLoadGeneratorAfterTimeout(void) {
+    cpu_load_generator_->Stop();
+    LOG_DEBUG("%s", "Load generator stopped after timeout");
+  }
+
 };
 
 } /*namespace tension_cpu*/

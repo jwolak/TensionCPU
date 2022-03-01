@@ -45,7 +45,8 @@ namespace tension_cpu {
 class ICpuLoadGenerator {
  public:
   virtual ~ICpuLoadGenerator() = default;
-  virtual void Start() = 0;
+  virtual void Start(void) = 0;
+  virtual void Stop(void) = 0;
 };
 
 } /*namespace tension_cpu*/

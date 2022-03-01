@@ -42,6 +42,7 @@
 
 #include <cstdint>
 #include <sched.h>
+#include <chrono>
 
 namespace tension_cpu {
 
@@ -52,10 +53,9 @@ class CmdArguments {
       scheduling_nice_priotity { 0 },
       scheduling_policy { SCHED_RR },
       cpu_load { 0 },
-      time { 0 },
-      peaks { 0 },
-      time_peaks { 0 } {
+      time { 0 } {
   }
+
   bool ProcessArguments(int, const char*[]) {
   }
 
@@ -63,9 +63,7 @@ class CmdArguments {
   int32_t scheduling_nice_priotity;
   int32_t scheduling_policy;
   int32_t cpu_load;
-  int32_t time;
-  int32_t peaks;
-  int32_t time_peaks;
+  const std::chrono::seconds time;
 };
 
 } /*namespace tension_cpu*/

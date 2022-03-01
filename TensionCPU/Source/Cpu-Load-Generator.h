@@ -42,12 +42,26 @@
 
 #include "ICpu-Load-Generator.h"
 
+#include <memory>
+
+#include "Cmd-Arguments.h"
+
 namespace tension_cpu {
 
 class CpuLoadGenerator : public ICpuLoadGenerator {
  public:
-  CpuLoadGenerator() {}
-  void Start() override {};
+  CpuLoadGenerator(std::shared_ptr<CmdArguments> cmd_arguments)
+      :
+      cmd_arguments_ { cmd_arguments } {
+  }
+  void Start(void) override {
+  }
+
+  void Stop(void) override {
+  }
+
+ private:
+  std::shared_ptr<CmdArguments> cmd_arguments_;
 };
 
 } /*namespace tension_cpu*/

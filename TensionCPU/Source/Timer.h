@@ -52,7 +52,7 @@ namespace tension_cpu {
 
 class Timer : public ITimer {
  public:
-  Timer(std::function<void(void)> callback_f, const std::chrono::seconds period)
+  Timer(std::function<void(void)> callback_f , const std::chrono::seconds period)
       :
       callback_func_ { callback_f },
       period_ { period },
