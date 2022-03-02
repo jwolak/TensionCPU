@@ -45,7 +45,7 @@ namespace tension_cpu {
 class ICpuBenchmarker {
  public:
   virtual ~ICpuBenchmarker() = default;
-  virtual bool Start() = 0;
+  virtual void Start() = 0;
   virtual void SetLoadSlice(double) = 0;
   virtual double GetLoadSlice(void) = 0;
 };

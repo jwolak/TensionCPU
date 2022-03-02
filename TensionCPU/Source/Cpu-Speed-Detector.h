@@ -48,19 +48,71 @@
 
 namespace tension_cpu {
 
+#define  CALIBRATION_PERIOD   5
+
 class CpuSpeedDetector : public ICpuSpeedDetector {
  public:
   CpuSpeedDetector()
       :
       loops_per_second { 0 },
+      load_slice { 1.0 },
       cpu_benchmarker_ { new CpuBenchmarker } {
   }
   bool Start() override {
   }
+
   uint64_t GetLoopsPerSecond() override {
+/*    cpu_benchmarker_->GetLoadSlice();
+    cpu_benchmarker_->SetLoadSlice(load_slice);*/
+
+    uint64_t   loops;
+    time_t period;
+
+    printf ("calibrating cpu speed:");
+    fflush(stdout);
+
+    do
+    {
+       loops = 1000 * 1000;
+
+       while (loops)
+       {
+          uint64_t loop = 0;
+
+          period = time(NULL);
+          while (loop < loops)
+          {
+             /*cpu_load_slice();*/
+             cpu_benchmarker_->Start();
+             loop++;
+          }
+          period = time(NULL) - period;
+
+          if (period >= CALIBRATION_PERIOD)
+             break;
+          else if ( 0 == period )
+             loops *= 10;
+          else
+             loops *= 1 + CALIBRATION_PERIOD / period;
+       }
+
+       if ( loops )
+          break;
+       else {
+          /*s_slice *= 10.0;*/
+          load_slice = cpu_benchmarker_->GetLoadSlice();
+          cpu_benchmarker_->SetLoadSlice( load_slice * 10.0 );
+       }
+    } while ( 1 );
+
+    /*s_loops = loops / period;*/
+    loops_per_second = loops / period;
+    printf (" %llu loops per second\n", loops_per_second);
+
   }
 
   uint64_t loops_per_second;
+  double load_slice;
 
  private:
   std::unique_ptr<ICpuBenchmarker> cpu_benchmarker_;

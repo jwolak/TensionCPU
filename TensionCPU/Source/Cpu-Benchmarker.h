@@ -50,9 +50,15 @@ class CpuBenchmarker : public ICpuBenchmarker {
  public:
   CpuBenchmarker() : load_slice{ 1.0 } {}
 
-  bool Start() override {}
-  void SetLoadSlice(double) override {}
-  double GetLoadSlice(void) override {}
+  void Start() override {
+    double load = 1.0;
+    while (load < load_slice) {
+      load += 1.0;
+    }
+  }
+
+  void SetLoadSlice(double load_s) override { load_slice = load_s; }
+  double GetLoadSlice(void) override { return load_slice; }
 
  public:
   double load_slice;
