@@ -40,14 +40,17 @@
 #ifndef SOURCE_ICPU_BENCHMARKER_H_
 #define SOURCE_ICPU_BENCHMARKER_H_
 
+#include <cstdint>
+
 namespace tension_cpu {
 
 class ICpuBenchmarker {
  public:
   virtual ~ICpuBenchmarker() = default;
-  virtual void Start() = 0;
+  virtual void Run() = 0;
   virtual void SetLoadSlice(double) = 0;
   virtual double GetLoadSlice(void) = 0;
+  virtual void GenerateIdle(uint32_t&) = 0;
 };
 
 } /*namespace tension_cpu*/

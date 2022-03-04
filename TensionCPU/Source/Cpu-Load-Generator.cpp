@@ -37,6 +37,37 @@
  *
  */
 
+#include "Cpu-Load-Generator.h"
 
+
+void tension_cpu::CpuLoadGenerator::Start(void) {
+
+  uint32_t load = cmd_arguments_->cpu_load;
+
+  cpu_speed_detector_->Run();
+  const uint64_t slice = cpu_speed_detector_->GetLoopsPerSecond() / 100;
+
+  printf("generate %u%c cpu load\n", load, '%');
+
+  while (1) {
+    unsigned busy = (load ? load : (0 == (random() & 1) ? 100 : 50));
+    unsigned idle = 100 - busy;
+
+    while (busy || idle) {
+      if (busy) {
+        /* try to be produce load for 10 ms */
+        uint64_t loop = 0;
+        while (loop < slice) {
+          cpu_benchmarker_->Run();
+          loop++;
+        }
+        busy--;
+      }
+
+      cpu_benchmarker_->GenerateIdle(idle);
+    }
+  }
+
+}
 
 

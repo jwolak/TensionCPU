@@ -58,55 +58,11 @@ class CpuLoadGenerator : public ICpuLoadGenerator {
   CpuLoadGenerator(std::shared_ptr<CmdArguments> cmd_arguments)
       :
       cmd_arguments_ { cmd_arguments },
+      cpu_benchmarker_ {new CpuBenchmarker },
       cpu_speed_detector_ { new CpuSpeedDetector }
       {}
 
-  void Start(void) override {
-    /*cpu_speed_detector_->GetLoopsPerSecond();*/
-    /*cpu_benchmarker_->Start();*/
-
-    uint32_t load = cmd_arguments_->cpu_load;
-
-    const uint64_t slice = cpu_speed_detector_->GetLoopsPerSecond() / 100;/*s_loops / 100;*/
-    static const char show[] = "-\\|/";
-    unsigned stage = 0;
-
-    printf ("generate %u%c cpu load\n", load, '%');
-    while (1)
-    {
-       unsigned busy = (load ? load : (0 == (random() & 1) ? 100 : 50));
-       unsigned idle = 100 - busy;
-
-       printf("\r%c", show[stage]);
-       fflush(stdout);
-       if ( !show[++stage] )
-          stage = 0;
-
-       while (busy || idle)
-       {
-          if ( busy )
-          {
-             /* try to be produce load for 10 ms */
-             uint64_t loop = 0;
-             while (loop < slice)
-             {
-                /*cpu_load_slice();*/
-                cpu_benchmarker_->Start();
-                loop++;
-             }
-             busy--;
-          }
-
-          if ( idle )
-          {
-             /* sleeping for 10 ms */
-             usleep(10 * 1000);
-             idle--;
-          }
-       }
-    }
-
-  }
+  void Start(void) override;
 
   void Stop(void) override {
   }

@@ -42,23 +42,20 @@
 
 #include "ICpu-Benchmarker.h"
 
-#include <memory>
-
 namespace tension_cpu {
 
 class CpuBenchmarker : public ICpuBenchmarker {
  public:
-  CpuBenchmarker() : load_slice{ 1.0 } {}
-
-  void Start() override {
-    double load = 1.0;
-    while (load < load_slice) {
-      load += 1.0;
-    }
+  CpuBenchmarker()
+      :
+      load_slice { 1.0 } {
   }
 
-  void SetLoadSlice(double load_s) override { load_slice = load_s; }
-  double GetLoadSlice(void) override { return load_slice; }
+  void Run() override;
+
+  void SetLoadSlice(double load_s) override;
+  double GetLoadSlice(void) override;
+  void GenerateIdle(uint32_t&) override;
 
  public:
   double load_slice;

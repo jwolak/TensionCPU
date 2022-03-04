@@ -39,4 +39,29 @@
 
 #include "Cpu-Benchmarker.h"
 
+#include <unistd.h>
 
+void tension_cpu::CpuBenchmarker::Run() {
+  double load = 1.0;
+  while (load < load_slice) {
+    load += 1.0;
+  }
+}
+
+void tension_cpu::CpuBenchmarker::SetLoadSlice(double load_s) {
+  load_slice = load_s;
+}
+
+double tension_cpu::CpuBenchmarker::GetLoadSlice(void) {
+  return load_slice;
+}
+
+void tension_cpu::CpuBenchmarker::GenerateIdle(uint32_t& cpu_idle) {
+
+  if (cpu_idle > 0) {
+    /* sleeping for 10 ms */
+    usleep(10 * 1000);
+    cpu_idle--;
+  }
+
+}

@@ -58,13 +58,8 @@ class CpuSpeedDetector : public ICpuSpeedDetector {
       load_slice { 1.0 },
       cpu_benchmarker_ { new CpuBenchmarker } {
   }
-  bool Start() override {
-  }
 
-  uint64_t GetLoopsPerSecond() override {
-/*    cpu_benchmarker_->GetLoadSlice();
-    cpu_benchmarker_->SetLoadSlice(load_slice);*/
-
+  bool Run() override {
     uint64_t   loops;
     time_t period;
 
@@ -83,7 +78,7 @@ class CpuSpeedDetector : public ICpuSpeedDetector {
           while (loop < loops)
           {
              /*cpu_load_slice();*/
-             cpu_benchmarker_->Start();
+             cpu_benchmarker_->Run();
              loop++;
           }
           period = time(NULL) - period;
@@ -108,8 +103,9 @@ class CpuSpeedDetector : public ICpuSpeedDetector {
     /*s_loops = loops / period;*/
     loops_per_second = loops / period;
     printf (" %llu loops per second\n", loops_per_second);
-
   }
+
+  uint64_t GetLoopsPerSecond() override { return loops_per_second; }
 
   uint64_t loops_per_second;
   double load_slice;
