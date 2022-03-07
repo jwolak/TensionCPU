@@ -58,7 +58,7 @@ class TensionCpu : public ITensionCpu {
       cmd_arguments_ { new CmdArguments },
       cmd_arg_parser_ { new CmdArgsParser { cmd_arguments_ } },
       cpu_load_generator_ { new CpuLoadGenerator { cmd_arguments_ } },
-      timer_ { new Timer { std::bind(&tension_cpu::TensionCpu::StopLoadGeneratorAfterTimeout, this), cmd_arguments_->time } } {
+      timer_ { new Timer { std::bind(&tension_cpu::TensionCpu::StopLoadGeneratorAfterTimeout, this), cmd_arguments_->test_time } } {
   }
 
   bool ParseCmdArguments(int argc, char **argv) override;

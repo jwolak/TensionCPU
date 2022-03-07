@@ -44,7 +44,46 @@
 #include <memory>
 #include <string>
 
+#include <cstdlib>
+#include <cstdio>
+#include <iostream>
+
 namespace cmd_args_parser_test {
+
+namespace {
+const uint32_t kNumberOfArgumentsSetToZero  = 0;
+const uint32_t kNumberOfArgumentsSetToOne   = 1;
+const uint32_t kNumberOfArgumentsSetToTwo   = 2;
+const uint32_t kNumberOfArgumentsSetToThree = 3;
+const uint32_t kNumberOfArgumentsSetToFour  = 4;
+
+int32_t cpu_load_value = 90;
+int32_t test_time      = 10;
+
+char* kTestProgramName = (char*)"TestAppName";
+char* kEmptyCommandLineArgument[] = {kTestProgramName};
+char* kCpuLoadCommandLineArgument[] = {kTestProgramName, (char*)("-l " + std::to_string(cpu_load_value)).c_str()};
+char* kCpuLoadAndTestTimeCommandLineArguments[] = {kTestProgramName, (char*)("-l 90 -T " + std::to_string(test_time)).c_str()};
+char* kCpuLoadAndTestTimeAndSchedulingAlgorithCommandLineArguments[] = {kTestProgramName, (char*)"-l 90 -T 10 -S b"};
+char* kEnableHelpModeArgument[] = {kTestProgramName, (char*)"h"};
+
+char* kCpuLoadCommandLineArgumentWithoutValue[] = {kTestProgramName, (char*)"-l"};
+char* kTestTimeCommandLineArgumentWithoutValue[] = {kTestProgramName, (char*)"-l 90 -T"};
+char* kdSchedulingAlgorithCommandLineArgumentWithoutValue[] = {kTestProgramName, (char*)"-l 90 -T 10 -S"};
+
+char* kCpuLoadCommandLineArgumentMoreThan100[] = {kTestProgramName, (char*)"-l 101"};
+char* kCpuLoadCommandLineArgumentEqualZero[] = {kTestProgramName, (char*)"-l 0"};
+char* kCpuLoadCommandLineArgumentLowerThanlZero[] = {kTestProgramName, (char*)"-l -10"};
+
+char* kTestTimeCommandLineArgumentOverflowed[] = {kTestProgramName, (char*)"-l 90 -T 2147483648"};
+char* kTestTimeCommandLineArgumentWithNegativeValue[] = {kTestProgramName, (char*)"-l 90 -T -21"};
+
+char* kTestTimeCommandLineArgumentWithZeroValue[] = {kTestProgramName, (char*)"-l 90 -T 0"};
+
+char* kCommandLineArgumentsWithoutCpuLoad[] = {kTestProgramName, (char*)"-T 10"};
+
+char* kdSchedulingAlgorithCommandLineArgumentWithoWrongValue[] = {kTestProgramName, (char*)"-l 90 -T 10 -S z"};
+}
 
 class CmdArgsParserTests : public ::testing::Test {
  public:
@@ -59,8 +98,18 @@ class CmdArgsParserTests : public ::testing::Test {
 
 };
 
-TEST_F(CmdArgsParserTests, Tets) {
-  cmd_args_parser->PrintHelpMenu();
+TEST_F(CmdArgsParserTests, Process_Empty_CommandLine_Arguments_And_False_Returned) {
+  ASSERT_FALSE(cmd_args_parser->ProcessArguments(kNumberOfArgumentsSetToOne, kEmptyCommandLineArgument));
+}
+
+TEST_F(CmdArgsParserTests, Process_Load_Cpu_Argument_And_Cpu_Load_Value_In_CmdArguments_Is_Set) {
+  cmd_args_parser->ProcessArguments(kNumberOfArgumentsSetToTwo, kCpuLoadCommandLineArgument);
+  ASSERT_EQ(cpu_load_value, cmd_arguments->cpu_load);
+}
+
+TEST_F(CmdArgsParserTests, Process_Test_Time_Argument_And_Test_Time_In_CmdArguments_Is_Set) {
+  cmd_args_parser->ProcessArguments(kNumberOfArgumentsSetToThree, kCpuLoadAndTestTimeCommandLineArguments);
+  ASSERT_EQ(test_time, cmd_arguments->test_time.count());
 }
 
 } /*namespace cmd_args_parser_test*/

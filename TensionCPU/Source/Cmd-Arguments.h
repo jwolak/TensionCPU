@@ -53,7 +53,7 @@ class CmdArguments {
       scheduling_nice_priotity { 0 },
       scheduling_policy { SCHED_RR },
       cpu_load { 0 },
-      time { 0 } {
+      test_time { 0 } {
   }
 
   bool ProcessArguments(int, const char*[]) {
@@ -63,7 +63,7 @@ class CmdArguments {
   int32_t scheduling_nice_priotity;
   int32_t scheduling_policy;
   int32_t cpu_load;
-  const std::chrono::seconds time;
+  const std::chrono::seconds test_time;
 };
 
 } /*namespace tension_cpu*/
