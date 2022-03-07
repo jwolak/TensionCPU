@@ -63,7 +63,7 @@ void catch_sigend(void (*handler)(int)) {
 #endif
 }
 
-int main(int argc, const char *argv[]) {
+int main(int argc, char *argv[]) {
 
   SET_LOG_LEVEL(equinox_logger::LogLevelType::LOG_LEVEL_DEBUG);
 

@@ -45,7 +45,7 @@ namespace tension_cpu {
 class ITensionCpu {
  public:
   virtual ~ITensionCpu() = default;
-  virtual bool ParseCmdArguments(int, const char* []) = 0;
+  virtual bool ParseCmdArguments(int, char**) = 0;
   virtual bool Start() = 0;
   virtual bool Stop() = 0;
 };

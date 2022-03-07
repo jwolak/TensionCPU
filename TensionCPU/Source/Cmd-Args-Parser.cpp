@@ -94,12 +94,13 @@ bool tension_cpu::CmdArgsParser::ProcessArguments(int argc, char **argv) {
       break;
 
     case 'S':
-      sched_mode = atoi(optarg);
+      /*sched_mode = atoi(optarg);*/
       LOG_DEBUG("%s", "%d", "Scheduling mode set to: ", sched_mode );
       break;
 
     default:
       std::cout << kQuickHelpMenuPrint << std::endl;
+      return false;
     }
   }
 
