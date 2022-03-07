@@ -62,19 +62,8 @@ class TensionCpu : public ITensionCpu {
       {}
 
   bool ParseCmdArguments(int argc, const char *argv[]) override;
-
-  bool Start() override {
-    cpu_load_generator_->Start();
-    LOG_DEBUG("%s", "Load generator started");
-
-    return true;
-  }
-
-  bool Stop() override {
-    cpu_load_generator_->Stop();
-    LOG_DEBUG("%s", "Load generator stopped");
-    return true;
-  }
+  bool Start() override;
+  bool Stop() override;
 
  private:
   std::shared_ptr<CmdArguments> cmd_arguments_;
@@ -82,10 +71,7 @@ class TensionCpu : public ITensionCpu {
   std::unique_ptr<ICpuLoadGenerator> cpu_load_generator_;
   std::unique_ptr<ITimer> timer_;
 
-  void StopLoadGeneratorAfterTimeout(void) {
-    cpu_load_generator_->Stop();
-    LOG_DEBUG("%s", "Load generator stopped after timeout");
-  }
+  void StopLoadGeneratorAfterTimeout(void);
 
 };
 

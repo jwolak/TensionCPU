@@ -41,8 +41,27 @@
 
 #include "Logger.h"
 
-bool tension_cpu::TensionCpu::ParseCmdArguments(int argc, const char* argv[]) {
+bool tension_cpu::TensionCpu::ParseCmdArguments(int argc, const char *argv[]) {
 
   LOG_DEBUG("%s, Line: %d, File: %s", "Arguments parsed successfully", __LINE__, __FILE__);
   return true;
+}
+
+bool tension_cpu::TensionCpu::Start() {
+  cpu_load_generator_->Start();
+  LOG_DEBUG("%s", "Load generator started");
+
+  return true;
+}
+
+bool tension_cpu::TensionCpu::Stop() {
+  cpu_load_generator_->Stop();
+  LOG_DEBUG("%s", "Load generator stopped");
+
+  return true;
+}
+
+void tension_cpu::TensionCpu::StopLoadGeneratorAfterTimeout(void) {
+  cpu_load_generator_->Stop();
+  LOG_DEBUG("%s", "Load generator stopped after timeout");
 }

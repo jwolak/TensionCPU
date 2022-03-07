@@ -43,6 +43,7 @@
 #include "ICpu-Load-Generator.h"
 
 #include <memory>
+#include <mutex>
 
 #include <cstdint>
 #include <unistd.h>
@@ -59,18 +60,25 @@ class CpuLoadGenerator : public ICpuLoadGenerator {
       :
       cmd_arguments_ { cmd_arguments },
       cpu_benchmarker_ {new CpuBenchmarker },
-      cpu_speed_detector_ { new CpuSpeedDetector }
+      cpu_speed_detector_ { new CpuSpeedDetector },
+      mutex_ {},
+      continue_cpu_load_ { true }
       {}
 
   void Start(void) override;
-
-  void Stop(void) override {
-  }
+  void Stop(void) override;
 
  private:
   std::shared_ptr<CmdArguments> cmd_arguments_;
   std::unique_ptr<ICpuBenchmarker> cpu_benchmarker_;
   std::unique_ptr<ICpuSpeedDetector> cpu_speed_detector_;
+  std::mutex mutex_;
+  bool continue_cpu_load_;
+
+  bool GetCpuLoadGeneratorStatus() {
+    std::lock_guard<std::mutex> lock(mutex_);
+    return continue_cpu_load_;
+  }
 };
 
 } /*namespace tension_cpu*/
