@@ -51,7 +51,6 @@
 namespace cmd_args_parser_test {
 
 namespace {
-const uint32_t kNumberOfArgumentsSetToZero  = 0;
 const uint32_t kNumberOfArgumentsSetToOne   = 1;
 const uint32_t kNumberOfArgumentsSetToTwo   = 2;
 const uint32_t kNumberOfArgumentsSetToThree = 3;
@@ -59,30 +58,19 @@ const uint32_t kNumberOfArgumentsSetToFour  = 4;
 
 int32_t cpu_load_value = 90;
 int32_t test_time      = 10;
+std::string sched_mode_batch = "b";
+std::string sched_mode_fifo = "f";
+std::string sched_mode_rr = "r";
+std::string sched_mode_other = "o";
 
 char* kTestProgramName = (char*)"TestAppName";
 char* kEmptyCommandLineArgument[] = {kTestProgramName};
 char* kCpuLoadCommandLineArgument[] = {kTestProgramName, (char*)("-l " + std::to_string(cpu_load_value)).c_str()};
 char* kCpuLoadAndTestTimeCommandLineArguments[] = {kTestProgramName, (char*)("-l 90 -T " + std::to_string(test_time)).c_str()};
-char* kCpuLoadAndTestTimeAndSchedulingAlgorithCommandLineArguments[] = {kTestProgramName, (char*)"-l 90 -T 10 -S b"};
-char* kEnableHelpModeArgument[] = {kTestProgramName, (char*)"h"};
-
-char* kCpuLoadCommandLineArgumentWithoutValue[] = {kTestProgramName, (char*)"-l"};
-char* kTestTimeCommandLineArgumentWithoutValue[] = {kTestProgramName, (char*)"-l 90 -T"};
-char* kdSchedulingAlgorithCommandLineArgumentWithoutValue[] = {kTestProgramName, (char*)"-l 90 -T 10 -S"};
-
-char* kCpuLoadCommandLineArgumentMoreThan100[] = {kTestProgramName, (char*)"-l 101"};
-char* kCpuLoadCommandLineArgumentEqualZero[] = {kTestProgramName, (char*)"-l 0"};
-char* kCpuLoadCommandLineArgumentLowerThanlZero[] = {kTestProgramName, (char*)"-l -10"};
-
-char* kTestTimeCommandLineArgumentOverflowed[] = {kTestProgramName, (char*)"-l 90 -T 2147483648"};
-char* kTestTimeCommandLineArgumentWithNegativeValue[] = {kTestProgramName, (char*)"-l 90 -T -21"};
-
-char* kTestTimeCommandLineArgumentWithZeroValue[] = {kTestProgramName, (char*)"-l 90 -T 0"};
-
-char* kCommandLineArgumentsWithoutCpuLoad[] = {kTestProgramName, (char*)"-T 10"};
-
-char* kdSchedulingAlgorithCommandLineArgumentWithoWrongValue[] = {kTestProgramName, (char*)"-l 90 -T 10 -S z"};
+char* kCpuLoadAndTestTimeAndSchedulingAlgorithBatchCommandLineArguments[] = {kTestProgramName, (char*)("-l 90 -T 10 -S " + sched_mode_batch).c_str() };
+char* kCpuLoadAndTestTimeAndSchedulingAlgorithFifoCommandLineArguments[] = {kTestProgramName, (char*)("-l 90 -T 10 -S " + sched_mode_fifo).c_str() };
+char* kCpuLoadAndTestTimeAndSchedulingAlgorithRoundRobinCommandLineArguments[] = {kTestProgramName, (char*)("-l 90 -T 10 -S " + sched_mode_rr).c_str() };
+char* kCpuLoadAndTestTimeAndSchedulingAlgorithOtherCommandLineArguments[] = {kTestProgramName, (char*)("-l 90 -T 10 -S " + sched_mode_other).c_str() };
 }
 
 class CmdArgsParserTests : public ::testing::Test {
@@ -110,6 +98,26 @@ TEST_F(CmdArgsParserTests, Process_Load_Cpu_Argument_And_Cpu_Load_Value_In_CmdAr
 TEST_F(CmdArgsParserTests, Process_Test_Time_Argument_And_Test_Time_In_CmdArguments_Is_Set) {
   cmd_args_parser->ProcessArguments(kNumberOfArgumentsSetToThree, kCpuLoadAndTestTimeCommandLineArguments);
   ASSERT_EQ(test_time, cmd_arguments->test_time.count());
+}
+
+TEST_F(CmdArgsParserTests, Process_Sched_Mode_Batch_Argument_And_Batch_Mode_In_CmdArguments_Is_Set) {
+  cmd_args_parser->ProcessArguments(kNumberOfArgumentsSetToFour, kCpuLoadAndTestTimeAndSchedulingAlgorithBatchCommandLineArguments);
+  ASSERT_EQ(cmd_arguments->scheduling_policy, tension_cpu::SchedulingPolicyType::BATCH);
+}
+
+TEST_F(CmdArgsParserTests, Process_Sched_Mode_Fifo_Argument_And_Fifo_Mode_In_CmdArguments_Is_Set) {
+  cmd_args_parser->ProcessArguments(kNumberOfArgumentsSetToFour, kCpuLoadAndTestTimeAndSchedulingAlgorithFifoCommandLineArguments);
+  ASSERT_EQ(cmd_arguments->scheduling_policy, tension_cpu::SchedulingPolicyType::FIFO);
+}
+
+TEST_F(CmdArgsParserTests, Process_Sched_Mode_RounRobin_Argument_And_RoundRobin_Mode_In_CmdArguments_Is_Set) {
+  cmd_args_parser->ProcessArguments(kNumberOfArgumentsSetToFour, kCpuLoadAndTestTimeAndSchedulingAlgorithRoundRobinCommandLineArguments);
+  ASSERT_EQ(cmd_arguments->scheduling_policy, tension_cpu::SchedulingPolicyType::RR);
+}
+
+TEST_F(CmdArgsParserTests, Process_Sched_Mode_Other_Argument_And_Other_Mode_In_CmdArguments_Is_Set) {
+  cmd_args_parser->ProcessArguments(kNumberOfArgumentsSetToFour, kCpuLoadAndTestTimeAndSchedulingAlgorithOtherCommandLineArguments);
+  ASSERT_EQ(cmd_arguments->scheduling_policy, tension_cpu::SchedulingPolicyType::OTHER);
 }
 
 } /*namespace cmd_args_parser_test*/

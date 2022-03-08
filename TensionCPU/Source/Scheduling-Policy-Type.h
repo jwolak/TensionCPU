@@ -1,5 +1,5 @@
 /*
- * Cmd-Arguments.h
+ * Scheduling-Policy-Type.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,36 +37,18 @@
  *
  */
 
-#ifndef SOURCE_CMD_ARGUMENTS_H_
-#define SOURCE_CMD_ARGUMENTS_H_
-
-#include <cstdint>
-#include <chrono>
-
-#include "Scheduling-Policy-Type.h"
+#ifndef SOURCE_SCHEDULING_POLICY_TYPE_H_
+#define SOURCE_SCHEDULING_POLICY_TYPE_H_
 
 namespace tension_cpu {
 
-class CmdArguments {
- public:
-  CmdArguments()
-      :
-      scheduling_nice_priotity { 0 },
-      scheduling_policy { SchedulingPolicyType::OTHER },
-      cpu_load { 0 },
-      test_time { 0 } {
-  }
-
-  bool ProcessArguments(int, const char*[]) {
-  }
-
- public:
-  int32_t scheduling_nice_priotity;
-  SchedulingPolicyType scheduling_policy;
-  int32_t cpu_load;
-  const std::chrono::seconds test_time;
+enum class SchedulingPolicyType {
+  BATCH  = 1,
+  FIFO   = 2,
+  RR     = 3,
+  OTHER  = 4,
 };
 
 } /*namespace tension_cpu*/
 
-#endif /* SOURCE_CMD_ARGUMENTS_H_ */
+#endif /* SOURCE_SCHEDULING_POLICY_TYPE_H_ */

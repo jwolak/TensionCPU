@@ -26,6 +26,7 @@ ${SOURCE_FILES_DIR}/Cpu-Load-Generator.h
 ${SOURCE_FILES_DIR}/Timer.h
 ${SOURCE_FILES_DIR}/Cpu-Benchmarker.h
 ${SOURCE_FILES_DIR}/Cpu-Speed-Detector.h
+${SOURCE_FILES_DIR}/Scheduling-Policy-Type.h
 
 #source
 ${SOURCE_FILES_DIR}/Tension-Cpu.cpp
