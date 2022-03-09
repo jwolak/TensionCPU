@@ -27,6 +27,7 @@ ${SOURCE_FILES_DIR}/Timer.h
 ${SOURCE_FILES_DIR}/Cpu-Benchmarker.h
 ${SOURCE_FILES_DIR}/Cpu-Speed-Detector.h
 ${SOURCE_FILES_DIR}/Scheduling-Policy-Type.h
+${SOURCE_FILES_DIR}/Variables-For-Cpu-Load-Generator.h
 
 #source
 ${SOURCE_FILES_DIR}/Tension-Cpu.cpp
@@ -37,6 +38,7 @@ ${SOURCE_FILES_DIR}/Cpu-Load-Generator.cpp
 ${SOURCE_FILES_DIR}/Timer.cpp
 ${SOURCE_FILES_DIR}/Cpu-Benchmarker.cpp
 ${SOURCE_FILES_DIR}/Cpu-Speed-Detector.cpp
+${SOURCE_FILES_DIR}/Variables-For-Cpu-Load-Generator.cpp
 
 )
 

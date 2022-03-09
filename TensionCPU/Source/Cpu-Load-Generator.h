@@ -51,14 +51,16 @@
 
 #include "Cmd-Arguments.h"
 #include "Cpu-Speed-Detector.h"
+#include "Variables-For-Cpu-Load-Generator.h"
 
 namespace tension_cpu {
 
 class CpuLoadGenerator : public ICpuLoadGenerator {
  public:
-  CpuLoadGenerator(std::shared_ptr<CmdArguments> cmd_arguments)
+  CpuLoadGenerator(std::shared_ptr<CmdArguments> cmd_arguments, std::shared_ptr<VariablesForCpuLoadGenerator> variables_for_cpu_generator)
       :
       cmd_arguments_ { cmd_arguments },
+      variables_for_cpu_generator_ { variables_for_cpu_generator },
       cpu_benchmarker_ {new CpuBenchmarker },
       cpu_speed_detector_ { new CpuSpeedDetector },
       mutex_ {},
@@ -70,6 +72,7 @@ class CpuLoadGenerator : public ICpuLoadGenerator {
 
  private:
   std::shared_ptr<CmdArguments> cmd_arguments_;
+  std::shared_ptr<VariablesForCpuLoadGenerator> variables_for_cpu_generator_;
   std::unique_ptr<ICpuBenchmarker> cpu_benchmarker_;
   std::unique_ptr<ICpuSpeedDetector> cpu_speed_detector_;
   std::mutex mutex_;
