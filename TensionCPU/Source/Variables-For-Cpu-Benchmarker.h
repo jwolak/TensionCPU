@@ -1,5 +1,5 @@
 /*
- * Cpu-Benchmarker.cpp
+ * Variables-For-Cpu-Benchmarker.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,33 +37,29 @@
  *
  */
 
-#include "Cpu-Benchmarker.h"
+#ifndef SOURCE_VARIABLES_FOR_CPU_BENCHMARKER_H_
+#define SOURCE_VARIABLES_FOR_CPU_BENCHMARKER_H_
 
-#include <unistd.h>
+#include <cstdint>
 
-void tension_cpu::CpuBenchmarker::Run() {
-  variables_for_cpu_benchmarker_->load = 1.0;
-  while (variables_for_cpu_benchmarker_->load < variables_for_cpu_benchmarker_->load_slice) {
-    variables_for_cpu_benchmarker_->load += 1.0;
-  }
-}
+namespace tension_cpu {
 
-void tension_cpu::CpuBenchmarker::SetLoadSlice(double load_s) {
-  variables_for_cpu_benchmarker_->load_slice = load_s;
-}
-
-double tension_cpu::CpuBenchmarker::GetLoadSlice(void) {
-  return variables_for_cpu_benchmarker_->load_slice;
-}
-
-uint32_t tension_cpu::CpuBenchmarker::GenerateIdle(const uint32_t cpu_idle) {
-
-  variables_for_cpu_benchmarker_->tmp_cpu_idle = cpu_idle;
-  if (variables_for_cpu_benchmarker_->tmp_cpu_idle > 0) {
-    /* sleeping for 10 ms */
-    usleep(10 * 1000);
-    variables_for_cpu_benchmarker_->tmp_cpu_idle--;
+struct VariablesForCpuBenchmarker {
+ public:
+  VariablesForCpuBenchmarker()
+      :
+      load { 1.0 },
+      load_slice { 0.0 },
+      tmp_cpu_idle { 0 } {
   }
 
-  return variables_for_cpu_benchmarker_->tmp_cpu_idle;
-}
+  double load;
+  double load_slice;
+  int32_t tmp_cpu_idle;
+
+};
+
+} /*namespace tension_cpu*/
+
+
+#endif /* SOURCE_VARIABLES_FOR_CPU_BENCHMARKER_H_ */

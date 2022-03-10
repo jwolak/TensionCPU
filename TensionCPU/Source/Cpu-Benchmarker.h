@@ -42,13 +42,17 @@
 
 #include "ICpu-Benchmarker.h"
 
+#include <memory>
+
+#include "Variables-For-Cpu-Benchmarker.h"
+
 namespace tension_cpu {
 
 class CpuBenchmarker : public ICpuBenchmarker {
  public:
-  CpuBenchmarker()
+  CpuBenchmarker(std::shared_ptr<VariablesForCpuBenchmarker> variables_for_cpu_benchmarker)
       :
-      load_slice { 1.0 } {
+      variables_for_cpu_benchmarker_ { variables_for_cpu_benchmarker } {
   }
 
   void Run() override;
@@ -57,8 +61,8 @@ class CpuBenchmarker : public ICpuBenchmarker {
   double GetLoadSlice(void) override;
   uint32_t GenerateIdle(const uint32_t) override;
 
- public:
-  double load_slice;
+ private:
+  std::shared_ptr<VariablesForCpuBenchmarker> variables_for_cpu_benchmarker_;
 };
 
 } /*namespace tension_cpu*/

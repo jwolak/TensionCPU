@@ -58,7 +58,8 @@ class TensionCpu : public ITensionCpu {
       cmd_arguments_ { new CmdArguments },
       cmd_arg_parser_ { new CmdArgsParser { cmd_arguments_ } },
       variables_for_cpu_generator_ {new VariablesForCpuLoadGenerator },
-      cpu_benchmarker_ { new CpuBenchmarker },
+      variables_for_cpu_benchmarker_ { new VariablesForCpuBenchmarker },
+      cpu_benchmarker_ { new CpuBenchmarker { variables_for_cpu_benchmarker_ } },
       variables_for_cpu_speed_detector_ { new VariablesForCpuSpeedDetector },
       cpu_speed_detector_ { new CpuSpeedDetector { variables_for_cpu_speed_detector_, cpu_benchmarker_} },
       cpu_load_generator_ { new CpuLoadGenerator { cmd_arguments_, variables_for_cpu_generator_, cpu_benchmarker_, cpu_speed_detector_ } },
@@ -73,6 +74,7 @@ class TensionCpu : public ITensionCpu {
   std::shared_ptr<CmdArguments> cmd_arguments_;
   std::unique_ptr<ICmdArgsParser> cmd_arg_parser_;
   std::shared_ptr<VariablesForCpuLoadGenerator> variables_for_cpu_generator_;
+  std::shared_ptr<VariablesForCpuBenchmarker> variables_for_cpu_benchmarker_;
   std::shared_ptr<ICpuBenchmarker> cpu_benchmarker_;
   std::shared_ptr<VariablesForCpuSpeedDetector> variables_for_cpu_speed_detector_;
   std::shared_ptr<ICpuSpeedDetector> cpu_speed_detector_;
