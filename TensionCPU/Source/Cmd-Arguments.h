@@ -58,6 +58,7 @@ class CmdArguments {
   }
 
   bool ProcessArguments(int, const char*[]) {
+    return true;
   }
 
  public:

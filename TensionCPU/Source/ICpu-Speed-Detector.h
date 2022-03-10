@@ -47,7 +47,6 @@ namespace tension_cpu {
 class ICpuSpeedDetector {
  public:
   virtual ~ICpuSpeedDetector() = default;
-  virtual bool Run() = 0;
   virtual uint64_t GetLoopsPerSecond() = 0;
 };
 

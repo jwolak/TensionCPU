@@ -56,12 +56,14 @@ double tension_cpu::CpuBenchmarker::GetLoadSlice(void) {
   return load_slice;
 }
 
-void tension_cpu::CpuBenchmarker::GenerateIdle(uint32_t& cpu_idle) {
+uint32_t tension_cpu::CpuBenchmarker::GenerateIdle(const uint32_t cpu_idle) {
 
-  if (cpu_idle > 0) {
+  int32_t tmp_idle = cpu_idle;
+  if (tmp_idle > 0) {
     /* sleeping for 10 ms */
     usleep(10 * 1000);
-    cpu_idle--;
+    tmp_idle--;
   }
 
+  return tmp_idle;
 }

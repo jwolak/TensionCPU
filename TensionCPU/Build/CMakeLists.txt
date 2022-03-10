@@ -38,7 +38,6 @@ ${SOURCE_FILES_DIR}/Cpu-Load-Generator.cpp
 ${SOURCE_FILES_DIR}/Timer.cpp
 ${SOURCE_FILES_DIR}/Cpu-Benchmarker.cpp
 ${SOURCE_FILES_DIR}/Cpu-Speed-Detector.cpp
-${SOURCE_FILES_DIR}/Variables-For-Cpu-Load-Generator.cpp
 
 )
 

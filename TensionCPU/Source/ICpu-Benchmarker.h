@@ -50,7 +50,7 @@ class ICpuBenchmarker {
   virtual void Run() = 0;
   virtual void SetLoadSlice(double) = 0;
   virtual double GetLoadSlice(void) = 0;
-  virtual void GenerateIdle(uint32_t&) = 0;
+  virtual uint32_t GenerateIdle(const uint32_t) = 0;
 };
 
 } /*namespace tension_cpu*/

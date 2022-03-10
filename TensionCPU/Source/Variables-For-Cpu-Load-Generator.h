@@ -58,7 +58,7 @@ struct VariablesForCpuLoadGenerator {
   bool continue_cpu_load;
   int32_t cpu_busy_level;
   uint64_t cpu_slice;
-  int32_t cpu_idle_level;
+  uint32_t cpu_idle_level;
   uint64_t cpu_loop;
 };
 

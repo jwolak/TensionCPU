@@ -59,53 +59,51 @@ class CpuSpeedDetector : public ICpuSpeedDetector {
       cpu_benchmarker_ { new CpuBenchmarker } {
   }
 
-  bool Run() override {
-    uint64_t   loops;
+  uint64_t GetLoopsPerSecond() override {
+
+    uint64_t loops;
     time_t period;
 
-    printf ("calibrating cpu speed:");
+    printf("calibrating cpu speed:");
     fflush(stdout);
 
-    do
-    {
-       loops = 1000 * 1000;
+    do {
+      loops = 1000 * 1000;
 
-       while (loops)
-       {
-          uint64_t loop = 0;
+      while (loops) {
+        uint64_t loop = 0;
 
-          period = time(NULL);
-          while (loop < loops)
-          {
-             /*cpu_load_slice();*/
-             cpu_benchmarker_->Run();
-             loop++;
-          }
-          period = time(NULL) - period;
+        period = time(NULL);
+        while (loop < loops) {
+          /*cpu_load_slice();*/
+          cpu_benchmarker_->Run();
+          loop++;
+        }
+        period = time(NULL) - period;
 
-          if (period >= CALIBRATION_PERIOD)
-             break;
-          else if ( 0 == period )
-             loops *= 10;
-          else
-             loops *= 1 + CALIBRATION_PERIOD / period;
-       }
-
-       if ( loops )
+        if (period >= CALIBRATION_PERIOD)
           break;
-       else {
-          /*s_slice *= 10.0;*/
-          load_slice = cpu_benchmarker_->GetLoadSlice();
-          cpu_benchmarker_->SetLoadSlice( load_slice * 10.0 );
-       }
-    } while ( 1 );
+        else if (0 == period)
+          loops *= 10;
+        else
+          loops *= 1 + CALIBRATION_PERIOD / period;
+      }
+
+      if (loops)
+        break;
+      else {
+        /*s_slice *= 10.0;*/
+        load_slice = cpu_benchmarker_->GetLoadSlice();
+        cpu_benchmarker_->SetLoadSlice(load_slice * 10.0);
+      }
+    } while (1);
 
     /*s_loops = loops / period;*/
     loops_per_second = loops / period;
-    printf (" %llu loops per second\n", loops_per_second);
-  }
+    /*printf (" %llu loops per second\n", loops_per_second);*/
 
-  uint64_t GetLoopsPerSecond() override { return loops_per_second; }
+    return loops_per_second;
+  }
 
   uint64_t loops_per_second;
   double load_slice;

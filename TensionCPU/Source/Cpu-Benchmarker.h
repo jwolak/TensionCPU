@@ -55,7 +55,7 @@ class CpuBenchmarker : public ICpuBenchmarker {
 
   void SetLoadSlice(double load_s) override;
   double GetLoadSlice(void) override;
-  void GenerateIdle(uint32_t&) override;
+  uint32_t GenerateIdle(const uint32_t) override;
 
  public:
   double load_slice;

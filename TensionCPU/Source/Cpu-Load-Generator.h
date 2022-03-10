@@ -57,15 +57,17 @@ namespace tension_cpu {
 
 class CpuLoadGenerator : public ICpuLoadGenerator {
  public:
-  CpuLoadGenerator(std::shared_ptr<CmdArguments> cmd_arguments, std::shared_ptr<VariablesForCpuLoadGenerator> variables_for_cpu_generator)
+  CpuLoadGenerator(std::shared_ptr<CmdArguments> cmd_arguments,
+                   std::shared_ptr<VariablesForCpuLoadGenerator> variables_for_cpu_generator,
+                   std::shared_ptr<ICpuBenchmarker> cpu_benchmarker,
+                   std::shared_ptr<ICpuSpeedDetector> cpu_speed_detector)
       :
       cmd_arguments_ { cmd_arguments },
       variables_for_cpu_generator_ { variables_for_cpu_generator },
-      cpu_benchmarker_ {new CpuBenchmarker },
-      cpu_speed_detector_ { new CpuSpeedDetector },
-      mutex_ {},
-      continue_cpu_load_ { true }
-      {}
+      cpu_benchmarker_ { cpu_benchmarker },
+      cpu_speed_detector_ { cpu_speed_detector },
+      mutex_ { } {
+  }
 
   void Start(void) override;
   void Stop(void) override;
@@ -73,14 +75,13 @@ class CpuLoadGenerator : public ICpuLoadGenerator {
  private:
   std::shared_ptr<CmdArguments> cmd_arguments_;
   std::shared_ptr<VariablesForCpuLoadGenerator> variables_for_cpu_generator_;
-  std::unique_ptr<ICpuBenchmarker> cpu_benchmarker_;
-  std::unique_ptr<ICpuSpeedDetector> cpu_speed_detector_;
+  std::shared_ptr<ICpuBenchmarker> cpu_benchmarker_;
+  std::shared_ptr<ICpuSpeedDetector> cpu_speed_detector_;
   std::mutex mutex_;
-  bool continue_cpu_load_;
 
   bool GetCpuLoadGeneratorStatus() {
     std::lock_guard<std::mutex> lock(mutex_);
-    return continue_cpu_load_;
+    return variables_for_cpu_generator_->continue_cpu_load;
   }
 };
 
