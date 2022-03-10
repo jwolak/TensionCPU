@@ -1,5 +1,5 @@
 /*
- * TensionCpu.h
+ * Variables-For-Cpu-Speed-Detector.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,56 +37,33 @@
  *
  */
 
-#ifndef SOURCE_TENSION_CPU_H_
-#define SOURCE_TENSION_CPU_H_
+#ifndef SOURCE_VARIABLES_FOR_CPU_SPEED_DETECTOR_H_
+#define SOURCE_VARIABLES_FOR_CPU_SPEED_DETECTOR_H_
 
-#include "ITension-Cpu.h"
-
-#include <memory>
-
-#include "Cmd-Args-Parser.h"
-#include "Cpu-Load-Generator.h"
-#include "Timer.h"
-#include "Logger.h"
+#include <cstdint>
+#include <time.h>
 
 namespace tension_cpu {
 
-class TensionCpu : public ITensionCpu {
+struct VariablesForCpuSpeedDetector {
  public:
-  TensionCpu()
+  VariablesForCpuSpeedDetector()
       :
-      cmd_arguments_ { new CmdArguments },
-      cmd_arg_parser_ { new CmdArgsParser { cmd_arguments_ } },
-      variables_for_cpu_generator_ {new VariablesForCpuLoadGenerator },
-      cpu_benchmarker_ { new CpuBenchmarker },
-      variables_for_cpu_speed_detector_ { new VariablesForCpuSpeedDetector },
-      cpu_speed_detector_ { new CpuSpeedDetector { variables_for_cpu_speed_detector_, cpu_benchmarker_} },
-      cpu_load_generator_ { new CpuLoadGenerator { cmd_arguments_, variables_for_cpu_generator_, cpu_benchmarker_, cpu_speed_detector_ } },
-      timer_ { new Timer { std::bind(&tension_cpu::TensionCpu::StopLoadGeneratorAfterTimeout, this), cmd_arguments_->test_time } } {
+      loops { 0 },
+      period { NULL },
+      loop { 0 },
+      loops_per_second { 0 },
+      load_slice { 0 } {
   }
 
-  bool ParseCmdArguments(int argc, char **argv) override;
-  bool Start() override;
-  bool Stop() override;
-
- private:
-  std::shared_ptr<CmdArguments> cmd_arguments_;
-  std::unique_ptr<ICmdArgsParser> cmd_arg_parser_;
-  std::shared_ptr<VariablesForCpuLoadGenerator> variables_for_cpu_generator_;
-  std::shared_ptr<ICpuBenchmarker> cpu_benchmarker_;
-  std::shared_ptr<VariablesForCpuSpeedDetector> variables_for_cpu_speed_detector_;
-  std::shared_ptr<ICpuSpeedDetector> cpu_speed_detector_;
-  std::unique_ptr<ICpuLoadGenerator> cpu_load_generator_;
-  std::unique_ptr<ITimer> timer_;
-
-  void StopLoadGeneratorAfterTimeout(void) {
-    cpu_load_generator_->Stop();
-    LOG_DEBUG("%s", "Load generator stopped after timeout");
-  }
+  uint64_t loops;
+  time_t period;
+  uint64_t loop;
+  uint64_t loops_per_second;
+  double load_slice;
 
 };
 
 } /*namespace tension_cpu*/
 
-
-#endif /* SOURCE_TENSION_CPU_H_ */
+#endif /* SOURCE_VARIABLES_FOR_CPU_SPEED_DETECTOR_H_ */
