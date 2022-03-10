@@ -49,7 +49,7 @@ struct VariablesForCpuBenchmarker {
   VariablesForCpuBenchmarker()
       :
       load { 1.0 },
-      load_slice { 0.0 },
+      load_slice { 1.0 },
       tmp_cpu_idle { 0 } {
   }
 
