@@ -1,5 +1,5 @@
 /*
- * Variables-For-Cpu-Speed-Detector.h
+ * Cpu-Speed-Detector-Tests.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,41 +37,40 @@
  *
  */
 
-#ifndef SOURCE_VARIABLES_FOR_CPU_SPEED_DETECTOR_H_
-#define SOURCE_VARIABLES_FOR_CPU_SPEED_DETECTOR_H_
+#include <gtest/gtest.h>
 
-#include "IVariables-For-Cpu-Speed-Detector.h"
+#include <memory>
+#include <string>
+#include <cstdint>
 
-namespace tension_cpu {
+namespace cpu_speed_detector_tests {
 
-class VariablesForCpuSpeedDetector : public IVariablesForCpuSpeedDetector {
+namespace {
+constexpr uint64_t kLoopsValue = 30000;
+}
+
+class CpuSpeedDetectorTests : public ::testing::Test {
  public:
-  VariablesForCpuSpeedDetector()
+  CpuSpeedDetectorTests()
       :
-      loops { 1000 * 1000 },
-      period { NULL },
-      loop { 0 },
-      loops_per_second { 0 },
-      load_slice { 0 } {
+      variables_for_cpu_speed_detector { new tension_cpu::VariablesForCpuSpeedDetector },
+      variables_for_cpu_benchmarker { new tension_cpu::VariablesForCpuBenchmarker },
+      cpu_benchmarker { new tension_cpu::CpuBenchmarker { variables_for_cpu_benchmarker } },
+      cpu_speed_detector { new tension_cpu::CpuSpeedDetector { variables_for_cpu_speed_detector, cpu_benchmarker } } {
   }
 
-  uint64_t GetLoopS() override { return loops; }
-  time_t GetPeriod() override { return period; }
-  uint64_t GetLoop() override { return loop; }
-  uint64_t GetLoopsPerSecond() override { return loops_per_second; }
-  double GetLoadSlice() override { return load_slice; }
-
-  void SetLoopS(uint64_t loopS_value) override { loops = loopS_value; }
-  void SetLoop(uint64_t loop_value) override { loop = loop_value; }
-
-  uint64_t loops;
-  time_t period;
-  uint64_t loop;
-  uint64_t loops_per_second;
-  double load_slice;
+  std::shared_ptr<tension_cpu::VariablesForCpuSpeedDetector> variables_for_cpu_speed_detector;
+  std::shared_ptr<tension_cpu::VariablesForCpuBenchmarker> variables_for_cpu_benchmarker;
+  std::shared_ptr<tension_cpu::ICpuBenchmarker> cpu_benchmarker;
+  std::unique_ptr<tension_cpu::ICpuSpeedDetector> cpu_speed_detector;
 
 };
 
-} /*namespace tension_cpu*/
+TEST_F(CpuSpeedDetectorTests, Assign_Loops_In_GetLoopsPerSecond_And_Loops_In_Asssigned_To_Value) {
+  variables_for_cpu_speed_detector->loops = 0;
+  variables_for_cpu_speed_detector->loop = 0;
+  cpu_speed_detector->GetLoopsPerSecond();
+  ASSERT_TRUE(variables_for_cpu_speed_detector->loops > 0);
+}
 
-#endif /* SOURCE_VARIABLES_FOR_CPU_SPEED_DETECTOR_H_ */
+} /*namespace cpu_speed_detector_tests*/

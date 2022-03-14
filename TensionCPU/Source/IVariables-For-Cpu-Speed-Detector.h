@@ -1,5 +1,5 @@
 /*
- * Variables-For-Cpu-Speed-Detector.h
+ * IVariables-For-Cpu-Speed-Detector.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,41 +37,27 @@
  *
  */
 
-#ifndef SOURCE_VARIABLES_FOR_CPU_SPEED_DETECTOR_H_
-#define SOURCE_VARIABLES_FOR_CPU_SPEED_DETECTOR_H_
+#ifndef SOURCE_IVARIABLES_FOR_CPU_SPEED_DETECTOR_H_
+#define SOURCE_IVARIABLES_FOR_CPU_SPEED_DETECTOR_H_
 
-#include "IVariables-For-Cpu-Speed-Detector.h"
+#include <cstdint>
+#include <time.h>
 
 namespace tension_cpu {
 
-class VariablesForCpuSpeedDetector : public IVariablesForCpuSpeedDetector {
+class IVariablesForCpuSpeedDetector {
  public:
-  VariablesForCpuSpeedDetector()
-      :
-      loops { 1000 * 1000 },
-      period { NULL },
-      loop { 0 },
-      loops_per_second { 0 },
-      load_slice { 0 } {
-  }
+  virtual ~IVariablesForCpuSpeedDetector() = default;
+  virtual uint64_t GetLoopS() = 0;
+  virtual time_t GetPeriod() = 0;
+  virtual uint64_t GetLoop() = 0;
+  virtual uint64_t GetLoopsPerSecond() = 0;
+  virtual double GetLoadSlice() = 0;
 
-  uint64_t GetLoopS() override { return loops; }
-  time_t GetPeriod() override { return period; }
-  uint64_t GetLoop() override { return loop; }
-  uint64_t GetLoopsPerSecond() override { return loops_per_second; }
-  double GetLoadSlice() override { return load_slice; }
-
-  void SetLoopS(uint64_t loopS_value) override { loops = loopS_value; }
-  void SetLoop(uint64_t loop_value) override { loop = loop_value; }
-
-  uint64_t loops;
-  time_t period;
-  uint64_t loop;
-  uint64_t loops_per_second;
-  double load_slice;
-
+  virtual void SetLoopS(uint64_t) = 0;
+  virtual void SetLoop(uint64_t) = 0;
 };
 
 } /*namespace tension_cpu*/
 
-#endif /* SOURCE_VARIABLES_FOR_CPU_SPEED_DETECTOR_H_ */
+#endif /* SOURCE_IVARIABLES_FOR_CPU_SPEED_DETECTOR_H_ */

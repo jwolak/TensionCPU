@@ -63,24 +63,24 @@ class CpuSpeedDetector : public ICpuSpeedDetector {
   uint64_t GetLoopsPerSecond() override {
 
     do {
-      variables_for_cpu_speed_detector_->loops = 1000 * 1000;
+      variables_for_cpu_speed_detector_->SetLoopS(1000 * 1000);
 
-      while (variables_for_cpu_speed_detector_->loops) {
-        variables_for_cpu_speed_detector_->loop = 0;
+      while (variables_for_cpu_speed_detector_->GetLoopS()) {
+        variables_for_cpu_speed_detector_->SetLoop(0);
 
         variables_for_cpu_speed_detector_->period = time(NULL);
-        while (variables_for_cpu_speed_detector_->loop < variables_for_cpu_speed_detector_->loops) {
+        while (variables_for_cpu_speed_detector_->GetLoop() < variables_for_cpu_speed_detector_->GetLoopS()) {
           cpu_benchmarker_->Run();
           variables_for_cpu_speed_detector_->loop++;
         }
-        variables_for_cpu_speed_detector_->period = time(NULL) - variables_for_cpu_speed_detector_->period;
+        variables_for_cpu_speed_detector_->period = time(NULL) - variables_for_cpu_speed_detector_->GetPeriod();
 
-        if (variables_for_cpu_speed_detector_->period >= CALIBRATION_PERIOD)
+        if (variables_for_cpu_speed_detector_->GetPeriod() >= CALIBRATION_PERIOD)
           break;
-        else if (0 == variables_for_cpu_speed_detector_->period)
+        else if (0 == variables_for_cpu_speed_detector_->GetPeriod())
           variables_for_cpu_speed_detector_->loops *= 10;
         else
-          variables_for_cpu_speed_detector_->loops *= 1 + CALIBRATION_PERIOD / variables_for_cpu_speed_detector_->period;
+          variables_for_cpu_speed_detector_->loops *= 1 + CALIBRATION_PERIOD / variables_for_cpu_speed_detector_->GetPeriod();
       }
 
       if (variables_for_cpu_speed_detector_->loops)
