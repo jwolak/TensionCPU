@@ -1,5 +1,5 @@
 /*
- * Variables-For-Cpu-Speed-Detector.h
+ * IVariables-For-Cpu-Load-Generator.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,50 +37,28 @@
  *
  */
 
-#ifndef SOURCE_VARIABLES_FOR_CPU_SPEED_DETECTOR_H_
-#define SOURCE_VARIABLES_FOR_CPU_SPEED_DETECTOR_H_
+#ifndef SOURCE_IVARIABLES_FOR_CPU_LOAD_GENERATOR_H_
+#define SOURCE_IVARIABLES_FOR_CPU_LOAD_GENERATOR_H_
 
-#include "IVariables-For-Cpu-Speed-Detector.h"
+#include <cstdint>
 
 namespace tension_cpu {
 
-class VariablesForCpuSpeedDetector : public IVariablesForCpuSpeedDetector {
+class IVariablesForCpuLoadGenerator {
  public:
-  VariablesForCpuSpeedDetector()
-      :
-      loops { 0 },
-      period { NULL },
-      loop { 0 },
-      loops_per_second { 0 },
-      load_slice { 0 } {
-  }
-
-  uint64_t GetLoopS() override { return loops; }
-  time_t GetPeriod() override { return period; }
-  uint64_t GetLoop() override { return loop; }
-  uint64_t GetLoopsPerSecond() override { return loops_per_second; }
-  double GetLoadSlice() override { return load_slice; }
-
-  void SetLoopS(uint64_t loopS_value) override { loops = loopS_value; }
-  void SetLoop(uint64_t loop_value) override { loop = loop_value; }
-  void SetTimePeriod() override { period = time(NULL); }
-  time_t GetTimePeriodDiff() override { period =  time(NULL) - period; return period; }
-  void SetLoadSlice(double load_slice_value) override { load_slice = load_slice_value; }
-  void SetLoopsPerSecond (uint64_t loops_per_second_value) override { loops_per_second =  loops_per_second_value; }
-  bool CheckLoopSCounterNotZero() override { return loops > 0; }
-  bool LoopSCounterSet() override { return loops != 0; }
-  void IncreaseLoop(uint64_t value) override { loop = loop + value; }
-  void MulLoopS(uint64_t mult_value) override { loops = loops * mult_value; }
-
-public:
-  uint64_t loops;
-  time_t period;
-  uint64_t loop;
-  uint64_t loops_per_second;
-  double load_slice;
-
+  virtual ~IVariablesForCpuLoadGenerator() = default;
+  virtual bool GetContinueCpuLoad() = 0;
+  virtual void SetContinueCpuLoad(bool) = 0;
+  virtual int32_t GetCpuBusyLevel() = 0;
+  virtual void SetCpuBusyLevel(int32_t) = 0;
+  virtual uint64_t GetCpuSlice() = 0;
+  virtual void SetCpuSlice(uint64_t) = 0;
+  virtual uint32_t GetCpuIdleLevel() = 0;
+  virtual void SetCpuIdleLevel(uint32_t) = 0;
+  virtual uint64_t GetCpuLoop() = 0;
+  virtual void SetCpuLoop(uint64_t) = 0;
 };
 
 } /*namespace tension_cpu*/
 
-#endif /* SOURCE_VARIABLES_FOR_CPU_SPEED_DETECTOR_H_ */
+#endif /* SOURCE_IVARIABLES_FOR_CPU_LOAD_GENERATOR_H_ */

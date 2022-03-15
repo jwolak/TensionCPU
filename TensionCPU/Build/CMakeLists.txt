@@ -17,6 +17,7 @@ ${SOURCE_FILES_DIR}/ITimer.h
 ${SOURCE_FILES_DIR}/ICpu-Benchmarker.h
 ${SOURCE_FILES_DIR}/ICpu-Speed-Detector.h
 ${SOURCE_FILES_DIR}/IVariables-For-Cpu-Speed-Detector.h
+${SOURCE_FILES_DIR}/IVariables-For-Cpu-Load-Generator.h
 
 #headers
 ${SOURCE_FILES_DIR}/Tension-Cpu.h

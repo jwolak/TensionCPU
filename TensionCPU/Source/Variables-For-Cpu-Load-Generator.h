@@ -40,11 +40,13 @@
 #ifndef SOURCE_VARIABLES_FOR_CPU_LOAD_GENERATOR_H_
 #define SOURCE_VARIABLES_FOR_CPU_LOAD_GENERATOR_H_
 
+#include "IVariables-For-Cpu-Load-Generator.h"
+
 #include <cstdint>
 
 namespace tension_cpu {
 
-struct VariablesForCpuLoadGenerator {
+class VariablesForCpuLoadGenerator : public IVariablesForCpuLoadGenerator {
  public:
   VariablesForCpuLoadGenerator()
       :
@@ -55,11 +57,23 @@ struct VariablesForCpuLoadGenerator {
       cpu_loop { 0 } {
   }
 
+  bool GetContinueCpuLoad() override {}
+  void SetContinueCpuLoad(bool) override {}
+  int32_t GetCpuBusyLevel() override {}
+  void SetCpuBusyLevel(int32_t) override {}
+  uint64_t GetCpuSlice() override {}
+  void SetCpuSlice(uint64_t) override {}
+  uint32_t GetCpuIdleLevel() override {}
+  void SetCpuIdleLevel(uint32_t) override {}
+  uint64_t GetCpuLoop() override {}
+  void SetCpuLoop(uint64_t) override {}
+
   bool continue_cpu_load;
   int32_t cpu_busy_level;
   uint64_t cpu_slice;
   uint32_t cpu_idle_level;
   uint64_t cpu_loop;
+  std::mutex mutex_;
 };
 
 } /*namespace tension_cpu*/
