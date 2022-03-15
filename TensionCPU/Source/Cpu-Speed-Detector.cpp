@@ -39,4 +39,38 @@
 
 #include "Cpu-Speed-Detector.h"
 
+uint64_t tension_cpu::CpuSpeedDetector::GetLoopsPerSecond() {
 
+  do {
+    variables_for_cpu_speed_detector_->SetLoopS(1000 * 1000);
+
+    while (variables_for_cpu_speed_detector_->LoopSCounterSet()) {
+      variables_for_cpu_speed_detector_->SetLoop(0);
+
+      variables_for_cpu_speed_detector_->SetTimePeriod();
+      while (variables_for_cpu_speed_detector_->GetLoop() < variables_for_cpu_speed_detector_->GetLoopS()) {
+        cpu_benchmarker_->Run();
+        variables_for_cpu_speed_detector_->IncreaseLoop(1);
+      }
+
+      if (variables_for_cpu_speed_detector_->GetTimePeriodDiff() >= CALIBRATION_PERIOD)
+        break;
+      else if (0 == variables_for_cpu_speed_detector_->GetPeriod()) {
+        variables_for_cpu_speed_detector_->MulLoopS(10);
+      } else {
+        variables_for_cpu_speed_detector_->MulLoopS(((1 + CALIBRATION_PERIOD) / variables_for_cpu_speed_detector_->GetPeriod()));
+      }
+    }
+
+    if (variables_for_cpu_speed_detector_->CheckLoopSCounterNotZero()) {
+      break;
+    } else {
+      variables_for_cpu_speed_detector_->SetLoadSlice(cpu_benchmarker_->GetLoadSlice());
+      cpu_benchmarker_->SetLoadSlice(variables_for_cpu_speed_detector_->GetLoadSlice() * 10.0);
+    }
+  } while (true);
+
+  variables_for_cpu_speed_detector_->SetLoopsPerSecond(variables_for_cpu_speed_detector_->GetLoopS() / variables_for_cpu_speed_detector_->GetPeriod());
+
+  return variables_for_cpu_speed_detector_->GetLoopsPerSecond();
+}

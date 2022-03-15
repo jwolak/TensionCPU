@@ -38,7 +38,7 @@
  */
 
 #include "../Mocks/Variables-For-Cpu-Speed-Detector-Mock.h"
-#include "../../../TensionCPU/Source/Cpu-Speed-Detector.h"
+#include "../../../TensionCPU/Source/Cpu-Speed-Detector.cpp"
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
