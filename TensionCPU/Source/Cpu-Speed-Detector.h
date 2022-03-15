@@ -71,16 +71,15 @@ class CpuSpeedDetector : public ICpuSpeedDetector {
         variables_for_cpu_speed_detector_->SetTimePeriod();
         while (variables_for_cpu_speed_detector_->GetLoop() < variables_for_cpu_speed_detector_->GetLoopS()) {
           cpu_benchmarker_->Run();
-          variables_for_cpu_speed_detector_->SetLoop(variables_for_cpu_speed_detector_->GetLoop() + 1);
+          variables_for_cpu_speed_detector_->IncreaseLoop(1);
         }
 
         if (variables_for_cpu_speed_detector_->GetTimePeriodDiff() >= CALIBRATION_PERIOD)
           break;
         else if (0 == variables_for_cpu_speed_detector_->GetPeriod()) {
-          variables_for_cpu_speed_detector_->SetLoopS(variables_for_cpu_speed_detector_->GetLoopS() * 10);
+          variables_for_cpu_speed_detector_->MulLoopS(10);
         } else {
-          variables_for_cpu_speed_detector_->SetLoopS(
-              variables_for_cpu_speed_detector_->GetLoopS() * (1 + CALIBRATION_PERIOD) / variables_for_cpu_speed_detector_->GetPeriod());
+          variables_for_cpu_speed_detector_->MulLoopS(((1 + CALIBRATION_PERIOD) / variables_for_cpu_speed_detector_->GetPeriod()));
         }
       }
 

@@ -62,6 +62,8 @@ class IVariablesForCpuSpeedDetector {
   virtual void SetLoopsPerSecond (uint64_t) = 0;
   virtual bool CheckLoopSCounterNotZero() = 0;
   virtual bool LoopSCounterSet() = 0;
+  virtual void IncreaseLoop(uint64_t) = 0;
+  virtual void MulLoopS(uint64_t) = 0;
 };
 
 } /*namespace tension_cpu*/

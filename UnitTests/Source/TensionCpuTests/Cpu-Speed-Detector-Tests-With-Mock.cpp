@@ -72,15 +72,29 @@ class CpuSpeedDetectorTestsWithMock : public ::testing::Test {
 
 };
 
-TEST_F(CpuSpeedDetectorTestsWithMock, Test1) {
+TEST_F(CpuSpeedDetectorTestsWithMock, LoopS_Count_And_Time_Exceeded_And_GetLoopsPerSecond_Returned) {
   EXPECT_CALL(*variables_for_cpu_speed_detector_mock, SetLoopS(_)).Times(1);
   EXPECT_CALL(*variables_for_cpu_speed_detector_mock, LoopSCounterSet()).WillOnce(Return(false));
   EXPECT_CALL(*variables_for_cpu_speed_detector_mock, CheckLoopSCounterNotZero()).WillOnce(Return(true));
-
   EXPECT_CALL(*variables_for_cpu_speed_detector_mock, GetLoopS()).WillOnce(Return(10));
   EXPECT_CALL(*variables_for_cpu_speed_detector_mock, GetPeriod()).WillOnce(Return(2));
   EXPECT_CALL(*variables_for_cpu_speed_detector_mock, SetLoopsPerSecond(_)).Times(1);
+  EXPECT_CALL(*variables_for_cpu_speed_detector_mock, GetLoopsPerSecond()).WillOnce(Return(2));
 
+  ASSERT_EQ(cpu_speed_detector->GetLoopsPerSecond(), 2);
+}
+
+TEST_F(CpuSpeedDetectorTestsWithMock, PeriodTime_Exceeded__And_GetLoopsPerSecond_Returned) {
+  EXPECT_CALL(*variables_for_cpu_speed_detector_mock, SetLoopS(_)).Times(1);
+  EXPECT_CALL(*variables_for_cpu_speed_detector_mock, LoopSCounterSet()).WillOnce(Return(true));
+  EXPECT_CALL(*variables_for_cpu_speed_detector_mock, SetLoop(_)).Times(1);
+  EXPECT_CALL(*variables_for_cpu_speed_detector_mock, SetTimePeriod()).Times(1);
+  EXPECT_CALL(*variables_for_cpu_speed_detector_mock, GetLoop()).WillOnce(Return(10));
+  EXPECT_CALL(*variables_for_cpu_speed_detector_mock, GetLoopS()).Times(2).WillRepeatedly(Return(10));
+  EXPECT_CALL(*variables_for_cpu_speed_detector_mock, GetTimePeriodDiff()).WillOnce(Return(6));
+  EXPECT_CALL(*variables_for_cpu_speed_detector_mock, CheckLoopSCounterNotZero()).WillOnce(Return(true));
+  EXPECT_CALL(*variables_for_cpu_speed_detector_mock, GetPeriod()).WillOnce(Return(2));
+  EXPECT_CALL(*variables_for_cpu_speed_detector_mock, SetLoopsPerSecond(_)).Times(1);
   EXPECT_CALL(*variables_for_cpu_speed_detector_mock, GetLoopsPerSecond()).WillOnce(Return(2));
 
   ASSERT_EQ(cpu_speed_detector->GetLoopsPerSecond(), 2);

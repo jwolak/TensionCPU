@@ -69,6 +69,8 @@ class VariablesForCpuSpeedDetector : public IVariablesForCpuSpeedDetector {
   void SetLoopsPerSecond (uint64_t loops_per_second_value) override { loops_per_second =  loops_per_second_value; }
   bool CheckLoopSCounterNotZero() override { return loops > 0; }
   bool LoopSCounterSet() override { return loops != 0; }
+  void IncreaseLoop(uint64_t value) override { loop = loop + value; }
+  void MulLoopS(uint64_t mult_value) override { loops = loops * mult_value; }
 
   uint64_t loops;
   time_t period;

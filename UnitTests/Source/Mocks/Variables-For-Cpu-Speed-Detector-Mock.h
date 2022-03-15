@@ -61,6 +61,8 @@ class VariablesForCpuSpeedDetectorMock : public tension_cpu::IVariablesForCpuSpe
   MOCK_METHOD(void, SetLoopsPerSecond, (uint64_t), (override));
   MOCK_METHOD(bool, CheckLoopSCounterNotZero, (), (override));
   MOCK_METHOD(bool, LoopSCounterSet, (), (override));
+  MOCK_METHOD(void, IncreaseLoop, (uint64_t), (override));
+  MOCK_METHOD(void, MulLoopS, (uint64_t), (override));
 };
 
 }/*namespace tension_cpu_mocks*/
