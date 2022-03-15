@@ -48,7 +48,7 @@ class VariablesForCpuSpeedDetector : public IVariablesForCpuSpeedDetector {
  public:
   VariablesForCpuSpeedDetector()
       :
-      loops { 1000 * 1000 },
+      loops { 0 },
       period { NULL },
       loop { 0 },
       loops_per_second { 0 },
@@ -67,6 +67,8 @@ class VariablesForCpuSpeedDetector : public IVariablesForCpuSpeedDetector {
   time_t GetTimePeriodDiff() override { period =  time(NULL) - period; return period; }
   void SetLoadSlice(double load_slice_value) override { load_slice = load_slice_value; }
   void SetLoopsPerSecond (uint64_t loops_per_second_value) override { loops_per_second =  loops_per_second_value; }
+  bool CheckLoopSCounterNotZero() override { return loops > 0; }
+  bool LoopSCounterSet() override { return loops != 0; }
 
   uint64_t loops;
   time_t period;

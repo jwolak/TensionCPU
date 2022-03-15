@@ -41,6 +41,7 @@
 #define SOURCE_CPU_SPEED_DETECTOR_H_
 
 #include "ICpu-Speed-Detector.h"
+#include "Logger.h"
 
 #include <memory>
 
@@ -53,7 +54,7 @@ namespace tension_cpu {
 
 class CpuSpeedDetector : public ICpuSpeedDetector {
  public:
-  CpuSpeedDetector(std::shared_ptr<VariablesForCpuSpeedDetector> variables_for_cpu_speed_detector, std::shared_ptr<ICpuBenchmarker> cpu_benchmarker)
+  CpuSpeedDetector(std::shared_ptr<IVariablesForCpuSpeedDetector> variables_for_cpu_speed_detector, std::shared_ptr<ICpuBenchmarker> cpu_benchmarker)
       :
       variables_for_cpu_speed_detector_ { variables_for_cpu_speed_detector },
       cpu_benchmarker_ { cpu_benchmarker } {
@@ -64,13 +65,13 @@ class CpuSpeedDetector : public ICpuSpeedDetector {
     do {
       variables_for_cpu_speed_detector_->SetLoopS(1000 * 1000);
 
-      while (variables_for_cpu_speed_detector_->GetLoopS()) {
+      while (variables_for_cpu_speed_detector_->LoopSCounterSet()) {
         variables_for_cpu_speed_detector_->SetLoop(0);
 
         variables_for_cpu_speed_detector_->SetTimePeriod();
         while (variables_for_cpu_speed_detector_->GetLoop() < variables_for_cpu_speed_detector_->GetLoopS()) {
           cpu_benchmarker_->Run();
-          variables_for_cpu_speed_detector_->loop++;
+          variables_for_cpu_speed_detector_->SetLoop(variables_for_cpu_speed_detector_->GetLoop() + 1);
         }
 
         if (variables_for_cpu_speed_detector_->GetTimePeriodDiff() >= CALIBRATION_PERIOD)
@@ -83,13 +84,13 @@ class CpuSpeedDetector : public ICpuSpeedDetector {
         }
       }
 
-      if (variables_for_cpu_speed_detector_->GetLoopS())
+      if (variables_for_cpu_speed_detector_->CheckLoopSCounterNotZero()) {
         break;
-      else {
+      } else {
         variables_for_cpu_speed_detector_->SetLoadSlice(cpu_benchmarker_->GetLoadSlice());
         cpu_benchmarker_->SetLoadSlice(variables_for_cpu_speed_detector_->GetLoadSlice() * 10.0);
       }
-    } while (1);
+    } while (true);
 
     variables_for_cpu_speed_detector_->SetLoopsPerSecond(variables_for_cpu_speed_detector_->GetLoopS() / variables_for_cpu_speed_detector_->GetPeriod());
 
@@ -98,7 +99,7 @@ class CpuSpeedDetector : public ICpuSpeedDetector {
 
  private:
   std::shared_ptr<ICpuBenchmarker> cpu_benchmarker_;
-  std::shared_ptr<VariablesForCpuSpeedDetector> variables_for_cpu_speed_detector_;
+  std::shared_ptr<IVariablesForCpuSpeedDetector> variables_for_cpu_speed_detector_;
 };
 
 } /*namespace tension_cpu*/

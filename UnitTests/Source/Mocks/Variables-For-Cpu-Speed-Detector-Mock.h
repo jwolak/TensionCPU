@@ -1,5 +1,5 @@
 /*
- * IVariables-For-Cpu-Speed-Detector.h
+ * Variables-For-Cpu-Speed-Detector-Mock.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,33 +37,32 @@
  *
  */
 
-#ifndef SOURCE_IVARIABLES_FOR_CPU_SPEED_DETECTOR_H_
-#define SOURCE_IVARIABLES_FOR_CPU_SPEED_DETECTOR_H_
+#ifndef SOURCE_MOCKS_VARIABLES_FOR_CPU_SPEED_DETECTOR_MOCK_H_
+#define SOURCE_MOCKS_VARIABLES_FOR_CPU_SPEED_DETECTOR_MOCK_H_
 
-#include <cstdint>
-#include <time.h>
+#include "../../../TensionCPU/Source/Variables-For-Cpu-Speed-Detector.h"
 
-namespace tension_cpu {
+#include "gmock/gmock.h"
 
-class IVariablesForCpuSpeedDetector {
+namespace tension_cpu_mocks {
+
+class VariablesForCpuSpeedDetectorMock : public tension_cpu::IVariablesForCpuSpeedDetector {
  public:
-  virtual ~IVariablesForCpuSpeedDetector() = default;
-  virtual uint64_t GetLoopS(void) = 0;
-  virtual time_t GetPeriod(void) = 0;
-  virtual uint64_t GetLoop(void) = 0;
-  virtual uint64_t GetLoopsPerSecond() = 0;
-  virtual double GetLoadSlice(void) = 0;
-
-  virtual void SetLoopS(uint64_t) = 0;
-  virtual void SetLoop(uint64_t) = 0;
-  virtual void SetTimePeriod(void) = 0;
-  virtual time_t GetTimePeriodDiff(void) = 0;
-  virtual void SetLoadSlice(double) = 0;
-  virtual void SetLoopsPerSecond (uint64_t) = 0;
-  virtual bool CheckLoopSCounterNotZero() = 0;
-  virtual bool LoopSCounterSet() = 0;
+  MOCK_METHOD(uint64_t, GetLoopS, (), (override));
+  MOCK_METHOD(time_t, GetPeriod, (), (override));
+  MOCK_METHOD(uint64_t, GetLoop, (), (override));
+  MOCK_METHOD(uint64_t, GetLoopsPerSecond, (), (override));
+  MOCK_METHOD(double, GetLoadSlice, (), (override));
+  MOCK_METHOD(void, SetLoopS, (uint64_t), (override));
+  MOCK_METHOD(void, SetLoop, (uint64_t), (override));
+  MOCK_METHOD(void, SetTimePeriod, (), (override));
+  MOCK_METHOD(time_t, GetTimePeriodDiff, (), (override));
+  MOCK_METHOD(void, SetLoadSlice, (double), (override));
+  MOCK_METHOD(void, SetLoopsPerSecond, (uint64_t), (override));
+  MOCK_METHOD(bool, CheckLoopSCounterNotZero, (), (override));
+  MOCK_METHOD(bool, LoopSCounterSet, (), (override));
 };
 
-} /*namespace tension_cpu*/
+}/*namespace tension_cpu_mocks*/
 
-#endif /* SOURCE_IVARIABLES_FOR_CPU_SPEED_DETECTOR_H_ */
+#endif /* SOURCE_MOCKS_VARIABLES_FOR_CPU_SPEED_DETECTOR_MOCK_H_ */
