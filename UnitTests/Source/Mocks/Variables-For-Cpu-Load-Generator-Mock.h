@@ -1,5 +1,5 @@
 /*
- * Cpu-Load-Generator.h
+ * Variables-For-Cpu-Load-Generator-Mock.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,53 +37,31 @@
  *
  */
 
-#ifndef SOURCE_CPU_LOAD_GENERATOR_H_
-#define SOURCE_CPU_LOAD_GENERATOR_H_
+#ifndef SOURCE_MOCKS_VARIABLES_FOR_CPU_LOAD_GENERATOR_MOCK_H_
+#define SOURCE_MOCKS_VARIABLES_FOR_CPU_LOAD_GENERATOR_MOCK_H_
 
-#include "ICpu-Load-Generator.h"
+#include "../../../TensionCPU/Source/Variables-For-Cpu-Load-Generator.h"
 
-#include <memory>
-#include <mutex>
+#include "gmock/gmock.h"
 
-#include <cstdint>
-#include <unistd.h>
-#include <cstdio>
+namespace tension_cpu_mocks {
 
-#include "Cmd-Arguments.h"
-#include "Cpu-Speed-Detector.h"
-#include "Variables-For-Cpu-Load-Generator.h"
-
-namespace tension_cpu {
-
-class CpuLoadGenerator : public ICpuLoadGenerator {
+class VariablesForCpuLoadGeneratorMock : public tension_cpu::IVariablesForCpuLoadGenerator {
  public:
-  CpuLoadGenerator(std::shared_ptr<CmdArguments> cmd_arguments,
-                   std::shared_ptr<IVariablesForCpuLoadGenerator> variables_for_cpu_generator,
-                   std::shared_ptr<ICpuBenchmarker> cpu_benchmarker,
-                   std::shared_ptr<ICpuSpeedDetector> cpu_speed_detector)
-      :
-      cmd_arguments_ { cmd_arguments },
-      variables_for_cpu_generator_ { variables_for_cpu_generator },
-      cpu_benchmarker_ { cpu_benchmarker },
-      cpu_speed_detector_ { cpu_speed_detector },
-      mutex_ { } {
-  }
-
-  void Start(void) override;
-  void Stop(void) override;
-
- private:
-  std::shared_ptr<CmdArguments> cmd_arguments_;
-  std::shared_ptr<IVariablesForCpuLoadGenerator> variables_for_cpu_generator_;
-  std::shared_ptr<ICpuBenchmarker> cpu_benchmarker_;
-  std::shared_ptr<ICpuSpeedDetector> cpu_speed_detector_;
-  std::mutex mutex_;
-
-  bool GetCpuLoadGeneratorStatus() {
-    return variables_for_cpu_generator_->GetContinueCpuLoad();
-  }
+  MOCK_METHOD(bool, GetContinueCpuLoad, ());
+  MOCK_METHOD(void, SetContinueCpuLoad, (bool));
+  MOCK_METHOD(int32_t, GetCpuBusyLevel ,());
+  MOCK_METHOD(void, SetCpuBusyLevel, (int32_t));
+  MOCK_METHOD(uint64_t, GetCpuSlice, ());
+  MOCK_METHOD(void, SetCpuSlice, (uint64_t));
+  MOCK_METHOD(uint32_t, GetCpuIdleLevel, ());
+  MOCK_METHOD(void, SetCpuIdleLevel, (uint32_t));
+  MOCK_METHOD(uint64_t, GetCpuLoop, ());
+  MOCK_METHOD(void, SetCpuLoop, (uint64_t));
 };
 
-} /*namespace tension_cpu*/
+} /*namespace tension_cpu_mocks*/
 
-#endif /* SOURCE_CPU_LOAD_GENERATOR_H_ */
+
+
+#endif /* SOURCE_MOCKS_VARIABLES_FOR_CPU_LOAD_GENERATOR_MOCK_H_ */
