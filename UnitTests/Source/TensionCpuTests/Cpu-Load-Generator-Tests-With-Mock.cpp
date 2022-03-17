@@ -38,6 +38,8 @@
  */
 
 #include "../Mocks/Variables-For-Cpu-Load-Generator-Mock.h"
+#include "../Mocks/Cpu-Speed-Detector-Mock.h"
+#include "../Mocks/Cpu-Benchmarker-Mock.h"
 #include "../../../TensionCPU/Source/Cpu-Load-Generator.h"
 
 #include <gtest/gtest.h>
@@ -49,12 +51,6 @@
 
 using ::testing::Return;
 using ::testing::_;
-/*
-CpuLoadGenerator(std::shared_ptr<CmdArguments> cmd_arguments,
-                 std::shared_ptr<VariablesForCpuLoadGenerator> variables_for_cpu_generator,
-                 std::shared_ptr<ICpuBenchmarker> cpu_benchmarker,
-                 std::shared_ptr<ICpuSpeedDetector> cpu_speed_detector)*/
-
 
 namespace cpu_load_generator_tests_with_mock {
 
@@ -65,20 +61,28 @@ class CpuLoadGeneratorTestsWithMock : public ::testing::Test {
       cmd_arguments { new tension_cpu::CmdArguments },
       variables_for_cpu_generator_mock { new tension_cpu_mocks::VariablesForCpuLoadGeneratorMock },
       variables_for_cpu_benchmarker { new  tension_cpu::VariablesForCpuBenchmarker},
-      cpu_benchmarker { new tension_cpu::CpuBenchmarker {variables_for_cpu_benchmarker} },
+      cpu_benchmarkermock { new tension_cpu_mocks::CpuBenchmarkerMock },
       variables_for_cpu_speed_detector {new tension_cpu::VariablesForCpuSpeedDetector},
-      cpu_speed_detector { new tension_cpu::CpuSpeedDetector {variables_for_cpu_speed_detector, cpu_benchmarker} },
-      cpu_load_generator { new tension_cpu::CpuLoadGenerator { cmd_arguments, variables_for_cpu_generator_mock, cpu_benchmarker, cpu_speed_detector } } {
+      cpu_speed_detector_mock { new tension_cpu_mocks::CpuSpeedDetectorMock},
+      cpu_load_generator { new tension_cpu::CpuLoadGenerator { cmd_arguments, variables_for_cpu_generator_mock, cpu_benchmarkermock, cpu_speed_detector_mock } } {
   }
 
   std::shared_ptr<tension_cpu::CmdArguments> cmd_arguments;
   std::shared_ptr<tension_cpu_mocks::VariablesForCpuLoadGeneratorMock> variables_for_cpu_generator_mock;
   std::shared_ptr<tension_cpu::VariablesForCpuBenchmarker> variables_for_cpu_benchmarker;
-  std::shared_ptr<tension_cpu::ICpuBenchmarker> cpu_benchmarker;
+  std::shared_ptr<tension_cpu_mocks::CpuBenchmarkerMock> cpu_benchmarkermock;
   std::shared_ptr<tension_cpu::IVariablesForCpuSpeedDetector> variables_for_cpu_speed_detector;
-  std::shared_ptr<tension_cpu::ICpuSpeedDetector> cpu_speed_detector;
+  std::shared_ptr<tension_cpu_mocks::CpuSpeedDetectorMock> cpu_speed_detector_mock;
   std::unique_ptr<tension_cpu::ICpuLoadGenerator> cpu_load_generator;
 
 };
+
+TEST_F(CpuLoadGeneratorTestsWithMock, Load_Generator_Started_And_Set_To_Be_Stopped_And_Main_Loop_Stopped) {
+  EXPECT_CALL(*variables_for_cpu_generator_mock, SetCpuBusyLevel(_)).Times(1);
+  EXPECT_CALL(*variables_for_cpu_generator_mock, SetCpuSlice(_)).Times(1);
+  EXPECT_CALL(*cpu_speed_detector_mock, GetLoopsPerSecond()).WillOnce(Return(1));
+  EXPECT_CALL(*variables_for_cpu_generator_mock, GetContinueCpuLoad()).WillOnce(Return(false));
+  cpu_load_generator->Start();
+}
 
 } /*namespace cpu_load_generator_tests_with_mock*/
