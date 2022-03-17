@@ -43,6 +43,7 @@
 #include "IVariables-For-Cpu-Load-Generator.h"
 
 #include <cstdint>
+#include <mutex>
 
 namespace tension_cpu {
 
@@ -57,16 +58,24 @@ class VariablesForCpuLoadGenerator : public IVariablesForCpuLoadGenerator {
       cpu_loop { 0 } {
   }
 
-  bool GetContinueCpuLoad() override {}
-  void SetContinueCpuLoad(bool) override {}
-  int32_t GetCpuBusyLevel() override {}
-  void SetCpuBusyLevel(int32_t) override {}
-  uint64_t GetCpuSlice() override {}
-  void SetCpuSlice(uint64_t) override {}
-  uint32_t GetCpuIdleLevel() override {}
-  void SetCpuIdleLevel(uint32_t) override {}
-  uint64_t GetCpuLoop() override {}
-  void SetCpuLoop(uint64_t) override {}
+  bool GetContinueCpuLoad() override {
+    std::lock_guard<std::mutex> lock(mutex_);
+    return continue_cpu_load;
+  }
+
+  void SetContinueCpuLoad(bool status_to_be_set) override {
+    std::lock_guard<std::mutex> lock(mutex_);
+    continue_cpu_load = status_to_be_set;
+  }
+
+  int32_t GetCpuBusyLevel() override { return cpu_busy_level; }
+  void SetCpuBusyLevel(int32_t busy_level_to_be_set) override { cpu_busy_level =  busy_level_to_be_set; }
+  uint64_t GetCpuSlice() override { return cpu_slice; }
+  void SetCpuSlice(uint64_t cpu_slice_to_be_set) override { cpu_slice = cpu_slice_to_be_set; }
+  uint32_t GetCpuIdleLevel() override { return cpu_idle_level; }
+  void SetCpuIdleLevel(uint32_t idle_level_to_be_set) override { cpu_idle_level = idle_level_to_be_set; }
+  uint64_t GetCpuLoop() override { return cpu_loop; }
+  void SetCpuLoop(uint64_t cpu_loop_to_be_set) override { cpu_loop = cpu_loop_to_be_set; }
 
   bool continue_cpu_load;
   int32_t cpu_busy_level;

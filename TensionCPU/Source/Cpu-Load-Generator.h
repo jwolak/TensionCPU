@@ -80,8 +80,7 @@ class CpuLoadGenerator : public ICpuLoadGenerator {
   std::mutex mutex_;
 
   bool GetCpuLoadGeneratorStatus() {
-    std::lock_guard<std::mutex> lock(mutex_);
-    return variables_for_cpu_generator_->continue_cpu_load;
+    return variables_for_cpu_generator_->GetContinueCpuLoad();
   }
 };
 

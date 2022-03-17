@@ -41,36 +41,35 @@
 #include "Logger.h"
 
  void tension_cpu::CpuLoadGenerator::Stop(void) {
-  std::lock_guard<std::mutex> lock(mutex_);
-  variables_for_cpu_generator_->continue_cpu_load  = false;
+  variables_for_cpu_generator_->SetContinueCpuLoad(false);
   LOG_DEBUG("%s", "continue_cpu_load_ set to false");
   LOG_DEBUG("%s", "CpuLoadGenerator set to stop");
 }
 
 void tension_cpu::CpuLoadGenerator::Start(void) {
 
-  variables_for_cpu_generator_->cpu_busy_level = cmd_arguments_->cpu_load;
+  variables_for_cpu_generator_->SetCpuBusyLevel(cmd_arguments_->cpu_load);
   LOG_DEBUG("cmd_arguments_->cpu_load: %d, File: %s, Line: %d", cmd_arguments_->cpu_load, __FILE__, __LINE__);
 
-  variables_for_cpu_generator_->cpu_slice = cpu_speed_detector_->GetLoopsPerSecond() / 100;
+  variables_for_cpu_generator_->SetCpuSlice(cpu_speed_detector_->GetLoopsPerSecond() / 100);
 
   LOG_DEBUG("%s %d [%]", "CpuLoadGenerator generates CPU load: ", variables_for_cpu_generator_->cpu_busy_level);
 
-  while (GetCpuLoadGeneratorStatus()) {
-    variables_for_cpu_generator_->cpu_idle_level = 100 - variables_for_cpu_generator_->cpu_busy_level;
+  while (variables_for_cpu_generator_->GetContinueCpuLoad()) {
+    variables_for_cpu_generator_->SetCpuIdleLevel(variables_for_cpu_generator_->cpu_busy_level);
 
-    while ((variables_for_cpu_generator_->cpu_busy_level || variables_for_cpu_generator_->cpu_idle_level) && GetCpuLoadGeneratorStatus()) {
-      if (variables_for_cpu_generator_->cpu_busy_level) {
+    while ((variables_for_cpu_generator_->GetCpuBusyLevel() || variables_for_cpu_generator_->GetCpuIdleLevel()) && variables_for_cpu_generator_->GetContinueCpuLoad()) {
+      if (variables_for_cpu_generator_->GetCpuBusyLevel()) {
 
-        variables_for_cpu_generator_->cpu_loop = 0;
-        while ((variables_for_cpu_generator_->cpu_loop < variables_for_cpu_generator_->cpu_slice) && GetCpuLoadGeneratorStatus()) {
+        variables_for_cpu_generator_->SetCpuLoop(0);
+        while ((variables_for_cpu_generator_->GetCpuLoop() < variables_for_cpu_generator_->GetCpuSlice()) && variables_for_cpu_generator_->GetContinueCpuLoad()) {
           cpu_benchmarker_->Run();
           variables_for_cpu_generator_->cpu_loop++;
         }
         variables_for_cpu_generator_->cpu_busy_level--;
       }
 
-      variables_for_cpu_generator_->cpu_idle_level = cpu_benchmarker_->GenerateIdle(variables_for_cpu_generator_->cpu_idle_level);
+      variables_for_cpu_generator_->SetCpuIdleLevel(cpu_benchmarker_->GenerateIdle(variables_for_cpu_generator_->cpu_idle_level));
     }
   }
 
