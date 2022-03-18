@@ -85,4 +85,15 @@ TEST_F(CpuLoadGeneratorTestsWithMock, Load_Generator_Started_And_Set_To_Be_Stopp
   cpu_load_generator->Start();
 }
 
+TEST_F(CpuLoadGeneratorTestsWithMock,t) {
+  EXPECT_CALL(*variables_for_cpu_generator_mock, SetCpuBusyLevel(_)).Times(1);
+  EXPECT_CALL(*variables_for_cpu_generator_mock, SetCpuSlice(_)).Times(1);
+  EXPECT_CALL(*cpu_speed_detector_mock, GetLoopsPerSecond()).WillOnce(Return(1));
+  EXPECT_CALL(*variables_for_cpu_generator_mock, GetContinueCpuLoad()).Times(2).WillOnce(Return(true)).WillOnce(Return(false));
+  EXPECT_CALL(*variables_for_cpu_generator_mock, SetCpuIdleLevel(_)).Times(1);
+  EXPECT_CALL(*variables_for_cpu_generator_mock, GetCpuBusyLevel()).Times(2).WillRepeatedly(Return(0));
+  EXPECT_CALL(*variables_for_cpu_generator_mock, GetCpuIdleLevel()).WillOnce(Return(0));
+  cpu_load_generator->Start();
+}
+
 } /*namespace cpu_load_generator_tests_with_mock*/
