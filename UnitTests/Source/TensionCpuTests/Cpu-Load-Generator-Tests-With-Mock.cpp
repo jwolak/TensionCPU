@@ -61,16 +61,16 @@ class CpuLoadGeneratorTestsWithMock : public ::testing::Test {
       cmd_arguments { new tension_cpu::CmdArguments },
       variables_for_cpu_generator_mock { new tension_cpu_mocks::VariablesForCpuLoadGeneratorMock },
       variables_for_cpu_benchmarker { new  tension_cpu::VariablesForCpuBenchmarker},
-      cpu_benchmarkermock { new tension_cpu_mocks::CpuBenchmarkerMock },
+      cpu_benchmarker_mock { new tension_cpu_mocks::CpuBenchmarkerMock },
       variables_for_cpu_speed_detector {new tension_cpu::VariablesForCpuSpeedDetector},
       cpu_speed_detector_mock { new tension_cpu_mocks::CpuSpeedDetectorMock},
-      cpu_load_generator { new tension_cpu::CpuLoadGenerator { cmd_arguments, variables_for_cpu_generator_mock, cpu_benchmarkermock, cpu_speed_detector_mock } } {
+      cpu_load_generator { new tension_cpu::CpuLoadGenerator { cmd_arguments, variables_for_cpu_generator_mock, cpu_benchmarker_mock, cpu_speed_detector_mock } } {
   }
 
   std::shared_ptr<tension_cpu::CmdArguments> cmd_arguments;
   std::shared_ptr<tension_cpu_mocks::VariablesForCpuLoadGeneratorMock> variables_for_cpu_generator_mock;
   std::shared_ptr<tension_cpu::VariablesForCpuBenchmarker> variables_for_cpu_benchmarker;
-  std::shared_ptr<tension_cpu_mocks::CpuBenchmarkerMock> cpu_benchmarkermock;
+  std::shared_ptr<tension_cpu_mocks::CpuBenchmarkerMock> cpu_benchmarker_mock;
   std::shared_ptr<tension_cpu::IVariablesForCpuSpeedDetector> variables_for_cpu_speed_detector;
   std::shared_ptr<tension_cpu_mocks::CpuSpeedDetectorMock> cpu_speed_detector_mock;
   std::unique_ptr<tension_cpu::ICpuLoadGenerator> cpu_load_generator;
@@ -85,7 +85,7 @@ TEST_F(CpuLoadGeneratorTestsWithMock, Load_Generator_Started_And_Set_To_Be_Stopp
   cpu_load_generator->Start();
 }
 
-TEST_F(CpuLoadGeneratorTestsWithMock,t) {
+TEST_F(CpuLoadGeneratorTestsWithMock, Load_Generator_Started_And_Stoped_When_BusyLevel_Is_Zero) {
   EXPECT_CALL(*variables_for_cpu_generator_mock, SetCpuBusyLevel(_)).Times(1);
   EXPECT_CALL(*variables_for_cpu_generator_mock, SetCpuSlice(_)).Times(1);
   EXPECT_CALL(*cpu_speed_detector_mock, GetLoopsPerSecond()).WillOnce(Return(1));
@@ -93,6 +93,21 @@ TEST_F(CpuLoadGeneratorTestsWithMock,t) {
   EXPECT_CALL(*variables_for_cpu_generator_mock, SetCpuIdleLevel(_)).Times(1);
   EXPECT_CALL(*variables_for_cpu_generator_mock, GetCpuBusyLevel()).Times(2).WillRepeatedly(Return(0));
   EXPECT_CALL(*variables_for_cpu_generator_mock, GetCpuIdleLevel()).WillOnce(Return(0));
+  cpu_load_generator->Start();
+}
+
+TEST_F(CpuLoadGeneratorTestsWithMock, Load_Generator_Two_Loops_Launched_And_One_Blocked) {
+  EXPECT_CALL(*variables_for_cpu_generator_mock, SetCpuBusyLevel(_)).Times(2);
+  EXPECT_CALL(*variables_for_cpu_generator_mock, SetCpuSlice(_)).Times(1);
+  EXPECT_CALL(*cpu_speed_detector_mock, GetLoopsPerSecond()).WillOnce(Return(1));
+  EXPECT_CALL(*variables_for_cpu_generator_mock, GetContinueCpuLoad()).Times(4).WillOnce(Return(true)).WillOnce(Return(true)).WillOnce(Return(false)).WillOnce(Return(false));
+  EXPECT_CALL(*variables_for_cpu_generator_mock, SetCpuIdleLevel(_)).Times(2);
+  EXPECT_CALL(*variables_for_cpu_generator_mock, GetCpuBusyLevel()).Times(5).WillOnce(Return(0)).WillOnce(Return(1));
+  EXPECT_CALL(*variables_for_cpu_generator_mock, GetCpuIdleLevel()).Times(1).WillOnce(Return(1));
+  EXPECT_CALL(*variables_for_cpu_generator_mock, SetCpuLoop(_)).Times(1);
+  EXPECT_CALL(*variables_for_cpu_generator_mock, GetCpuLoop()).Times(1).WillOnce(Return(0));
+  EXPECT_CALL(*variables_for_cpu_generator_mock, GetCpuSlice()).Times(1).WillOnce(Return(0));
+  EXPECT_CALL(*cpu_benchmarker_mock, GenerateIdle(_)).Times(1);
   cpu_load_generator->Start();
 }
 
