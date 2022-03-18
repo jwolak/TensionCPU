@@ -70,7 +70,8 @@ char* kCpuLoadAndTestTimeCommandLineArguments[] = {kTestProgramName, (char*)("-l
 char* kCpuLoadAndTestTimeAndSchedulingAlgorithBatchCommandLineArguments[] = {kTestProgramName, (char*)("-l 90 -T 10 -S " + sched_mode_batch).c_str() };
 char* kCpuLoadAndTestTimeAndSchedulingAlgorithFifoCommandLineArguments[] = {kTestProgramName, (char*)("-l 90 -T 10 -S " + sched_mode_fifo).c_str() };
 char* kCpuLoadAndTestTimeAndSchedulingAlgorithRoundRobinCommandLineArguments[] = {kTestProgramName, (char*)("-l 90 -T 10 -S " + sched_mode_rr).c_str() };
-char* kCpuLoadAndTestTimeAndSchedulingAlgorithOtherCommandLineArguments[] = {kTestProgramName, (char*)("-l 90 -T 10 -S " + sched_mode_other).c_str() };
+char* kCpuLoadAndTestTimeAndSchedulingAlgorithOtherCommandLineArguments[] = {{(char*)kTestProgramName}, {(char*)"-l 90"}, {(char*)"-T 10"}, {(char*)"-S o"} };
+/*{{(char*)"test"}, {(char*)"-l 90"}, {(char*)"-T 10"}, {(char*)"-S r"}}*/
 }
 
 class CmdArgsParserTests : public ::testing::Test {
@@ -112,14 +113,14 @@ TEST_F(CmdArgsParserTests, Process_Sched_Mode_Fifo_Argument_And_Fifo_Mode_In_Cmd
 
 TEST_F(CmdArgsParserTests, Process_Sched_Mode_RounRobin_Argument_And_RoundRobin_Mode_In_CmdArguments_Is_Set) {
   char *test[] = {{(char*)"test"}, {(char*)"-l 90"}, {(char*)"-T 10"}, {(char*)"-S r"}};
-  cmd_args_parser->ProcessArguments(kNumberOfArgumentsSetToFour, test /*kCpuLoadAndTestTimeAndSchedulingAlgorithRoundRobinCommandLineArguments*/);
+  cmd_args_parser->ProcessArguments(kNumberOfArgumentsSetToFour, kCpuLoadAndTestTimeAndSchedulingAlgorithRoundRobinCommandLineArguments);
   EXPECT_EQ(cmd_arguments->scheduling_policy, tension_cpu::SchedulingPolicyType::RR);
 }
-/*
+
 TEST_F(CmdArgsParserTests, Process_Sched_Mode_Other_Argument_And_Other_Mode_In_CmdArguments_Is_Set) {
   cmd_args_parser->ProcessArguments(kNumberOfArgumentsSetToFour, kCpuLoadAndTestTimeAndSchedulingAlgorithOtherCommandLineArguments);
   ASSERT_EQ(cmd_arguments->scheduling_policy, tension_cpu::SchedulingPolicyType::OTHER);
-}*/
+}
 
 } /*namespace cmd_args_parser_test*/
 
