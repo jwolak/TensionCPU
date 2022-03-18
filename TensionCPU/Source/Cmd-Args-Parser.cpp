@@ -40,6 +40,7 @@
 #include "Cmd-Args-Parser.h"
 
 #include <getopt.h>
+#include <cstring>
 
 #include <iostream>
 
@@ -69,7 +70,7 @@ bool tension_cpu::CmdArgsParser::ProcessArguments(int argc, char **argv) {
   int flag;
   int32_t cpu_load;
   int32_t cpu_load_total_time;
-  int32_t sched_mode;
+  SchedulingPolicyType sched_mode;
 
   static struct option longopts[] = {
       {"help", no_argument, NULL, 'h' },
@@ -78,36 +79,69 @@ bool tension_cpu::CmdArgsParser::ProcessArguments(int argc, char **argv) {
       {"Sched", required_argument, NULL, 'S'},
   };
 
+  LOG_DEBUG("%s, File: %s, Line: %d", "CmdArgsParser::ProcessArguments", __FILE__, __LINE__);
+  LOG_DEBUG("argc: %d", argc);
+
+  for (int i = 0; i < argc; ++i) {
+    LOG_DEBUG("argv[%d]: %s", i, argv[i]);
+  }
+
   while ((flag = getopt_long(argc, argv, "hl:T:S:", longopts, NULL)) != -1) {
     switch (flag) {
     case 'h':
+      std::cout << kFHelpMenuPrint << std::endl;
+      LOG_DEBUG("%s", "Help printed");
       break;
 
     case 'l':
+      LOG_DEBUG("%s%s", "Load value:", optarg);
       cpu_load = atoi(optarg);
-      LOG_DEBUG("%s", "%d", "Load CPU set to: ", cpu_load );
+      LOG_DEBUG("%s %d[%]", "Load CPU set to: ", cpu_load);
       break;
 
     case 'T':
+      LOG_DEBUG("%s%s", "Time value:", optarg);
       cpu_load_total_time = atoi(optarg);
-      LOG_DEBUG("%s", "%d", "CPU load total time set to: ", cpu_load_total_time );
+      LOG_DEBUG("%s %d [s]", "CPU load total time set to: ", cpu_load_total_time );
       break;
 
     case 'S':
-      /*sched_mode = atoi(optarg);*/
-      LOG_DEBUG("%s", "%d", "Scheduling mode set to: ", sched_mode );
+        LOG_DEBUG("%s%s", "Scheduling mode:", optarg);
+
+        if( strncmp(optarg, " b", 2) == 0) {
+          cmd_arguments_->scheduling_policy = SchedulingPolicyType::BATCH;
+          LOG_DEBUG("%s", "Scheduling mode set to: BTACH");
+        }
+
+        if (strncmp(optarg, " f", 2)  == 0) {
+          cmd_arguments_->scheduling_policy = SchedulingPolicyType::FIFO;
+          LOG_DEBUG("%s", "Scheduling mode set to: FIFO");
+        }
+
+        if (strncmp(optarg, " r", 2)  == 0) {
+          cmd_arguments_->scheduling_policy = SchedulingPolicyType::RR;
+          LOG_DEBUG("%s", "Scheduling mode set to: RR");
+        }
+
+        if (strncmp(optarg, " o", 2)  == 0) {
+          cmd_arguments_->scheduling_policy = SchedulingPolicyType::OTHER;
+          LOG_DEBUG("%s", "Scheduling mode set to: OTHER");
+        }
       break;
 
     default:
       std::cout << kQuickHelpMenuPrint << std::endl;
+      LOG_ERROR("%s", "Invalid parameter(s) provided");
       return false;
     }
   }
 
+  LOG_DEBUG("%s", "Parameters parsed successfully");
   return true;
 }
 
 
 void tension_cpu::CmdArgsParser::PrintHelpMenu() {
   std::cout << kFHelpMenuPrint << std::endl;
+  LOG_DEBUG("%s", "kFHelpMenuPrint() called");
 }
