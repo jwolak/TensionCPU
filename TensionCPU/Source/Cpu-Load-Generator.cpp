@@ -57,14 +57,11 @@ void tension_cpu::CpuLoadGenerator::Start(void) {
 
   while (variables_for_cpu_generator_->GetContinueCpuLoad()) {
     variables_for_cpu_generator_->SetCpuIdleLevel(100 - variables_for_cpu_generator_->GetCpuBusyLevel());
-    LOG_DEBUG("%s", "Loop 1");
 
     while ((variables_for_cpu_generator_->GetCpuBusyLevel() || variables_for_cpu_generator_->GetCpuIdleLevel()) && variables_for_cpu_generator_->GetContinueCpuLoad()) {
-      LOG_DEBUG("%s", "Loop 2");
       if (variables_for_cpu_generator_->GetCpuBusyLevel()) {
         variables_for_cpu_generator_->SetCpuLoop(0);
         while ((variables_for_cpu_generator_->GetCpuLoop() < variables_for_cpu_generator_->GetCpuSlice()) && variables_for_cpu_generator_->GetContinueCpuLoad()) {
-          LOG_DEBUG("%s", "Loop 3");
           cpu_benchmarker_->Run();
           variables_for_cpu_generator_->SetCpuLoop(variables_for_cpu_generator_->GetCpuLoop() + 1 );
         }

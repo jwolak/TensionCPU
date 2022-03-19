@@ -43,8 +43,6 @@
 
 bool tension_cpu::TensionCpu::ParseCmdArguments(int argc, char **argv) {
 
-  LOG_DEBUG("Arguments: %s, File: %s, Line: %d", argv, __FILE__, __LINE__);
-
   if (true == cmd_arg_parser_->ProcessArguments(argc, argv)) {
     LOG_DEBUG("%s", "Arguments parsed successfully");
     return true;

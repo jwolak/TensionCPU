@@ -46,6 +46,8 @@
 
 #include "Logger.h"
 
+const int32_t kMaxTestTime = 3600; //[sec]
+
 namespace tension_cpu {
 
 const char kQuickHelpMenuPrint[] = "Usage: tensionCpu -l [CPU load in %] -T [total time in sec] [options]\n"
@@ -99,12 +101,28 @@ bool tension_cpu::CmdArgsParser::ProcessArguments(int argc, char **argv) {
     case 'l':
       LOG_DEBUG("%s%s", "Load value:", optarg);
       cmd_arguments_->cpu_load = atoi(optarg);
+
+        if (cmd_arguments_->cpu_load <= 0 || cmd_arguments_->cpu_load > 100) {
+          LOG_ERROR("%s%d[%]", "Load has invalid value: ", cmd_arguments_->cpu_load);
+          return false;
+        }
+
       LOG_DEBUG("%s %d[%]", "Load CPU set to: ", cmd_arguments_->cpu_load);
       break;
 
     case 'T':
       LOG_DEBUG("%s%s", "Time value:", optarg);
       cmd_arguments_->test_time = std::chrono::seconds{atoi(optarg)};
+      if ( cmd_arguments_->test_time.count() > kMaxTestTime || cmd_arguments_->test_time.count() < 0) {
+        LOG_ERROR("%s%d", "Test time has invalid value: ", cmd_arguments_->test_time.count());
+        return false;
+      }
+
+      if (cmd_arguments_->test_time.count() == 0) {
+        cmd_arguments_->test_time = std::chrono::seconds { kMaxTestTime };
+        LOG_DEBUG("%s%d[s]", "Test time value set to max: ", kMaxTestTime);
+      }
+
       LOG_DEBUG("%s %d [s]", "CPU load total time set to: ", cmd_arguments_->test_time );
       break;
 
@@ -114,23 +132,29 @@ bool tension_cpu::CmdArgsParser::ProcessArguments(int argc, char **argv) {
         if( strncmp(optarg, " b", 2) == 0) {
           cmd_arguments_->scheduling_policy = SchedulingPolicyType::BATCH;
           LOG_DEBUG("%s", "Scheduling mode set to: BTACH");
+          break;
         }
 
         if (strncmp(optarg, " f", 2)  == 0) {
           cmd_arguments_->scheduling_policy = SchedulingPolicyType::FIFO;
           LOG_DEBUG("%s", "Scheduling mode set to: FIFO");
+          break;
         }
 
         if (strncmp(optarg, " r", 2)  == 0) {
           cmd_arguments_->scheduling_policy = SchedulingPolicyType::RR;
           LOG_DEBUG("%s", "Scheduling mode set to: RR");
+          break;
         }
 
-        if (strncmp(optarg, " o", 2)  == 0) {
+        if (strncmp(optarg, " o", 2) == 0) {
           cmd_arguments_->scheduling_policy = SchedulingPolicyType::OTHER;
           LOG_DEBUG("%s", "Scheduling mode set to: OTHER");
+          break;
+        } else {
+          LOG_ERROR("%s%s", "Invalid scheduling mode provided: ", optarg);
+          return false;
         }
-      break;
 
     default:
       std::cout << kQuickHelpMenuPrint << std::endl;

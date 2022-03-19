@@ -3,11 +3,11 @@
 #include <gtest/gtest.h>
 #include "gmock/gmock.h"
 
-#include "TensionCpuTests/Cmd-Args-Parser-Tests.cpp"
-#include "TensionCpuTests/Tension-Cpu-Tests.cpp"
+//#include "TensionCpuTests/Cmd-Args-Parser-Tests.cpp"
 #include "TensionCpuTests/Cpu-Benchmarker-Tests.cpp"
 #include "TensionCpuTests/Cpu-Speed-Detector-Tests-With-Mock.cpp"
 #include "TensionCpuTests/Cpu-Load-Generator-Tests-With-Mock.cpp"
+#include "TensionCpuTests/Tension-Cpu-Tests.cpp"
 
 int main(int argc, char **argv) {
     SET_LOG_LEVEL(equinox_logger::LogLevelType::LOG_LEVEL_DEBUG);

@@ -39,6 +39,7 @@
 
 
 #include "../../../TensionCPU/Source/Variables-For-Cpu-Benchmarker.h"
+#include "../../../TensionCPU/Source/Cpu-Benchmarker.h"
 
 #include <gtest/gtest.h>
 
