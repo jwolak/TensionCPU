@@ -65,7 +65,7 @@ class CmdArguments {
   int32_t scheduling_nice_priotity;
   SchedulingPolicyType scheduling_policy;
   int32_t cpu_load;
-  const std::chrono::seconds test_time;
+  std::chrono::seconds test_time;
 };
 
 } /*namespace tension_cpu*/

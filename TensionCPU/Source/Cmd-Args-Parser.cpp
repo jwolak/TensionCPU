@@ -67,10 +67,13 @@ const char kFHelpMenuPrint[] = "Usage: tensionCpu -l [--load] [CPU load in %] -T
 
 bool tension_cpu::CmdArgsParser::ProcessArguments(int argc, char **argv) {
 
-  int flag;
-  int32_t cpu_load;
-  int32_t cpu_load_total_time;
-  SchedulingPolicyType sched_mode;
+  int flag = 0;
+
+  if (argc < 2) {
+    LOG_ERROR("%s", "No arguments provided");
+    std::cout << kQuickHelpMenuPrint << std::endl;
+    return false;
+  }
 
   static struct option longopts[] = {
       {"help", no_argument, NULL, 'h' },
@@ -95,14 +98,14 @@ bool tension_cpu::CmdArgsParser::ProcessArguments(int argc, char **argv) {
 
     case 'l':
       LOG_DEBUG("%s%s", "Load value:", optarg);
-      cpu_load = atoi(optarg);
-      LOG_DEBUG("%s %d[%]", "Load CPU set to: ", cpu_load);
+      cmd_arguments_->cpu_load = atoi(optarg);
+      LOG_DEBUG("%s %d[%]", "Load CPU set to: ", cmd_arguments_->cpu_load);
       break;
 
     case 'T':
       LOG_DEBUG("%s%s", "Time value:", optarg);
-      cpu_load_total_time = atoi(optarg);
-      LOG_DEBUG("%s %d [s]", "CPU load total time set to: ", cpu_load_total_time );
+      cmd_arguments_->test_time = std::chrono::seconds{atoi(optarg)};
+      LOG_DEBUG("%s %d [s]", "CPU load total time set to: ", cmd_arguments_->test_time );
       break;
 
     case 'S':

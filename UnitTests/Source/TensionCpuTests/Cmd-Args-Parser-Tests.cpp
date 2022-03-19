@@ -58,20 +58,15 @@ const uint32_t kNumberOfArgumentsSetToFour  = 4;
 
 int32_t cpu_load_value = 90;
 int32_t test_time      = 10;
-std::string sched_mode_batch = "b";
-std::string sched_mode_fifo = "f";
-std::string sched_mode_rr = "r";
-std::string sched_mode_other = "o";
 
 char* kTestProgramName = (char*)"TestAppName";
 char* kEmptyCommandLineArgument[] = {kTestProgramName};
-char* kCpuLoadCommandLineArgument[] = {kTestProgramName, (char*)("-l " + std::to_string(cpu_load_value)).c_str()};
-char* kCpuLoadAndTestTimeCommandLineArguments[] = {kTestProgramName, (char*)("-l 90 -T " + std::to_string(test_time)).c_str()};
-char* kCpuLoadAndTestTimeAndSchedulingAlgorithBatchCommandLineArguments[] = {kTestProgramName, (char*)("-l 90 -T 10 -S " + sched_mode_batch).c_str() };
-char* kCpuLoadAndTestTimeAndSchedulingAlgorithFifoCommandLineArguments[] = {kTestProgramName, (char*)("-l 90 -T 10 -S " + sched_mode_fifo).c_str() };
-char* kCpuLoadAndTestTimeAndSchedulingAlgorithRoundRobinCommandLineArguments[] = {kTestProgramName, (char*)("-l 90 -T 10 -S " + sched_mode_rr).c_str() };
+char* kCpuLoadCommandLineArgument[] = {{(char*)kTestProgramName}, {(char*)"-l 90"}};
+char* kCpuLoadAndTestTimeCommandLineArguments[] = {{kTestProgramName}, {(char*)"-l 90"}, {(char*)"-T 10"}};
+char* kCpuLoadAndTestTimeAndSchedulingAlgorithBatchCommandLineArguments[] = {{(char*)kTestProgramName}, {(char*)"-l 90"}, {(char*)"-T 10"}, {(char*)"-S b"}};
+char* kCpuLoadAndTestTimeAndSchedulingAlgorithFifoCommandLineArguments[] = {{(char*)kTestProgramName}, {(char*)"-l 90"}, {(char*)"-T 10"}, {(char*)"-S f"}};
+char* kCpuLoadAndTestTimeAndSchedulingAlgorithRoundRobinCommandLineArguments[] = {{(char*)kTestProgramName}, {(char*)"-l 90"}, {(char*)"-T 10"}, {(char*)"-S r"}};
 char* kCpuLoadAndTestTimeAndSchedulingAlgorithOtherCommandLineArguments[] = {{(char*)kTestProgramName}, {(char*)"-l 90"}, {(char*)"-T 10"}, {(char*)"-S o"} };
-/*{{(char*)"test"}, {(char*)"-l 90"}, {(char*)"-T 10"}, {(char*)"-S r"}}*/
 }
 
 class CmdArgsParserTests : public ::testing::Test {
@@ -112,7 +107,6 @@ TEST_F(CmdArgsParserTests, Process_Sched_Mode_Fifo_Argument_And_Fifo_Mode_In_Cmd
 }
 
 TEST_F(CmdArgsParserTests, Process_Sched_Mode_RounRobin_Argument_And_RoundRobin_Mode_In_CmdArguments_Is_Set) {
-  char *test[] = {{(char*)"test"}, {(char*)"-l 90"}, {(char*)"-T 10"}, {(char*)"-S r"}};
   cmd_args_parser->ProcessArguments(kNumberOfArgumentsSetToFour, kCpuLoadAndTestTimeAndSchedulingAlgorithRoundRobinCommandLineArguments);
   EXPECT_EQ(cmd_arguments->scheduling_policy, tension_cpu::SchedulingPolicyType::RR);
 }
