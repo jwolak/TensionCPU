@@ -129,25 +129,25 @@ bool tension_cpu::CmdArgsParser::ProcessArguments(int argc, char **argv) {
     case 'S':
         LOG_DEBUG("%s%s", "Scheduling mode:", optarg);
 
-        if( strncmp(optarg, " b", 2) == 0) {
+        if( strncmp(optarg, "b", 2) == 0) {
           cmd_arguments_->scheduling_policy = SchedulingPolicyType::BATCH;
           LOG_DEBUG("%s", "Scheduling mode set to: BTACH");
           break;
         }
 
-        if (strncmp(optarg, " f", 2)  == 0) {
+        if (strncmp(optarg, "f", 2)  == 0) {
           cmd_arguments_->scheduling_policy = SchedulingPolicyType::FIFO;
           LOG_DEBUG("%s", "Scheduling mode set to: FIFO");
           break;
         }
 
-        if (strncmp(optarg, " r", 2)  == 0) {
+        if (strncmp(optarg, "r", 2)  == 0) {
           cmd_arguments_->scheduling_policy = SchedulingPolicyType::RR;
           LOG_DEBUG("%s", "Scheduling mode set to: RR");
           break;
         }
 
-        if (strncmp(optarg, " o", 2) == 0) {
+        if (strncmp(optarg, "o", 2) == 0) {
           cmd_arguments_->scheduling_policy = SchedulingPolicyType::OTHER;
           LOG_DEBUG("%s", "Scheduling mode set to: OTHER");
           break;
