@@ -16,6 +16,7 @@ ${SOURCE_FILES_DIR}/ICpu-Load-Generator.h
 ${SOURCE_FILES_DIR}/ITimer.h
 ${SOURCE_FILES_DIR}/IUnit-Cpu-Load-Producer.h
 ${SOURCE_FILES_DIR}/ICpu-Benchmark.h
+${SOURCE_FILES_DIR}/ILoad-Generator-Work-Control.h
 
 #headers
 ${SOURCE_FILES_DIR}/Tension-Cpu.h
@@ -28,6 +29,7 @@ ${SOURCE_FILES_DIR}/Scheduling-Policy-Type.h
 ${SOURCE_FILES_DIR}/Unit-Cpu-Load-Producer.h
 ${SOURCE_FILES_DIR}/Cpu-Benchmark.h
 ${SOURCE_FILES_DIR}/Cpu-Load-Generator-Shared-Data.h
+${SOURCE_FILES_DIR}/Load-Generator-Work-Control.h
 
 #source
 ${SOURCE_FILES_DIR}/Tension-Cpu.cpp
@@ -38,6 +40,7 @@ ${SOURCE_FILES_DIR}/Cpu-Load-Generator.cpp
 ${SOURCE_FILES_DIR}/Timer.cpp
 ${SOURCE_FILES_DIR}/Unit-Cpu-Load-Producer.cpp
 ${SOURCE_FILES_DIR}/Cpu-Benchmark.cpp
+${SOURCE_FILES_DIR}/Load-Generator-Work-Control.cpp
 )
 
 target_link_libraries(TensionCPU.x86 libEquinoxLogger.a)

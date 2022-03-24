@@ -1,5 +1,5 @@
 /*
- * Cpu-Load-Generator.cpp
+ * Load-Generator-Work-Control.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,57 +37,16 @@
  *
  */
 
-#include "Cpu-Load-Generator.h"
+#include "Load-Generator-Work-Control.h"
 #include "Logger.h"
 
- void tension_cpu::CpuLoadGenerator::Stop(void) {
-   LOG_DEBUG("%s", "CpuLoadGenerator stopped");
-   load_generator_control_->SetContinueLoadGeneratorWork(false);
+bool tension_cpu::LoadGeneratorWorkControl::GetContinueLoadGeneratorWork() {
+  std::lock_guard<std::mutex> lock(mutex_);
+  return continue_load_generation_;
 }
 
-void tension_cpu::CpuLoadGenerator::Start(void) {
-
-  LOG_DEBUG("%s", "CpuLoadGenerator started");
-  load_generator_control_->SetContinueLoadGeneratorWork(true);
-
-  cpu_benchmark_->DetectCpuSpeed();
-
-  const unsigned long long slice = cpu_load_generator_shared_data_->s_loops / 100;
-  static const char show[] = "-\\|/";
-  unsigned stage = 0;
-
-  printf ("generate %u%c cpu load\n", cmd_arguments_->cpu_load /*load*/, '%');
-  while (/*1*/ load_generator_control_->GetContinueLoadGeneratorWork())
-  {
-     unsigned busy = (cmd_arguments_->cpu_load ? cmd_arguments_->cpu_load : (0 == (random() & 1) ? 100 : 50));
-     unsigned idle = 100 - busy;
-
-     printf("\r%c", show[stage]);
-     fflush(stdout);
-     if ( !show[++stage] )
-        stage = 0;
-
-     while (busy || idle)
-     {
-        if ( busy )
-        {
-           /* try to be produce load for 10 ms */
-          unsigned long long loop = 0;
-           while (loop < slice)
-           {
-             unit_cpu_load_producer_->ProduceMinimalCpuLoad();/*cpu_load_slice();*/
-              loop++;
-           }
-           busy--;
-        }
-
-        if ( idle )
-        {
-           /* sleeping for 10 ms */
-           usleep(10 * 1000);
-           idle--;
-        }
-     }
-  }
+void tension_cpu::LoadGeneratorWorkControl::SetContinueLoadGeneratorWork(bool status_to_be_set) {
+  LOG_DEBUG("%s%d", "SetContinueLoadGeneratorWork sets: ", status_to_be_set);
+  std::lock_guard<std::mutex> lock(mutex_);
+  continue_load_generation_ = status_to_be_set;
 }
-
