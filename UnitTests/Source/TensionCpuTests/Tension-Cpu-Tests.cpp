@@ -45,10 +45,9 @@
 #include <cstdint>
 
 #include "../../../TensionCPU/Source/Tension-Cpu.cpp"
-#include "../../../TensionCPU/Source/Cpu-Benchmarker.cpp"
 #include "../../../TensionCPU/Source/Cpu-Load-Generator.cpp"
 #include "../../../TensionCPU/Source/Timer.cpp"
-#include "../../../TensionCPU/Source/Cmd-Args-Parser.cpp"
+//#include "../../../TensionCPU/Source/Cmd-Args-Parser.cpp"
 
 namespace tension_cpu_tests {
 

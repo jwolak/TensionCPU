@@ -50,23 +50,14 @@
 #include <cstdio>
 
 #include "Cmd-Arguments.h"
-#include "Cpu-Speed-Detector.h"
-#include "Variables-For-Cpu-Load-Generator.h"
 
 namespace tension_cpu {
 
 class CpuLoadGenerator : public ICpuLoadGenerator {
  public:
-  CpuLoadGenerator(std::shared_ptr<CmdArguments> cmd_arguments,
-                   std::shared_ptr<IVariablesForCpuLoadGenerator> variables_for_cpu_generator,
-                   std::shared_ptr<ICpuBenchmarker> cpu_benchmarker,
-                   std::shared_ptr<ICpuSpeedDetector> cpu_speed_detector)
+  CpuLoadGenerator(std::shared_ptr<CmdArguments> cmd_arguments)
       :
-      cmd_arguments_ { cmd_arguments },
-      variables_for_cpu_generator_ { variables_for_cpu_generator },
-      cpu_benchmarker_ { cpu_benchmarker },
-      cpu_speed_detector_ { cpu_speed_detector },
-      mutex_ { } {
+      cmd_arguments_ { cmd_arguments } {
   }
 
   void Start(void) override;
@@ -74,14 +65,11 @@ class CpuLoadGenerator : public ICpuLoadGenerator {
 
  private:
   std::shared_ptr<CmdArguments> cmd_arguments_;
-  std::shared_ptr<IVariablesForCpuLoadGenerator> variables_for_cpu_generator_;
-  std::shared_ptr<ICpuBenchmarker> cpu_benchmarker_;
-  std::shared_ptr<ICpuSpeedDetector> cpu_speed_detector_;
   std::mutex mutex_;
 
   bool GetCpuLoadGeneratorStatus() {
-    return variables_for_cpu_generator_->GetContinueCpuLoad();
   }
+
 };
 
 } /*namespace tension_cpu*/

@@ -41,36 +41,9 @@
 #include "Logger.h"
 
  void tension_cpu::CpuLoadGenerator::Stop(void) {
-  variables_for_cpu_generator_->SetContinueCpuLoad(false);
-  LOG_DEBUG("%s", "continue_cpu_load_ set to false");
-  LOG_DEBUG("%s", "CpuLoadGenerator set to stop");
 }
 
 void tension_cpu::CpuLoadGenerator::Start(void) {
-
-  variables_for_cpu_generator_->SetCpuBusyLevel(cmd_arguments_->cpu_load);
-  LOG_DEBUG("cmd_arguments_->cpu_load: %d, File: %s, Line: %d", cmd_arguments_->cpu_load, __FILE__, __LINE__);
-
-  variables_for_cpu_generator_->SetCpuSlice(cpu_speed_detector_->GetLoopsPerSecond() / 100);
-
-  LOG_DEBUG("%s %d [%]", "CpuLoadGenerator generates CPU load: ", cmd_arguments_->cpu_load);
-
-  while (variables_for_cpu_generator_->GetContinueCpuLoad()) {
-    variables_for_cpu_generator_->SetCpuIdleLevel(100 - variables_for_cpu_generator_->GetCpuBusyLevel());
-
-    while ((variables_for_cpu_generator_->GetCpuBusyLevel() || variables_for_cpu_generator_->GetCpuIdleLevel()) && variables_for_cpu_generator_->GetContinueCpuLoad()) {
-      if (variables_for_cpu_generator_->GetCpuBusyLevel()) {
-        variables_for_cpu_generator_->SetCpuLoop(0);
-        while ((variables_for_cpu_generator_->GetCpuLoop() < variables_for_cpu_generator_->GetCpuSlice()) && variables_for_cpu_generator_->GetContinueCpuLoad()) {
-          cpu_benchmarker_->Run();
-          variables_for_cpu_generator_->SetCpuLoop(variables_for_cpu_generator_->GetCpuLoop() + 1 );
-        }
-          variables_for_cpu_generator_->SetCpuBusyLevel(variables_for_cpu_generator_->GetCpuBusyLevel() - 1);
-      }
-
-      variables_for_cpu_generator_->SetCpuIdleLevel(cpu_benchmarker_->GenerateIdle(variables_for_cpu_generator_->GetCpuIdleLevel()));
-    }
-  }
 
 }
 
