@@ -1,5 +1,5 @@
 /*
- * Cpu-Load-Generator.cpp
+ * Cpu-Load-Generator-Shared-Data.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,53 +37,26 @@
  *
  */
 
-#include "Cpu-Load-Generator.h"
-#include "Logger.h"
+#ifndef SOURCE_CPU_LOAD_GENERATOR_SHARED_DATA_H_
+#define SOURCE_CPU_LOAD_GENERATOR_SHARED_DATA_H_
 
- void tension_cpu::CpuLoadGenerator::Stop(void) {
+#include <cstdint>
 
-}
+namespace tension_cpu {
 
-void tension_cpu::CpuLoadGenerator::Start(void) {
-
-  cpu_benchmark_->DetectCpuSpeed();
-
-  const unsigned long long slice = cpu_load_generator_shared_data_->s_loops / 100;
-  static const char show[] = "-\\|/";
-  unsigned stage = 0;
-
-  printf ("generate %u%c cpu load\n", cmd_arguments_->cpu_load /*load*/, '%');
-  while (1)
-  {
-     unsigned busy = (cmd_arguments_->cpu_load ? cmd_arguments_->cpu_load : (0 == (random() & 1) ? 100 : 50));
-     unsigned idle = 100 - busy;
-
-     printf("\r%c", show[stage]);
-     fflush(stdout);
-     if ( !show[++stage] )
-        stage = 0;
-
-     while (busy || idle)
-     {
-        if ( busy )
-        {
-           /* try to be produce load for 10 ms */
-          unsigned long long loop = 0;
-           while (loop < slice)
-           {
-             unit_cpu_load_producer_->ProduceMinimalCpuLoad();/*cpu_load_slice();*/
-              loop++;
-           }
-           busy--;
-        }
-
-        if ( idle )
-        {
-           /* sleeping for 10 ms */
-           usleep(10 * 1000);
-           idle--;
-        }
-     }
+struct CpuLoadGeneratorSharedData {
+  CpuLoadGeneratorSharedData()
+      :
+      s_slice { 1.0 },
+      s_loops { 0 },
+      CALIBRATION_PERIOD { 5 } {
   }
-}
 
+  double s_slice;
+  unsigned long long s_loops;
+  uint32_t CALIBRATION_PERIOD;
+};
+
+} /*namespace tension_cpu*/
+
+#endif /* SOURCE_CPU_LOAD_GENERATOR_SHARED_DATA_H_ */

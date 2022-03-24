@@ -41,6 +41,9 @@
 #define SOURCE_CPU_LOAD_GENERATOR_H_
 
 #include "ICpu-Load-Generator.h"
+#include "Cpu-Load-Generator-Shared-Data.h"
+#include "Cpu-Benchmark.h"
+#include "Unit-Cpu-Load-Producer.h"
 
 #include <memory>
 #include <mutex>
@@ -57,7 +60,10 @@ class CpuLoadGenerator : public ICpuLoadGenerator {
  public:
   CpuLoadGenerator(std::shared_ptr<CmdArguments> cmd_arguments)
       :
-      cmd_arguments_ { cmd_arguments } {
+      cmd_arguments_ { cmd_arguments },
+      cpu_load_generator_shared_data_ { new CpuLoadGeneratorSharedData },
+      unit_cpu_load_producer_ { new UnitCpuLoadProducer { cpu_load_generator_shared_data_ } },
+      cpu_benchmark_ { new CpuBenchmark { cpu_load_generator_shared_data_, unit_cpu_load_producer_ } } {
   }
 
   void Start(void) override;
@@ -65,6 +71,9 @@ class CpuLoadGenerator : public ICpuLoadGenerator {
 
  private:
   std::shared_ptr<CmdArguments> cmd_arguments_;
+  std::shared_ptr<CpuLoadGeneratorSharedData> cpu_load_generator_shared_data_;
+  std::shared_ptr<IUnitCpuLoadProducer> unit_cpu_load_producer_;
+  std::unique_ptr<CpuBenchmark> cpu_benchmark_;
   std::mutex mutex_;
 
   bool GetCpuLoadGeneratorStatus() {

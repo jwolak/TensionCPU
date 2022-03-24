@@ -1,5 +1,5 @@
 /*
- * Cpu-Load-Generator.cpp
+ * Cpu-Benchmark.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,53 +37,33 @@
  *
  */
 
-#include "Cpu-Load-Generator.h"
-#include "Logger.h"
+#ifndef SOURCE_CPU_BENCHMARK_H_
+#define SOURCE_CPU_BENCHMARK_H_
 
- void tension_cpu::CpuLoadGenerator::Stop(void) {
+#include "ICpu-Benchmark.h"
+#include "Cpu-Load-Generator-Shared-Data.h"
+#include "Unit-Cpu-Load-Producer.h"
 
-}
+#include <memory>
 
-void tension_cpu::CpuLoadGenerator::Start(void) {
+namespace tension_cpu {
 
-  cpu_benchmark_->DetectCpuSpeed();
-
-  const unsigned long long slice = cpu_load_generator_shared_data_->s_loops / 100;
-  static const char show[] = "-\\|/";
-  unsigned stage = 0;
-
-  printf ("generate %u%c cpu load\n", cmd_arguments_->cpu_load /*load*/, '%');
-  while (1)
-  {
-     unsigned busy = (cmd_arguments_->cpu_load ? cmd_arguments_->cpu_load : (0 == (random() & 1) ? 100 : 50));
-     unsigned idle = 100 - busy;
-
-     printf("\r%c", show[stage]);
-     fflush(stdout);
-     if ( !show[++stage] )
-        stage = 0;
-
-     while (busy || idle)
-     {
-        if ( busy )
-        {
-           /* try to be produce load for 10 ms */
-          unsigned long long loop = 0;
-           while (loop < slice)
-           {
-             unit_cpu_load_producer_->ProduceMinimalCpuLoad();/*cpu_load_slice();*/
-              loop++;
-           }
-           busy--;
-        }
-
-        if ( idle )
-        {
-           /* sleeping for 10 ms */
-           usleep(10 * 1000);
-           idle--;
-        }
-     }
+class CpuBenchmark : public ICpuBenchmark {
+ public:
+  CpuBenchmark(std::shared_ptr<CpuLoadGeneratorSharedData> cpu_load_generator_shared_data, std::shared_ptr<IUnitCpuLoadProducer> unit_cpu_load_producer)
+      :
+      cpu_load_generator_shared_data_ { cpu_load_generator_shared_data },
+      unit_cpu_load_producer_ { unit_cpu_load_producer } {
   }
-}
 
+  void DetectCpuSpeed() override;
+
+ private:
+  std::shared_ptr<CpuLoadGeneratorSharedData> cpu_load_generator_shared_data_;
+  std::shared_ptr<IUnitCpuLoadProducer> unit_cpu_load_producer_;
+
+};
+
+} /*namespace tension_cpu*/
+
+#endif /* SOURCE_CPU_BENCHMARK_H_ */

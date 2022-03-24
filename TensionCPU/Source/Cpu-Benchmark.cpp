@@ -1,5 +1,5 @@
 /*
- * Cpu-Load-Generator.cpp
+ * Cpu-Benchmark.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,53 +37,51 @@
  *
  */
 
-#include "Cpu-Load-Generator.h"
-#include "Logger.h"
 
- void tension_cpu::CpuLoadGenerator::Stop(void) {
+#include "Cpu-Benchmark.h"
 
-}
+void tension_cpu::CpuBenchmark::DetectCpuSpeed() {
 
-void tension_cpu::CpuLoadGenerator::Start(void) {
+  unsigned long long   loops;
+  time_t period;
 
-  cpu_benchmark_->DetectCpuSpeed();
+  printf ("calibrating cpu speed:");
+  fflush(stdout);
 
-  const unsigned long long slice = cpu_load_generator_shared_data_->s_loops / 100;
-  static const char show[] = "-\\|/";
-  unsigned stage = 0;
-
-  printf ("generate %u%c cpu load\n", cmd_arguments_->cpu_load /*load*/, '%');
-  while (1)
+  do
   {
-     unsigned busy = (cmd_arguments_->cpu_load ? cmd_arguments_->cpu_load : (0 == (random() & 1) ? 100 : 50));
-     unsigned idle = 100 - busy;
+     loops = 1000 * 1000;
 
-     printf("\r%c", show[stage]);
-     fflush(stdout);
-     if ( !show[++stage] )
-        stage = 0;
-
-     while (busy || idle)
+     while (loops)
      {
-        if ( busy )
-        {
-           /* try to be produce load for 10 ms */
-          unsigned long long loop = 0;
-           while (loop < slice)
-           {
-             unit_cpu_load_producer_->ProduceMinimalCpuLoad();/*cpu_load_slice();*/
-              loop++;
-           }
-           busy--;
-        }
+       unsigned long long loop = 0;
 
-        if ( idle )
+        period = time(NULL);
+        while (loop < loops)
         {
-           /* sleeping for 10 ms */
-           usleep(10 * 1000);
-           idle--;
+          unit_cpu_load_producer_->ProduceMinimalCpuLoad()/*cpu_load_slice()*/;
+           loop++;
+        }
+        period = time(NULL) - period;
+
+        if (period >= cpu_load_generator_shared_data_->CALIBRATION_PERIOD)
+           break;
+        else if ( 0 == period ) {
+           loops *= 10;
+        }
+        else {
+           loops *= 1 + cpu_load_generator_shared_data_->CALIBRATION_PERIOD / period;
         }
      }
-  }
+
+     if ( loops )
+        break;
+     else {
+       cpu_load_generator_shared_data_->s_slice *= 10.0;
+     }
+  } while ( 1 );
+
+  cpu_load_generator_shared_data_->s_loops = loops / period;
+  printf (" %llu loops per second\n", cpu_load_generator_shared_data_->s_loops);
 }
 

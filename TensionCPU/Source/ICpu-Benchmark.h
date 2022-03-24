@@ -1,5 +1,5 @@
 /*
- * Cpu-Load-Generator.cpp
+ * ICpu-Benchmark.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,53 +37,17 @@
  *
  */
 
-#include "Cpu-Load-Generator.h"
-#include "Logger.h"
+#ifndef SOURCE_ICPU_BENCHMARK_H_
+#define SOURCE_ICPU_BENCHMARK_H_
 
- void tension_cpu::CpuLoadGenerator::Stop(void) {
+namespace tension_cpu {
 
-}
+class ICpuBenchmark {
+ public:
+  virtual ~ICpuBenchmark() = default;
+  virtual void DetectCpuSpeed() = 0;
+};
 
-void tension_cpu::CpuLoadGenerator::Start(void) {
+} /*namespace tension_cpu*/
 
-  cpu_benchmark_->DetectCpuSpeed();
-
-  const unsigned long long slice = cpu_load_generator_shared_data_->s_loops / 100;
-  static const char show[] = "-\\|/";
-  unsigned stage = 0;
-
-  printf ("generate %u%c cpu load\n", cmd_arguments_->cpu_load /*load*/, '%');
-  while (1)
-  {
-     unsigned busy = (cmd_arguments_->cpu_load ? cmd_arguments_->cpu_load : (0 == (random() & 1) ? 100 : 50));
-     unsigned idle = 100 - busy;
-
-     printf("\r%c", show[stage]);
-     fflush(stdout);
-     if ( !show[++stage] )
-        stage = 0;
-
-     while (busy || idle)
-     {
-        if ( busy )
-        {
-           /* try to be produce load for 10 ms */
-          unsigned long long loop = 0;
-           while (loop < slice)
-           {
-             unit_cpu_load_producer_->ProduceMinimalCpuLoad();/*cpu_load_slice();*/
-              loop++;
-           }
-           busy--;
-        }
-
-        if ( idle )
-        {
-           /* sleeping for 10 ms */
-           usleep(10 * 1000);
-           idle--;
-        }
-     }
-  }
-}
-
+#endif /* SOURCE_ICPU_BENCHMARK_H_ */
