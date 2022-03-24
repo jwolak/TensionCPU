@@ -1,5 +1,5 @@
 /*
- * Timer.cpp
+ * TimerTests.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,14 +37,40 @@
  *
  */
 
-#include "Timer.h"
+#include "../../../TensionCPU/Source/Timer.cpp"
 
-#include "Logger.h"
+#include <gtest/gtest.h>
 
-int32_t tension_cpu::Timer::next_id_ { 0 };
+#include <memory>
+#include <string>
+#include <iostream>
+#include <chrono>
 
-void tension_cpu::Timer::Start() {
-  thread_ = std::thread(&tension_cpu::Timer::threadTimerLoop, this);
-  LOG_DEBUG("Timer id: %d started for period %d", id_, period_.count());
-  thread_.join();
+namespace timer_tests {
+
+class TimetTests : public ::testing::Test {
+ public:
+  TimetTests() :
+    test_time {10},
+    timer { new tension_cpu::Timer{ std::bind(&timer_tests::TimetTests::TestFun, this), test_time} }
+  {}
+
+
+  std::chrono::seconds test_time;
+  std::unique_ptr<tension_cpu::Timer> timer;
+
+  void TestFun() {
+    std::cout<<"Called"<<std::endl;
+  }
+};
+
+TEST_F(TimetTests, test) {
+  auto start = std::chrono::high_resolution_clock::now();
+  timer->Start();
+  auto finish = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double, std::milli> elapsed = finish - start;
+  std::cout << "Elapsed Time: " << (int)(elapsed.count()/1000.0) << " seconds" << std::endl;
+  //timer->Stop();
 }
+
+} /*namespace timer_tests*/

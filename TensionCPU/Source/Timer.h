@@ -41,6 +41,7 @@
 #define SOURCE_TIMER_H_
 
 #include "ITimer.h"
+#include "Logger.h"
 
 #include <iostream>
 #include <chrono>
@@ -65,6 +66,7 @@ class Timer : public ITimer {
   void Start() override;
 
   void Stop() override {
+    LOG_DEBUG("%s%d%s", "Timer id: ", id_, "stopped");
     std::lock_guard<std::mutex> lock(mutex_);
     status_ = false;
     thread_.join();
@@ -73,9 +75,12 @@ class Timer : public ITimer {
  private:
 
   void threadTimerLoop() {
+    LOG_DEBUG("%s%d%s", "threadTimerLoop timer with id: ", id_, " started");
     while (GetStatus()) {
+      LOG_DEBUG("%s", "Timer loop");
       std::this_thread::sleep_for(period_);
       callback_func_();
+      break;
     }
   }
 
