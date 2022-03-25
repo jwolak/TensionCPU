@@ -61,7 +61,6 @@ bool tension_cpu::TensionCpu::Start() {
 }
 
 bool tension_cpu::TensionCpu::Stop() {
-  /*timer_->Stop();*/
   cpu_load_generator_->Stop();
   LOG_DEBUG("%s", "Load generator stopped");
 

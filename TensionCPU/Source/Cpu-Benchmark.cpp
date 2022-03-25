@@ -39,13 +39,17 @@
 
 
 #include "Cpu-Benchmark.h"
+#include "Logger.h"
+
+#include <iostream>
 
 void tension_cpu::CpuBenchmark::DetectCpuSpeed() {
 
   unsigned long long   loops;
   time_t period;
 
-  printf ("calibrating cpu speed:");
+  std::cout<<"TensionCPU detects Your CPU speed..."<<std::endl;
+  LOG_DEBUG("%s", "CpuBenchmark detects CPU speed");
   fflush(stdout);
 
   do
@@ -59,7 +63,7 @@ void tension_cpu::CpuBenchmark::DetectCpuSpeed() {
         period = time(NULL);
         while (loop < loops)
         {
-          unit_cpu_load_producer_->ProduceMinimalCpuLoad()/*cpu_load_slice()*/;
+          unit_cpu_load_producer_->ProduceMinimalCpuLoad();
            loop++;
         }
         period = time(NULL) - period;
@@ -82,6 +86,7 @@ void tension_cpu::CpuBenchmark::DetectCpuSpeed() {
   } while ( 1 );
 
   cpu_load_generator_shared_data_->s_loops = loops / period;
-  printf (" %llu loops per second\n", cpu_load_generator_shared_data_->s_loops);
+  LOG_DEBUG("%s%lld%s", "CPU can run: ", cpu_load_generator_shared_data_->s_loops, " per second");
+  std::cout<<"Your CPU can run "<<cpu_load_generator_shared_data_->s_loops<<" loops per second"<<std::endl;
 }
 

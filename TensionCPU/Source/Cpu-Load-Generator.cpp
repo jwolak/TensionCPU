@@ -60,7 +60,8 @@ void tension_cpu::CpuLoadGenerator::Start(void) {
   static const char show[] = "-\\|/";
   unsigned stage = 0;
 
-  printf ("generate %u%c cpu load\n", cmd_arguments_->cpu_load /*load*/, '%');
+  std::cout<<"TensionCPU generates "<<cmd_arguments_->cpu_load<<" [%] CPU load for "<<cmd_arguments_->test_time.count()<<" [s]"<<std::endl;
+
   timer_->Start();
   while (/*1*/ load_generator_control_->GetContinueLoadGeneratorWork())
   {
@@ -82,7 +83,7 @@ void tension_cpu::CpuLoadGenerator::Start(void) {
           unsigned long long loop = 0;
            while (loop < slice)
            {
-             unit_cpu_load_producer_->ProduceMinimalCpuLoad();/*cpu_load_slice();*/
+             unit_cpu_load_producer_->ProduceMinimalCpuLoad();
               loop++;
            }
            busy--;

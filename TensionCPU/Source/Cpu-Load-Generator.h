@@ -77,7 +77,7 @@ class CpuLoadGenerator : public ICpuLoadGenerator {
   std::shared_ptr<CmdArguments> cmd_arguments_;
   std::shared_ptr<CpuLoadGeneratorSharedData> cpu_load_generator_shared_data_;
   std::shared_ptr<IUnitCpuLoadProducer> unit_cpu_load_producer_;
-  std::unique_ptr<CpuBenchmark> cpu_benchmark_;
+  std::unique_ptr<ICpuBenchmark> cpu_benchmark_;
   std::unique_ptr<ILoadGeneratorWorkControl> load_generator_control_;
   std::shared_ptr<ITimer> timer_;
 
