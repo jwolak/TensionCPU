@@ -38,13 +38,28 @@
  */
 
 #include "Timer.h"
-
 #include "Logger.h"
 
-int32_t tension_cpu::Timer::next_id_ { 0 };
+int32_t tension_cpu::Timer::next_id_ { 1 };
 
 void tension_cpu::Timer::Start() {
   thread_ = std::thread(&tension_cpu::Timer::threadTimerLoop, this);
   LOG_DEBUG("Timer id: %d started for period %d", id_, period_.count());
   thread_.detach();
+}
+
+
+void tension_cpu::Timer::threadTimerLoop() {
+  LOG_DEBUG("%s%d%s", "threadTimerLoop timer with id: ", id_, " started");
+  uint32_t counter = 0;
+  LOG_DEBUG("%s%d%s", "Timer period set to: ", period_.count(), " [s]");
+  while (counter < period_.count() && GetStatus()) {
+    fflush(stdout);
+    std::cout<<"\r"<<counter<<" [s]";
+    std::this_thread::sleep_for(std::chrono::seconds{1});
+    ++counter;
+  }
+  callback_func_();
+  std::cout<<std::endl;
+  LOG_DEBUG("%s%d%s", "Callback in Timer id: ",id_, " after timeout called");
 }
