@@ -53,9 +53,9 @@ bool tension_cpu::TensionCpu::ParseCmdArguments(int argc, char **argv) {
 }
 
 bool tension_cpu::TensionCpu::Start() {
-  /*timer_->Start();*/
-  cpu_load_generator_->Start();
   LOG_DEBUG("%s", "Load generator started");
+  timer_->SetPeriodTime(cmd_arguments_->test_time);
+  cpu_load_generator_->Start();
 
   return true;
 }

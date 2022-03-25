@@ -48,19 +48,27 @@
 
 namespace timer_tests {
 
+namespace {
+const int kTimeToBeElapsed = 10;
+}
+
 class TimetTests : public ::testing::Test {
  public:
-  TimetTests() :
-    test_time {10},
-    timer { new tension_cpu::Timer{ std::bind(&timer_tests::TimetTests::TestFun, this), test_time} }
-  {}
-
+  TimetTests()
+      :
+      test_time { kTimeToBeElapsed },
+      timer { new tension_cpu::Timer { std::bind(&timer_tests::TimetTests::TestFunctionCallback, this), test_time } },
+      callback_function_called { false },
+      elapsed_time { 0 } {
+  }
 
   std::chrono::seconds test_time;
   std::unique_ptr<tension_cpu::Timer> timer;
+  bool callback_function_called;
+  int elapsed_time;
 
-  void TestFun() {
-    std::cout<<"Called"<<std::endl;
+  void TestFunctionCallback() {
+    callback_function_called = true;
   }
 };
 
@@ -69,8 +77,10 @@ TEST_F(TimetTests, test) {
   timer->Start();
   auto finish = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double, std::milli> elapsed = finish - start;
-  std::cout << "Elapsed Time: " << (int)(elapsed.count()/1000.0) << " seconds" << std::endl;
-  //timer->Stop();
+  elapsed_time = (int) (elapsed.count() / 1000.0);
+
+  ASSERT_EQ(kTimeToBeElapsed, elapsed_time);
+  ASSERT_TRUE(callback_function_called);
 }
 
 } /*namespace timer_tests*/

@@ -57,8 +57,8 @@ class TensionCpu : public ITensionCpu {
       :
       cmd_arguments_ { new CmdArguments },
       cmd_arg_parser_ { new CmdArgsParser { cmd_arguments_ } },
-      cpu_load_generator_ { new CpuLoadGenerator { cmd_arguments_ } },
-      timer_ { new Timer { std::bind(&tension_cpu::TensionCpu::StopLoadGeneratorAfterTimeout, this), cmd_arguments_->test_time } } {
+      timer_ { new Timer { std::bind(&tension_cpu::TensionCpu::StopLoadGeneratorAfterTimeout, this), cmd_arguments_->test_time } },
+      cpu_load_generator_ { new CpuLoadGenerator { cmd_arguments_, timer_ } }{
   }
 
   bool ParseCmdArguments(int argc, char **argv) override;
@@ -68,8 +68,8 @@ class TensionCpu : public ITensionCpu {
  private:
   std::shared_ptr<CmdArguments> cmd_arguments_;
   std::unique_ptr<ICmdArgsParser> cmd_arg_parser_;
+  std::shared_ptr<ITimer> timer_;
   std::unique_ptr<ICpuLoadGenerator> cpu_load_generator_;
-  std::unique_ptr<ITimer> timer_;
 
   void StopLoadGeneratorAfterTimeout(void) {
     cpu_load_generator_->Stop();

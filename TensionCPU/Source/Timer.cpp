@@ -46,5 +46,5 @@ int32_t tension_cpu::Timer::next_id_ { 0 };
 void tension_cpu::Timer::Start() {
   thread_ = std::thread(&tension_cpu::Timer::threadTimerLoop, this);
   LOG_DEBUG("Timer id: %d started for period %d", id_, period_.count());
-  thread_.join();
+  thread_.detach();
 }

@@ -42,30 +42,37 @@
 
  void tension_cpu::CpuLoadGenerator::Stop(void) {
    LOG_DEBUG("%s", "CpuLoadGenerator stopped");
+   timer_->Stop();
    load_generator_control_->SetContinueLoadGeneratorWork(false);
 }
 
 void tension_cpu::CpuLoadGenerator::Start(void) {
 
   LOG_DEBUG("%s", "CpuLoadGenerator started");
+  if (timer_ == nullptr) std::cout<<"Null timer"<<std::endl;
+
   load_generator_control_->SetContinueLoadGeneratorWork(true);
 
   cpu_benchmark_->DetectCpuSpeed();
 
   const unsigned long long slice = cpu_load_generator_shared_data_->s_loops / 100;
+  printf("\n");
   static const char show[] = "-\\|/";
   unsigned stage = 0;
 
   printf ("generate %u%c cpu load\n", cmd_arguments_->cpu_load /*load*/, '%');
+  timer_->Start();
   while (/*1*/ load_generator_control_->GetContinueLoadGeneratorWork())
   {
      unsigned busy = (cmd_arguments_->cpu_load ? cmd_arguments_->cpu_load : (0 == (random() & 1) ? 100 : 50));
      unsigned idle = 100 - busy;
 
+/*
      printf("\r%c", show[stage]);
      fflush(stdout);
      if ( !show[++stage] )
         stage = 0;
+*/
 
      while (busy || idle)
      {

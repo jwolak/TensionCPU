@@ -40,6 +40,8 @@
 #ifndef SOURCE_ITIMER_H_
 #define SOURCE_ITIMER_H_
 
+#include <chrono>
+
 namespace tension_cpu {
 
 class ITimer {
@@ -47,6 +49,7 @@ class ITimer {
   virtual ~ITimer() = default;
   virtual void Start() = 0;
   virtual void Stop() = 0;
+  virtual void SetPeriodTime(std::chrono::seconds) = 0;
 };
 
 } /*namespace tension_cpu*/

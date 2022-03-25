@@ -45,6 +45,7 @@
 #include "Cpu-Benchmark.h"
 #include "Unit-Cpu-Load-Producer.h"
 #include "Load-Generator-Work-Control.h"
+#include "Timer.h"
 
 #include <memory>
 #include <mutex>
@@ -59,13 +60,14 @@ namespace tension_cpu {
 
 class CpuLoadGenerator : public ICpuLoadGenerator {
  public:
-  CpuLoadGenerator(std::shared_ptr<CmdArguments> cmd_arguments)
+  CpuLoadGenerator(std::shared_ptr<CmdArguments> cmd_arguments, std::shared_ptr<ITimer> timer)
       :
       cmd_arguments_ { cmd_arguments },
       cpu_load_generator_shared_data_ { new CpuLoadGeneratorSharedData },
       unit_cpu_load_producer_ { new UnitCpuLoadProducer { cpu_load_generator_shared_data_ } },
       cpu_benchmark_ { new CpuBenchmark { cpu_load_generator_shared_data_, unit_cpu_load_producer_ } },
-      load_generator_control_ { new LoadGeneratorWorkControl }{
+      load_generator_control_ { new LoadGeneratorWorkControl },
+      timer_ { timer } {
   }
 
   void Start(void) override;
@@ -77,6 +79,7 @@ class CpuLoadGenerator : public ICpuLoadGenerator {
   std::shared_ptr<IUnitCpuLoadProducer> unit_cpu_load_producer_;
   std::unique_ptr<CpuBenchmark> cpu_benchmark_;
   std::unique_ptr<ILoadGeneratorWorkControl> load_generator_control_;
+  std::shared_ptr<ITimer> timer_;
 
 };
 

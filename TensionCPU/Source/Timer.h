@@ -66,22 +66,31 @@ class Timer : public ITimer {
   void Start() override;
 
   void Stop() override {
-    LOG_DEBUG("%s%d%s", "Timer id: ", id_, "stopped");
     std::lock_guard<std::mutex> lock(mutex_);
     status_ = false;
-    thread_.join();
+    LOG_DEBUG("%s%d%s", "Timer id: ", id_, " stopped");
+  }
+
+  void SetPeriodTime(std::chrono::seconds  period_to_be_set) override {
+    LOG_DEBUG("%s%d%s", "Period time set to: ", period_to_be_set, " [s]");
+    period_ = period_to_be_set;
   }
 
  private:
 
   void threadTimerLoop() {
     LOG_DEBUG("%s%d%s", "threadTimerLoop timer with id: ", id_, " started");
-    while (GetStatus()) {
-      LOG_DEBUG("%s", "Timer loop");
-      std::this_thread::sleep_for(period_);
-      callback_func_();
-      break;
+    uint32_t counter = 0;
+    LOG_DEBUG("%s%d%s", "Timer period set to: ", period_.count(), " [s]");
+    while (counter < period_.count() && GetStatus()) {
+      fflush(stdout);
+      std::cout<<"\r"<<counter<<" [s]";
+      std::this_thread::sleep_for(std::chrono::seconds{1});
+      ++counter;
     }
+    callback_func_();
+    std::cout<<std::endl;
+    LOG_DEBUG("%s%d%s", "Callback in Timer id: ",id_, " after timeout called");
   }
 
   bool GetStatus() {
@@ -90,7 +99,7 @@ class Timer : public ITimer {
   }
 
   std::function<void(void)> callback_func_;
-  const std::chrono::seconds period_;
+  std::chrono::seconds period_;
   std::thread thread_;
   int32_t id_;
   static int32_t next_id_;
