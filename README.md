@@ -48,6 +48,7 @@ Unlimmited time:            TensionCPU.x86 -l 80 -T 0
 Scheduling policy RR:       TensionCPU.x86 -l 80 -T 10 -S r
 ```
 ![](https://github.com/jwolak/TensionCPU/blob/main/Screenshot.png?raw=true)
+![](https://github.com/jwolak/TensionCPU/blob/main/Screenshot_top.png?raw=true)
 
 ## License
 
