@@ -49,53 +49,37 @@
 void tension_cpu::CpuLoadGenerator::Start(void) {
 
   LOG_DEBUG("%s", "CpuLoadGenerator started");
-  if (timer_ == nullptr) std::cout<<"Null timer"<<std::endl;
 
   load_generator_control_->SetContinueLoadGeneratorWork(true);
-
   cpu_benchmark_->DetectCpuSpeed();
 
   const unsigned long long slice = cpu_load_generator_shared_data_->s_loops / 100;
-  printf("\n");
-  static const char show[] = "-\\|/";
   unsigned stage = 0;
 
-  std::cout<<"TensionCPU generates "<<cmd_arguments_->cpu_load<<" [%] CPU load for "<<cmd_arguments_->test_time.count()<<" [s]"<<std::endl;
+  std::cout << "TensionCPU generates " << cmd_arguments_->cpu_load << " [%] CPU load for " << cmd_arguments_->test_time.count() << " [s]" << std::endl;
 
+  process_scheduler_->SetPolicyType(cmd_arguments_->scheduling_policy);
+  timer_->SetPeriodTime(cmd_arguments_->test_time);
   timer_->Start();
-  while (/*1*/ load_generator_control_->GetContinueLoadGeneratorWork())
-  {
-     unsigned busy = (cmd_arguments_->cpu_load ? cmd_arguments_->cpu_load : (0 == (random() & 1) ? 100 : 50));
-     unsigned idle = 100 - busy;
+  while (load_generator_control_->GetContinueLoadGeneratorWork()) {
+    unsigned busy = (cmd_arguments_->cpu_load ? cmd_arguments_->cpu_load : (0 == (random() & 1) ? 100 : 50));
+    unsigned idle = 100 - busy;
 
-/*
-     printf("\r%c", show[stage]);
-     fflush(stdout);
-     if ( !show[++stage] )
-        stage = 0;
-*/
-
-     while (busy || idle)
-     {
-        if ( busy )
-        {
-           /* try to be produce load for 10 ms */
-          unsigned long long loop = 0;
-           while (loop < slice)
-           {
-             unit_cpu_load_producer_->ProduceMinimalCpuLoad();
-              loop++;
-           }
-           busy--;
+    while (busy || idle) {
+      if (busy) {
+        unsigned long long loop = 0;
+        while (loop < slice) {
+          unit_cpu_load_producer_->ProduceMinimalCpuLoad();
+          loop++;
         }
+        busy--;
+      }
 
-        if ( idle )
-        {
-           /* sleeping for 10 ms */
-           usleep(10 * 1000);
-           idle--;
-        }
-     }
+      if (idle) {
+        std::this_thread::sleep_for(std::chrono::milliseconds{10});
+        idle--;
+      }
+    }
   }
 }
 

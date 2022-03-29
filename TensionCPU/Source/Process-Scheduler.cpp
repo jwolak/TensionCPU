@@ -1,5 +1,5 @@
 /*
- * Console-Logger-Tests.cpp
+ * Process-Scheduler.cpp
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,56 +37,24 @@
  *
  */
 
-#include <gtest/gtest.h>
+#include "Process-Scheduler.h"
+#include "Logger.h"
 
-#include <memory>
-#include <string>
+#include <sched.h>
+#include <cstring>
 
-#include "../../../TensionCPU/Source/EquinoxLogger/Console-Logger.cpp"
-#include "../../../TensionCPU/Source/EquinoxLogger/Logger-Time.cpp"
+bool tension_cpu::ProcessScheduler::SetPolicyType(tension_cpu::SchedulingPolicyType policy) {
 
-namespace console_logger_tests {
-
-namespace {
-std::string kTestLogMessage = "Test log message ";
-}
-
-class ConsoleLoggerTests : public ::testing::Test {
- public:
-  ConsoleLoggerTests()
-      :
-      logger_time(new equinox_logger::LoggerTime),
-      console_logger(new equinox_logger::ConsoleLogger(logger_time)),
-      cout_strbuf(std::cout.rdbuf()),
-      string_stream_output() {
+  struct sched_param param;
+  memset(&param, 0, sizeof(param));
+  param.sched_priority = sched_get_priority_max((int)policy);
+  if (sched_setscheduler(0, (int)policy, &param) < 0) {
+    LOG_ERROR("%s", "Set scheduling policy failed");
+    return false;
   }
 
-  std::shared_ptr<equinox_logger::ILoggerTime> logger_time;
-  std::unique_ptr<equinox_logger::IConsoleLogger> console_logger;
-  std::streambuf *cout_strbuf;
-  std::ostringstream string_stream_output;
-
-  void RedirectStandarOutputToBuffer(std::ostringstream &output) {
-    std::cout.rdbuf(output.rdbuf());
-  }
-
-  void RedirectFromBufferToStandarOutput() {
-    std::cout.rdbuf(cout_strbuf);
-  }
-
-};
-
-TEST_F (ConsoleLoggerTests, Call_LogMessage_And_No_Throw_Occurs) {
-  ASSERT_NO_THROW(console_logger->LogMessage(equinox_logger::LogLevelType::LOG_LEVEL_ERROR, kTestLogMessage));
+  LOG_DEBUG("%s", "Set scheduling policy successful");
+  return true;
 }
 
-TEST_F(ConsoleLoggerTests, LogMessage_As_Text_To_Console_And_It_Is_Printed_Successfully) {
 
-  RedirectStandarOutputToBuffer(string_stream_output);
-  console_logger->LogMessage(equinox_logger::LogLevelType::LOG_LEVEL_ERROR, kTestLogMessage);
-  RedirectFromBufferToStandarOutput();
-
-  ASSERT_TRUE(string_stream_output.str().find(kTestLogMessage) != std::string::npos);
-}
-
-} /*console_logger_tests*/

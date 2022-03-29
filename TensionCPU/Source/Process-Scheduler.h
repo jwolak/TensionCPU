@@ -1,5 +1,5 @@
 /*
- * Cpu-Load-Generator.h
+ * Process-Scheduler.h
  *
  *  Created on: 2022
  *      Author: Janusz Wolak
@@ -37,56 +37,19 @@
  *
  */
 
-#ifndef SOURCE_CPU_LOAD_GENERATOR_H_
-#define SOURCE_CPU_LOAD_GENERATOR_H_
+#ifndef SOURCE_PROCESS_SCHEDULER_H_
+#define SOURCE_PROCESS_SCHEDULER_H_
 
-#include "ICpu-Load-Generator.h"
-#include "Cpu-Load-Generator-Shared-Data.h"
-#include "Cpu-Benchmark.h"
-#include "Unit-Cpu-Load-Producer.h"
-#include "Load-Generator-Work-Control.h"
-#include "Timer.h"
-#include "Process-Scheduler.h"
-
-#include <memory>
-#include <mutex>
-
-#include <cstdint>
-#include <unistd.h>
-#include <cstdio>
-
-#include "Cmd-Arguments.h"
+#include "IProcess-Scheduler.h"
 
 namespace tension_cpu {
 
-class CpuLoadGenerator : public ICpuLoadGenerator {
+class ProcessScheduler : public IProcessScheduler{
  public:
-  CpuLoadGenerator(std::shared_ptr<CmdArguments> cmd_arguments, std::shared_ptr<ITimer> timer)
-      :
-      cmd_arguments_ { cmd_arguments },
-      cpu_load_generator_shared_data_ { new CpuLoadGeneratorSharedData },
-      unit_cpu_load_producer_ { new UnitCpuLoadProducer { cpu_load_generator_shared_data_ } },
-      cpu_benchmark_ { new CpuBenchmark { cpu_load_generator_shared_data_, unit_cpu_load_producer_ } },
-      load_generator_control_ { new LoadGeneratorWorkControl },
-      timer_ { timer },
-      process_scheduler_ { new ProcessScheduler }
-      {
-  }
-
-  void Start(void) override;
-  void Stop(void) override;
-
- private:
-  std::shared_ptr<CmdArguments> cmd_arguments_;
-  std::shared_ptr<CpuLoadGeneratorSharedData> cpu_load_generator_shared_data_;
-  std::shared_ptr<IUnitCpuLoadProducer> unit_cpu_load_producer_;
-  std::unique_ptr<ICpuBenchmark> cpu_benchmark_;
-  std::unique_ptr<ILoadGeneratorWorkControl> load_generator_control_;
-  std::shared_ptr<ITimer> timer_;
-  std::unique_ptr<IProcessScheduler> process_scheduler_;
-
+  ProcessScheduler() {}
+  bool SetPolicyType(SchedulingPolicyType) override;
 };
 
 } /*namespace tension_cpu*/
 
-#endif /* SOURCE_CPU_LOAD_GENERATOR_H_ */
+#endif /* SOURCE_PROCESS_SCHEDULER_H_ */

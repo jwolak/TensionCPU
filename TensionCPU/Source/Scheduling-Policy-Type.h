@@ -43,10 +43,10 @@
 namespace tension_cpu {
 
 enum class SchedulingPolicyType {
-  BATCH  = 1,
-  FIFO   = 2,
-  RR     = 3,
-  OTHER  = 4,
+  OTHER  = 0,
+  FIFO   = 1,
+  RR     = 2,
+  BATCH  = 3,
 };
 
 } /*namespace tension_cpu*/

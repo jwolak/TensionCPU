@@ -96,7 +96,7 @@ bool tension_cpu::CmdArgsParser::ProcessArguments(int argc, char **argv) {
     case 'h':
       std::cout << kFHelpMenuPrint << std::endl;
       LOG_DEBUG("%s", "Help printed");
-      break;
+      return false;
 
     case 'l':
       LOG_DEBUG("%s%s", "Load value:", optarg);
