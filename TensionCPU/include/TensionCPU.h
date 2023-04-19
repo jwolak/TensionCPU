@@ -1,14 +1,14 @@
 /*
- * Load-Generator-Work-Control.cpp
+ * TensionCPU.h
  *
- *  Created on: 2022
+ *  Created on: 2023
  *      Author: Janusz Wolak
  */
 
 /*-
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, Janusz Wolak
+ * Copyright (c) 2023, Janusz Wolak
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,16 +37,11 @@
  *
  */
 
-#include "Load-Generator-Work-Control.h"
-#include "Logger.h"
+#ifndef INCLUDE_TENSIONCPU_H_
+#define INCLUDE_TENSIONCPU_H_
 
-bool tension_cpu::LoadGeneratorWorkControl::GetContinueLoadGeneratorWork() {
-  std::lock_guard<std::mutex> lock(mutex_);
-  return continue_load_generation_;
-}
 
-void tension_cpu::LoadGeneratorWorkControl::SetContinueLoadGeneratorWork(bool status_to_be_set) {
-  LOG_DEBUG("%s%d", "SetContinueLoadGeneratorWork sets: ", status_to_be_set);
-  std::lock_guard<std::mutex> lock(mutex_);
-  continue_load_generation_ = status_to_be_set;
-}
+
+
+
+#endif /* INCLUDE_TENSIONCPU_H_ */

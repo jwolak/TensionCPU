@@ -1,14 +1,14 @@
 /*
- * ITensionCpu.h
+ * main.cpp
  *
- *  Created on: 2022
+ *  Created on: 2023
  *      Author: Janusz Wolak
  */
 
 /*-
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, Janusz Wolak
+ * Copyright (c) 2023, Janusz Wolak
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,21 +37,6 @@
  *
  */
 
-#ifndef SOURCE_ITENSION_CPU_H_
-#define SOURCE_ITENSION_CPU_H_
-
-namespace tension_cpu {
-
-class ITensionCpu {
- public:
-  virtual ~ITensionCpu() = default;
-  virtual bool ParseCmdArguments(int, char**) = 0;
-  virtual bool Start() = 0;
-  virtual bool Stop() = 0;
-};
-
-} /*namespace tension_cpu*/
 
 
 
-#endif /* SOURCE_ITENSION_CPU_H_ */
