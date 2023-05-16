@@ -1,5 +1,5 @@
 /*
- * main.cpp
+ * CmdArgumentsParser.h
  *
  *  Created on: 2023
  *      Author: Janusz Wolak
@@ -37,67 +37,24 @@
  *
  */
 
+#ifndef INCLUDE_CMDARGUMENTSPARSER_H_
+#define INCLUDE_CMDARGUMENTSPARSER_H_
+
 #include <memory>
 
-#include <csignal>
-#include <csetjmp>
-#include <cstdio>
-#include <cstdlib>
+#include "ParsedCmdArguments.h"
 
-#include "CmdArgumentsParser.h"
-#include "TensionCPU.h"
-
-static jmp_buf sigend_jmp_buf;
-
-static void __attribute__ ((noreturn)) SigendHandler(int signal) {
-  printf("%s %d %s", "Signal", signal, "caught");
-  longjmp(sigend_jmp_buf, 1);
-}
-
-void CatchSigend(void (*handler)(int)) {
-#ifdef SIGINT
-  signal(SIGINT, handler);
-#endif
-#ifdef SIGTERM
-  signal(SIGTERM, handler);
-#endif
-#ifdef SIGHUP
-  signal(SIGHUP, handler);
-#endif
-}
-
-int main(int argc, char **argv)
+namespace tension_cpu
 {
-
-  std::shared_ptr<tension_cpu::IParsedCmdArguments> parsed_cmd_arguments {std::make_shared<tension_cpu::ParsedCmdArguments>()};
-  tension_cpu::CmdArgumentsParser CmdArgumentsParser;
-
-  if(!CmdArgumentsParser.ParseCmdArguments(parsed_cmd_arguments))
+  class CmdArgumentsParser
   {
-    printf("%s", "Parse arguments failed");
-    exit(EXIT_FAILURE);
-  }
-
-  tension_cpu::TensionCpu tension_cpu_instance(parsed_cmd_arguments);
-
-  CatchSigend(SigendHandler);
-  if (setjmp(sigend_jmp_buf))
-  {
-    if(!tension_cpu_instance.stop())
+   public:
+    CmdArgumentsParser()
     {
-      printf("%s", "TensionCPU stop by interrupt failed");
-      exit(EXIT_FAILURE);
     }
 
-    printf("%s", "TensionCPU stop by interrupt successful");
-    exit(EXIT_SUCCESS);
-  }
+    bool ParseCmdArguments(std::shared_ptr<IParsedCmdArguments> parsed_cmd_arguments);
+  };
+} /*namespace tension_cpu*/
 
-  if(!tension_cpu_instance.start())
-  {
-    printf("%s", "TensionCPU start failed");
-    exit(EXIT_FAILURE);
-  }
-
-  return 0;
-}
+#endif /* INCLUDE_CMDARGUMENTSPARSER_H_ */

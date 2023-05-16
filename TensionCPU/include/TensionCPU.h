@@ -40,8 +40,26 @@
 #ifndef INCLUDE_TENSIONCPU_H_
 #define INCLUDE_TENSIONCPU_H_
 
+#include <memory>
 
+#include "ParsedCmdArguments.h"
 
+namespace tension_cpu
+{
+  class TensionCpu
+  {
+   public:
+    TensionCpu(std::shared_ptr<IParsedCmdArguments> parsed_cmd_arguments)
+    : parsed_cmd_arguments_ { parsed_cmd_arguments }
+    {
+    }
 
+    bool start();
+    bool stop();
+
+   private:
+    std::shared_ptr<IParsedCmdArguments> parsed_cmd_arguments_;
+  };
+} /*namespace tension_cpu*/
 
 #endif /* INCLUDE_TENSIONCPU_H_ */
