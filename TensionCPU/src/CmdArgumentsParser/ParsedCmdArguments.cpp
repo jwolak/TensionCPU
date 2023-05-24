@@ -1,5 +1,5 @@
 /*
- * IParsedCmdArguments.h
+ * ParsedCmdArguments.cpp
  *
  *  Created on: 2023
  *      Author: Janusz Wolak
@@ -37,22 +37,34 @@
  *
  */
 
-#ifndef INCLUDE_IPARSEDCMDARGUMENTS_H_
-#define INCLUDE_IPARSEDCMDARGUMENTS_H_
+#include "ParsedCmdArguments.h"
 
-namespace tension_cpu
+void tension_cpu::ParsedCmdArguments::SetScheduligMode(tension_cpu::SchedulingModeType sched_mode_type)
 {
-class IParsedCmdArguments
-{
- public:
-  virtual ~IParsedCmdArguments() = default;
-  virtual void SetScheduligMode() = 0;
-  virtual void GetScheduligMode() = 0;
-  virtual void SetLoad() = 0;
-  virtual void GetLoad() = 0;
-  virtual void SetTime() = 0;
-  virtual void GetTime() = 0;
-};
-} /*namespace tension_cpu*/
+  parsed_cmd_arguments_logic_.SetScheduligMode(sched_mode_type);
+}
 
-#endif /* INCLUDE_IPARSEDCMDARGUMENTS_H_ */
+tension_cpu::SchedulingModeType tension_cpu::ParsedCmdArguments::GetScheduligMode()
+{
+   return parsed_cmd_arguments_logic_.GetScheduligMode();
+}
+
+void tension_cpu::ParsedCmdArguments::SetLoad(int32_t load)
+{
+  parsed_cmd_arguments_logic_.SetLoad(load);
+}
+
+int32_t tension_cpu::ParsedCmdArguments::GetLoad()
+{
+  return parsed_cmd_arguments_logic_.GetLoad();
+}
+
+void tension_cpu::ParsedCmdArguments::SetTestTime(std::chrono::seconds time)
+{
+  parsed_cmd_arguments_logic_.SetTestTime(time);
+}
+
+std::chrono::seconds tension_cpu::ParsedCmdArguments::GetTestTime()
+{
+  return parsed_cmd_arguments_logic_.GetTestTime();
+}

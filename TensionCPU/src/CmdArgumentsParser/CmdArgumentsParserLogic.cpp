@@ -1,5 +1,5 @@
 /*
- * CmdArgumentsParser.h
+ * CmdArgumentsParserLogic.cpp
  *
  *  Created on: 2023
  *      Author: Janusz Wolak
@@ -37,24 +37,4 @@
  *
  */
 
-#ifndef INCLUDE_CMDARGUMENTSPARSER_H_
-#define INCLUDE_CMDARGUMENTSPARSER_H_
-
-#include <memory>
-
-#include "ParsedCmdArguments.h"
-
-namespace tension_cpu
-{
-  class CmdArgumentsParser
-  {
-   public:
-    CmdArgumentsParser()
-    {
-    }
-
-    bool ParseCmdArguments(std::shared_ptr<IParsedCmdArguments> parsed_cmd_arguments);
-  };
-} /*namespace tension_cpu*/
-
-#endif /* INCLUDE_CMDARGUMENTSPARSER_H_ */
+#include "CmdArgumentsParserLogic.h"

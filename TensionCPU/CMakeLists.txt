@@ -37,6 +37,7 @@ endif()
 #------------------------------------------------------------------------------------------
 set(TENSION_CPU_INCLUDE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/CmdArgumentsParser
 )
 
 include_directories(${PROJECT_NAME} PRIVATE  ${TENSION_CPU_INCLUDE})
@@ -54,8 +55,10 @@ set(TENSION_CPU_SRC_DIR
 set(TENSION_CPU_SRC
     ${TENSION_CPU_SRC_DIR}/main.cpp
     ${TENSION_CPU_SRC_DIR}/TensionCPU.cpp
-    ${TENSION_CPU_SRC_DIR}/CmdArgumentsParser.cpp
-    ${TENSION_CPU_SRC_DIR}/ParsedCmdArguments.cpp
+    ${TENSION_CPU_SRC_DIR}/CmdArgumentsParser/CmdArgumentsParser.cpp
+    ${TENSION_CPU_SRC_DIR}/CmdArgumentsParser/ParsedCmdArguments.cpp
+    ${TENSION_CPU_SRC_DIR}/CmdArgumentsParser/CmdArgumentsParserLogic.cpp
+    ${TENSION_CPU_SRC_DIR}/CmdArgumentsParser/ParsedCmdArgumentsLogic.cpp
 )
 
 #------------------------------------------------------------------------------------------

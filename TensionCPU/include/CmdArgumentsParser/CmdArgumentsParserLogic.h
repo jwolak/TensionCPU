@@ -1,5 +1,5 @@
 /*
- * ParsedCmdArguments.cpp
+ * CmdArgumentsParserLogic.h
  *
  *  Created on: 2023
  *      Author: Janusz Wolak
@@ -37,35 +37,20 @@
  *
  */
 
-#include "ParsedCmdArguments.h"
+#ifndef INCLUDE_CMDARGUMENTSPARSER_CMDARGUMENTSPARSERLOGIC_H_
+#define INCLUDE_CMDARGUMENTSPARSER_CMDARGUMENTSPARSERLOGIC_H_
 
-void tension_cpu::ParsedCmdArguments::SetScheduligMode()
+#include <memory>
+
+namespace tension_cpu
 {
+  class CmdArgumentsParserLogic
+  {
+   public:
+    CmdArgumentsParserLogic()
+    {
+    }
+  };
+} /*namespace tension_cpu*/
 
-}
-
-void tension_cpu::ParsedCmdArguments::GetScheduligMode()
-{
-
-}
-
-void tension_cpu::ParsedCmdArguments::SetLoad()
-{
-
-
-}
-
-void tension_cpu::ParsedCmdArguments::GetLoad()
-{
-
-}
-
-void tension_cpu::ParsedCmdArguments::SetTime()
-{
-
-}
-
-void tension_cpu::ParsedCmdArguments::GetTime()
-{
-
-}
+#endif /* INCLUDE_CMDARGUMENTSPARSER_CMDARGUMENTSPARSERLOGIC_H_ */

@@ -1,5 +1,5 @@
 /*
- * ParsedCmdArguments.h
+ * ParsedCmdArgumentsLogic.h
  *
  *  Created on: 2023
  *      Author: Janusz Wolak
@@ -37,27 +37,32 @@
  *
  */
 
-#ifndef INCLUDE_PARSEDCMDARGUMENTS_H_
-#define INCLUDE_PARSEDCMDARGUMENTS_H_
+#ifndef INCLUDE_CMDARGUMENTSPARSER_PARSEDCMDARGUMENTSLOGIC_H_
+#define INCLUDE_CMDARGUMENTSPARSER_PARSEDCMDARGUMENTSLOGIC_H_
 
-#include "IParsedCmdArguments.h"
+#include <chrono>
 
-namespace tension_cpu
-{
-class ParsedCmdArguments : public IParsedCmdArguments
-{
+#include <cstdint>
+
+#include "SchedulingModeType.h"
+
+namespace tension_cpu {
+
+class ParsedCmdArgumentsLogic {
  public:
-  ParsedCmdArguments()
-  {
-  }
+  ParsedCmdArgumentsLogic();
+  void SetScheduligMode(SchedulingModeType sched_mode_type);
+  SchedulingModeType GetScheduligMode();
+  void SetLoad(int32_t load);
+  int32_t GetLoad();
+  void SetTestTime(std::chrono::seconds time);
+  std::chrono::seconds GetTestTime();
 
-  void SetScheduligMode() override;
-  void GetScheduligMode() override;
-  void SetLoad() override;
-  void GetLoad() override;
-  void SetTime() override;
-  void GetTime() override;
+  SchedulingModeType scheduling_mode_type;
+  int32_t cpu_load;
+  std::chrono::seconds test_time;
 };
+
 } /*namespace tension_cpu*/
 
-#endif /* INCLUDE_PARSEDCMDARGUMENTS_H_ */
+#endif /* INCLUDE_CMDARGUMENTSPARSER_PARSEDCMDARGUMENTSLOGIC_H_ */
