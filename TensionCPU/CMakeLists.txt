@@ -27,7 +27,7 @@ message(STATUS "C++ standard set to: " ${CMAKE_CXX_STANDARD})
 #------------------------------------------------------------------------------------------
 #                                TensionCPU options
 #------------------------------------------------------------------------------------------
-option(TENSION_CPU_TESTS        "Build tests"        OFF)
+option(TENSION_CPU_TESTS        "Build tests"        ON)
 if(TENSION_CPU_TESTS)
     message(STATUS "Build test enabled")
 endif()
