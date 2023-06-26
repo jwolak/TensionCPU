@@ -45,6 +45,11 @@
 
 namespace tension_cpu
 {
+
+//!  ParsedCmdArguments class.
+/*!
+  ParsedCmdArguments contains parameters parsed from the command line.
+*/
 class ParsedCmdArguments : public IParsedCmdArguments
 {
  public:
@@ -52,14 +57,46 @@ class ParsedCmdArguments : public IParsedCmdArguments
   : parsed_cmd_arguments_logic_ {} {
   }
 
+  /**
+   * SetScheduligMode() method sets parameters contains scheduling policy like: FIFO, RoundRobin, BATCH or OTHER
+   * @param sched_mode_type a scheduling mode to be set (FIFO, RR, BATCH, OTHER).
+   */
   void SetScheduligMode(SchedulingModeType sched_mode_type) override;
+
+  /**
+   * GetScheduligMode() method returns scheduling policy.
+   * @return SchedulingModeType as scheduling mode parsed from command line.
+   */
   SchedulingModeType GetScheduligMode() override;
+
+  /**
+   * SetLoad() method sets CPU load in percentage.
+   * @param CPU load in percentage to be set.
+   */
   void SetLoad(int32_t load) override;
+
+  /**
+   * GetLoad() method returns CPU load in percentage.
+   * @return CPU load in percentage parsed form command line.
+   */
   int32_t GetLoad() override;
+
+  /**
+     * SetTestTime() method sets CPU load time in seconds.
+     * @param CPU load time in in seconds.
+     */
   void SetTestTime(std::chrono::seconds time) override;
+
+  /**
+     * GetTestTime() method returns CPU load time in seconds.
+     * @return CPU load time in seconds.
+     */
   std::chrono::seconds GetTestTime() override;
 
  private:
+  /**
+   * ParsedCmdArgumentsLogic contains a functionality implementation for ParsedCmdArguments.
+   */
   ParsedCmdArgumentsLogic parsed_cmd_arguments_logic_;
 };
 

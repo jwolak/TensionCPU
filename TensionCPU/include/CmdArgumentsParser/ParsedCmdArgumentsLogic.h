@@ -48,6 +48,10 @@
 
 namespace tension_cpu {
 
+//!  ParsedCmdArgumentsLogic class.
+/*!
+  ParsedCmdArgumentsLogic contains a functionality implementation for ParsedCmdArguments.
+*/
 class ParsedCmdArgumentsLogic {
  public:
   ParsedCmdArgumentsLogic();
