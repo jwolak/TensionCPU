@@ -95,7 +95,7 @@ class ParsedCmdArguments : public IParsedCmdArguments {
 
  private:
   /**
-   * ParsedCmdArgumentsLogic contains a functionality implementation for ParsedCmdArguments.
+   * parsed_cmd_arguments_logic_ contains a functionality implementation for ParsedCmdArguments.
    */
   ParsedCmdArgumentsLogic parsed_cmd_arguments_logic_;
 };

@@ -37,6 +37,27 @@
  *
  */
 
+#include <gtest/gtest.h>
 
+#include "CmdArgumentsParser/ParsedCmdArgumentsLogic.h"
 
+namespace parsed_cmd_arguments_logic_test {
 
+namespace {
+const tension_cpu::cmd_arguments_parser::SchedulingModeType kTestSchedulingModeBatch = tension_cpu::cmd_arguments_parser::SchedulingModeType::BATCH;
+}
+
+class ParsedCmdArgumentsLogicTest : public ::testing::Test {
+ public:
+  ParsedCmdArgumentsLogicTest() {
+  }
+
+  tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic parsed_cmd_arguments_logic;
+};
+
+TEST_F(ParsedCmdArgumentsLogicTest, Call_SetScheduligMode_With_BATCH_Argument_And_Field_scheduling_mode_type_Is_Set_To_BATCH) {
+  parsed_cmd_arguments_logic.SetScheduligMode(kTestSchedulingModeBatch);
+  ASSERT_EQ(parsed_cmd_arguments_logic.scheduling_mode_type, kTestSchedulingModeBatch);
+}
+
+} /*namespace parsed_cmd_arguments_logic_test*/
