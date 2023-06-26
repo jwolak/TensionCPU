@@ -43,18 +43,18 @@
 #include "IParsedCmdArguments.h"
 #include "ParsedCmdArgumentsLogic.h"
 
-namespace tension_cpu
-{
+namespace tension_cpu {
+namespace cmd_arguments_parser {
 
 //!  ParsedCmdArguments class.
 /*!
-  ParsedCmdArguments contains parameters parsed from the command line.
-*/
-class ParsedCmdArguments : public IParsedCmdArguments
-{
+ ParsedCmdArguments contains parameters parsed from the command line.
+ */
+class ParsedCmdArguments : public IParsedCmdArguments {
  public:
   ParsedCmdArguments()
-  : parsed_cmd_arguments_logic_ {} {
+      :
+      parsed_cmd_arguments_logic_ { } {
   }
 
   /**
@@ -82,15 +82,15 @@ class ParsedCmdArguments : public IParsedCmdArguments
   int32_t GetLoad() override;
 
   /**
-     * SetTestTime() method sets CPU load time in seconds.
-     * @param CPU load time in in seconds.
-     */
+   * SetTestTime() method sets CPU load time in seconds.
+   * @param CPU load time in in seconds.
+   */
   void SetTestTime(std::chrono::seconds time) override;
 
   /**
-     * GetTestTime() method returns CPU load time in seconds.
-     * @return CPU load time in seconds.
-     */
+   * GetTestTime() method returns CPU load time in seconds.
+   * @return CPU load time in seconds.
+   */
   std::chrono::seconds GetTestTime() override;
 
  private:
@@ -100,6 +100,7 @@ class ParsedCmdArguments : public IParsedCmdArguments
   ParsedCmdArgumentsLogic parsed_cmd_arguments_logic_;
 };
 
+} /*namespace cmd_arguments_parser*/
 } /*namespace tension_cpu*/
 
 #endif /* INCLUDE_PARSEDCMDARGUMENTS_H_ */

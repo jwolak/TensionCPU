@@ -40,7 +40,7 @@
 #include "CmdArgumentsParser.h"
 #include "EquinoxLogger.h"
 
-bool tension_cpu::CmdArgumentsParser::ParseCmdArguments(std::shared_ptr<IParsedCmdArguments> parsed_cmd_arguments)
+bool tension_cpu::cmd_arguments_parser::CmdArgumentsParser::ParseCmdArguments(std::shared_ptr<IParsedCmdArguments> parsed_cmd_arguments)
 {
 
   equinox::trace("[CmdArgumentsParser] Cmd arguments parsed successfully");

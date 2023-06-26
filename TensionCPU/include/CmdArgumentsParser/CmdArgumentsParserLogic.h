@@ -42,15 +42,14 @@
 
 #include <memory>
 
-namespace tension_cpu
-{
-  class CmdArgumentsParserLogic
-  {
-   public:
-    CmdArgumentsParserLogic()
-    {
-    }
-  };
+namespace tension_cpu {
+namespace cmd_arguments_parser {
+class CmdArgumentsParserLogic {
+ public:
+  CmdArgumentsParserLogic() {
+  }
+};
+} /*namespace cmd_arguments_parser*/
 } /*namespace tension_cpu*/
 
 #endif /* INCLUDE_CMDARGUMENTSPARSER_CMDARGUMENTSPARSERLOGIC_H_ */

@@ -45,20 +45,21 @@
 #include "ParsedCmdArguments.h"
 #include "CmdArgumentsParserLogic.h"
 
-namespace tension_cpu
-{
-  class CmdArgumentsParser
-  {
-   public:
-    CmdArgumentsParser()
-    {
-    }
+namespace tension_cpu {
+namespace cmd_arguments_parser {
 
-    bool ParseCmdArguments(std::shared_ptr<IParsedCmdArguments> parsed_cmd_arguments);
+class CmdArgumentsParser {
+ public:
+  CmdArgumentsParser() {
+  }
 
-   private:
-    CmdArgumentsParserLogic cmd_arguments_parserlogic_;
-  };
+  bool ParseCmdArguments(std::shared_ptr<IParsedCmdArguments> parsed_cmd_arguments);
+
+ private:
+  CmdArgumentsParserLogic cmd_arguments_parserlogic_;
+};
+
+} /*namespace cmd_arguments_parser*/
 } /*namespace tension_cpu*/
 
 #endif /* INCLUDE_CMDARGUMENTSPARSER_H_ */

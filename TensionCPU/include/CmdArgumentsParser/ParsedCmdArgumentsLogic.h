@@ -47,11 +47,12 @@
 #include "SchedulingModeType.h"
 
 namespace tension_cpu {
+namespace cmd_arguments_parser {
 
 //!  ParsedCmdArgumentsLogic class.
 /*!
-  ParsedCmdArgumentsLogic contains a functionality implementation for ParsedCmdArguments.
-*/
+ ParsedCmdArgumentsLogic contains a functionality implementation for ParsedCmdArguments.
+ */
 class ParsedCmdArgumentsLogic {
  public:
   ParsedCmdArgumentsLogic();
@@ -67,6 +68,7 @@ class ParsedCmdArgumentsLogic {
   std::chrono::seconds test_time;
 };
 
+} /*namespace cmd_arguments_parser*/
 } /*namespace tension_cpu*/
 
 #endif /* INCLUDE_CMDARGUMENTSPARSER_PARSEDCMDARGUMENTSLOGIC_H_ */

@@ -46,10 +46,9 @@
 
 #include "SchedulingModeType.h"
 
-namespace tension_cpu
-{
-class IParsedCmdArguments
-{
+namespace tension_cpu {
+namespace cmd_arguments_parser {
+class IParsedCmdArguments {
  public:
   virtual ~IParsedCmdArguments() = default;
   virtual void SetScheduligMode(SchedulingModeType) = 0;
@@ -59,6 +58,7 @@ class IParsedCmdArguments
   virtual void SetTestTime(std::chrono::seconds) = 0;
   virtual std::chrono::seconds GetTestTime() = 0;
 };
+} /*namespace cmd_arguments_parser*/
 } /*namespace tension_cpu*/
 
 #endif /* INCLUDE_IPARSEDCMDARGUMENTS_H_ */

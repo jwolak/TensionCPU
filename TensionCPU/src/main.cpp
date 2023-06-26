@@ -69,8 +69,8 @@ void CatchSigend(void (*handler)(int)) {
 int main(int argc, char **argv)
 {
 
-  std::shared_ptr<tension_cpu::IParsedCmdArguments> parsed_cmd_arguments {std::make_shared<tension_cpu::ParsedCmdArguments>()};
-  tension_cpu::CmdArgumentsParser CmdArgumentsParser;
+  std::shared_ptr<tension_cpu::cmd_arguments_parser::IParsedCmdArguments> parsed_cmd_arguments {std::make_shared<tension_cpu::cmd_arguments_parser::ParsedCmdArguments>()};
+  tension_cpu::cmd_arguments_parser::CmdArgumentsParser CmdArgumentsParser;
 
   if(!CmdArgumentsParser.ParseCmdArguments(parsed_cmd_arguments))
   {

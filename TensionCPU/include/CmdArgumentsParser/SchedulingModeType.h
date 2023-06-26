@@ -41,14 +41,16 @@
 #define INCLUDE_CMDARGUMENTSPARSER_SCHEDULINGMODETYPE_H_
 
 namespace tension_cpu {
+namespace cmd_arguments_parser {
 
 enum class SchedulingModeType {
   OTHER = 0,
   FIFO = 1,
   RR = 2,
-  BATCH  = 3,
+  BATCH = 3,
 };
 
+} /*namespace cmd_arguments_parser*/
 } /*namespace tension_cpu */
 
 #endif /* INCLUDE_CMDARGUMENTSPARSER_SCHEDULINGMODETYPE_H_ */

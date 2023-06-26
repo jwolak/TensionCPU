@@ -39,32 +39,32 @@
 
 #include "ParsedCmdArgumentsLogic.h"
 
-tension_cpu::ParsedCmdArgumentsLogic::ParsedCmdArgumentsLogic()
+tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::ParsedCmdArgumentsLogic()
 : scheduling_mode_type {},
   cpu_load {},
   test_time {} {
 }
 
-void tension_cpu::ParsedCmdArgumentsLogic::SetScheduligMode(tension_cpu::SchedulingModeType sched_mode_type) {
+void tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::SetScheduligMode(tension_cpu::cmd_arguments_parser::SchedulingModeType sched_mode_type) {
   scheduling_mode_type = sched_mode_type;
 }
 
-tension_cpu::SchedulingModeType tension_cpu::ParsedCmdArgumentsLogic::GetScheduligMode() {
+tension_cpu::cmd_arguments_parser::SchedulingModeType tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::GetScheduligMode() {
   return scheduling_mode_type;
 }
 
-void tension_cpu::ParsedCmdArgumentsLogic::SetLoad(int32_t load) {
+void tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::SetLoad(int32_t load) {
   cpu_load = load;
 }
 
-int32_t tension_cpu::ParsedCmdArgumentsLogic::GetLoad() {
+int32_t tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::GetLoad() {
   return cpu_load;
 }
 
-void tension_cpu::ParsedCmdArgumentsLogic::SetTestTime(std::chrono::seconds time) {
+void tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::SetTestTime(std::chrono::seconds time) {
   test_time = time;
 }
 
-std::chrono::seconds tension_cpu::ParsedCmdArgumentsLogic::GetTestTime() {
+std::chrono::seconds tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::GetTestTime() {
   return test_time;
 }

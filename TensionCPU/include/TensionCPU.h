@@ -49,7 +49,7 @@ namespace tension_cpu
   class TensionCpu
   {
    public:
-    TensionCpu(std::shared_ptr<IParsedCmdArguments> parsed_cmd_arguments)
+    TensionCpu(std::shared_ptr<cmd_arguments_parser::IParsedCmdArguments> parsed_cmd_arguments)
     : parsed_cmd_arguments_ { parsed_cmd_arguments }
     {
     }
@@ -58,7 +58,7 @@ namespace tension_cpu
     bool stop();
 
    private:
-    std::shared_ptr<IParsedCmdArguments> parsed_cmd_arguments_;
+    std::shared_ptr<cmd_arguments_parser::IParsedCmdArguments> parsed_cmd_arguments_;
   };
 } /*namespace tension_cpu*/
 
