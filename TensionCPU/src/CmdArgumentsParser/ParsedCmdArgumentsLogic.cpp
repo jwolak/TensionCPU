@@ -38,6 +38,7 @@
  */
 
 #include "ParsedCmdArgumentsLogic.h"
+#include "EquinoxLogger.h"
 
 tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::ParsedCmdArgumentsLogic()
 : scheduling_mode_type {},
@@ -47,6 +48,21 @@ tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::ParsedCmdArgumentsLo
 
 void tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::SetScheduligMode(tension_cpu::cmd_arguments_parser::SchedulingModeType sched_mode_type) {
   scheduling_mode_type = sched_mode_type;
+
+  switch(scheduling_mode_type) {
+    case tension_cpu::cmd_arguments_parser::SchedulingModeType::BATCH:
+      equinox::trace("[ParsedCmdArgumentsLogic] Scheduling mode set to: BATCH");
+      break;
+    case tension_cpu::cmd_arguments_parser::SchedulingModeType::FIFO:
+      equinox::trace("[ParsedCmdArgumentsLogic] Scheduling mode set to: FIFO");
+      break;
+    case tension_cpu::cmd_arguments_parser::SchedulingModeType::OTHER:
+      equinox::trace("[ParsedCmdArgumentsLogic] Scheduling mode set to: OTHER");
+      break;
+    case tension_cpu::cmd_arguments_parser::SchedulingModeType::RR:
+      equinox::trace("[ParsedCmdArgumentsLogic] Scheduling mode set to: RR");
+      break;
+  }
 }
 
 tension_cpu::cmd_arguments_parser::SchedulingModeType tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::GetScheduligMode() {
@@ -55,6 +71,7 @@ tension_cpu::cmd_arguments_parser::SchedulingModeType tension_cpu::cmd_arguments
 
 void tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::SetLoad(int32_t load) {
   cpu_load = load;
+  equinox::trace("[ParsedCmdArgumentsLogic] Cpu load set to: [%d%]", load);
 }
 
 int32_t tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::GetLoad() {
@@ -63,6 +80,7 @@ int32_t tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::GetLoad() {
 
 void tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::SetTestTime(std::chrono::seconds time) {
   test_time = time;
+  equinox::trace("[ParsedCmdArgumentsLogic] Test time set to: [%ds]", test_time);
 }
 
 std::chrono::seconds tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::GetTestTime() {

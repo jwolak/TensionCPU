@@ -69,3 +69,4 @@ add_executable(${PROJECT_NAME} ${TENSION_CPU_SRC} ${TENSION_CPU_TESTS_SRC})
 #------------------------------------------------------------------------------------------
 target_link_libraries(${PROJECT_NAME} gmock gtest gtest_main pthread)
 target_link_libraries(${PROJECT_NAME} ${GTEST_LIBRARIES} gtest_main)
+target_link_libraries(${PROJECT_NAME} EquinoxLogger)

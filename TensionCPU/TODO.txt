@@ -1,0 +1,2 @@
+1. Validator parametrow dla CMD
+2. Poprawić CMakeLists.txt (lepsze opisy i ładniej)
