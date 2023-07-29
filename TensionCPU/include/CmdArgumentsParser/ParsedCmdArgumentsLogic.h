@@ -45,6 +45,7 @@
 #include <cstdint>
 
 #include "SchedulingModeType.h"
+#include "DebugModeType.h"
 
 namespace tension_cpu {
 namespace cmd_arguments_parser {
@@ -71,7 +72,7 @@ class ParsedCmdArgumentsLogic {
 
   /**
    * SetLoad() method sets CPU load in percentage.
-   * @param CPU load in percentage to be set.
+   * @param load CPU load in percentage to be set.
    */
   void SetLoad(int32_t load);
 
@@ -83,7 +84,7 @@ class ParsedCmdArgumentsLogic {
 
   /**
    * SetTestTime() method sets CPU load time in seconds.
-   * @param CPU load time in in seconds.
+   * @param time CPU load time in in seconds.
    */
   void SetTestTime(std::chrono::seconds time);
 
@@ -92,6 +93,18 @@ class ParsedCmdArgumentsLogic {
    * @return CPU load time in seconds.
    */
   std::chrono::seconds GetTestTime();
+
+  /**
+   * SetDebugMode() method to set level of printed logs.
+   * @param debug_mode_to_set level of printed logs.
+   */
+  void SetDebugMode(DebugModeType debug_mode_to_set);
+
+  /**
+   * GetDebugMode() method to get level of printed logs.
+   * @return level of printed logs.
+   */
+  DebugModeType GetDebugMode();
 
   /**
    * scheduling_mode_type contains a scheduling policy.
@@ -107,6 +120,11 @@ class ParsedCmdArgumentsLogic {
    * test_time contains a CPU load time.
    */
   std::chrono::seconds test_time;
+
+  /**
+   * level of printed logs.
+   */
+  DebugModeType debug_mode;
 };
 
 } /*namespace cmd_arguments_parser*/

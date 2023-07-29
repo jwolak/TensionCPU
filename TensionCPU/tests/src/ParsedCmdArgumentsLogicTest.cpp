@@ -50,6 +50,12 @@ const tension_cpu::cmd_arguments_parser::SchedulingModeType kTestSchedulingModeF
 const tension_cpu::cmd_arguments_parser::SchedulingModeType kTestSchedulingModeOTHER = tension_cpu::cmd_arguments_parser::SchedulingModeType::OTHER;
 const int32_t kTestCpuLoad = 77;
 const std::chrono::seconds kTestTime = std::chrono::seconds(7);
+const tension_cpu::cmd_arguments_parser::DebugModeType kTestDebugModeCritical = tension_cpu::cmd_arguments_parser::DebugModeType::CRITICAL;
+const tension_cpu::cmd_arguments_parser::DebugModeType kTestDebugModeDebug = tension_cpu::cmd_arguments_parser::DebugModeType::DEBUG;
+const tension_cpu::cmd_arguments_parser::DebugModeType kTestDebugModeError = tension_cpu::cmd_arguments_parser::DebugModeType::ERROR;
+const tension_cpu::cmd_arguments_parser::DebugModeType kTestDebugModeInfo = tension_cpu::cmd_arguments_parser::DebugModeType::INFO;
+const tension_cpu::cmd_arguments_parser::DebugModeType kTestDebugModeTrace = tension_cpu::cmd_arguments_parser::DebugModeType::TRACE;
+const tension_cpu::cmd_arguments_parser::DebugModeType kTestDebugModeWarning = tension_cpu::cmd_arguments_parser::DebugModeType::WARNING;
 }
 
 class ParsedCmdArgumentsLogicTest : public ::testing::Test {
@@ -119,5 +125,50 @@ TEST_F(ParsedCmdArgumentsLogicTest, Set_Field_test_time_And_Call_GetTestTime_And
   parsed_cmd_arguments_logic.test_time = std::chrono::seconds(kTestTime);
   ASSERT_EQ(parsed_cmd_arguments_logic.GetTestTime(), kTestTime);
 }
+
+class SetDebugModeTestsParams {
+ public:
+  SetDebugModeTestsParams(tension_cpu::cmd_arguments_parser::DebugModeType debug_mode,
+                          tension_cpu::cmd_arguments_parser::DebugModeType expected_mode)
+      :
+      set_debug_mode { debug_mode },
+      expected_debug_mode { expected_mode } {
+  }
+
+  tension_cpu::cmd_arguments_parser::DebugModeType set_debug_mode;
+  tension_cpu::cmd_arguments_parser::DebugModeType expected_debug_mode;
+};
+
+class DebugModeParametrizedTest : public testing::TestWithParam<SetDebugModeTestsParams> {
+ public:
+  DebugModeParametrizedTest()
+      :
+      parsed_cmd_arguments_logic { } {
+  }
+
+  tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic parsed_cmd_arguments_logic;
+};
+
+TEST_P(DebugModeParametrizedTest, Set_Field_debug_mode_And_Call_GetDebugMode_And_Set_Debug_Mode_Returned) {
+  SetDebugModeTestsParams params = GetParam();
+  parsed_cmd_arguments_logic.debug_mode = params.set_debug_mode;
+  ASSERT_EQ(parsed_cmd_arguments_logic.GetDebugMode(), params.expected_debug_mode);
+}
+
+TEST_P(DebugModeParametrizedTest, Call_SetDebugMode_And_Test_Field_debug_mode_Set) {
+  SetDebugModeTestsParams params = GetParam();
+  parsed_cmd_arguments_logic.SetDebugMode(params.set_debug_mode);
+  ASSERT_EQ(parsed_cmd_arguments_logic.debug_mode, params.expected_debug_mode);
+}
+
+SetDebugModeTestsParams params[] = { { kTestDebugModeCritical, kTestDebugModeCritical },
+                                     { kTestDebugModeDebug, kTestDebugModeDebug },
+                                     { kTestDebugModeError, kTestDebugModeError },
+                                     { kTestDebugModeInfo, kTestDebugModeInfo },
+                                     { kTestDebugModeTrace, kTestDebugModeTrace },
+                                     { kTestDebugModeWarning, kTestDebugModeWarning }
+};
+
+INSTANTIATE_TEST_CASE_P(PackOfTests, DebugModeParametrizedTest, testing::ValuesIn(params));
 
 } /*namespace parsed_cmd_arguments_logic_test*/

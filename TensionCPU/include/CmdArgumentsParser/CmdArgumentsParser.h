@@ -53,7 +53,7 @@ class CmdArgumentsParser {
   CmdArgumentsParser() {
   }
 
-  bool ParseCmdArguments(std::shared_ptr<IParsedCmdArguments> parsed_cmd_arguments);
+  bool ParseCmdArguments(std::shared_ptr<IParsedCmdArguments> parsed_cmd_arguments, int argc, char **argv);
 
  private:
   CmdArgumentsParserLogic cmd_arguments_parserlogic_;

@@ -1,5 +1,5 @@
 /*
- * CmdArgumentsParser.cpp
+ * DebugModeType.h
  *
  *  Created on: 2023
  *      Author: Janusz Wolak
@@ -37,12 +37,22 @@
  *
  */
 
-#include "CmdArgumentsParser.h"
-#include "EquinoxLogger.h"
+#ifndef INCLUDE_CMDARGUMENTSPARSER_DEBUGMODETYPE_H_
+#define INCLUDE_CMDARGUMENTSPARSER_DEBUGMODETYPE_H_
 
-bool tension_cpu::cmd_arguments_parser::CmdArgumentsParser::ParseCmdArguments(std::shared_ptr<IParsedCmdArguments> parsed_cmd_arguments, int argc, char **argv)
-{
+namespace tension_cpu {
+namespace cmd_arguments_parser {
 
-  equinox::trace("[CmdArgumentsParser] Cmd arguments parsed successfully");
-  return true;
-}
+enum class DebugModeType {
+  TRACE,
+  DEBUG,
+  INFO,
+  WARNING,
+  ERROR,
+  CRITICAL
+};
+
+} /*namespace cmd_arguments_parser*/
+} /*namespace tension_cpu*/
+
+#endif /* INCLUDE_CMDARGUMENTSPARSER_DEBUGMODETYPE_H_ */

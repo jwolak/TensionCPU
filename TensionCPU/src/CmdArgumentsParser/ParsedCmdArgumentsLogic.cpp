@@ -43,7 +43,8 @@
 tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::ParsedCmdArgumentsLogic()
 : scheduling_mode_type {},
   cpu_load {},
-  test_time {} {
+  test_time {},
+  debug_mode {} {
 }
 
 void tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::SetScheduligMode(tension_cpu::cmd_arguments_parser::SchedulingModeType sched_mode_type) {
@@ -85,4 +86,33 @@ void tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::SetTestTime(std
 
 std::chrono::seconds tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::GetTestTime() {
   return test_time;
+}
+
+void tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::SetDebugMode(DebugModeType debug_mode_to_set) {
+  debug_mode = debug_mode_to_set;
+
+  switch (debug_mode) {
+    case tension_cpu::cmd_arguments_parser::DebugModeType::CRITICAL:
+      equinox::trace("[ParsedCmdArgumentsLogic] Debug mode set to: CRITICAL");
+      break;
+    case tension_cpu::cmd_arguments_parser::DebugModeType::DEBUG:
+      equinox::trace("[ParsedCmdArgumentsLogic] Debug mode set to: DEBUG");
+      break;
+    case tension_cpu::cmd_arguments_parser::DebugModeType::ERROR:
+      equinox::trace("[ParsedCmdArgumentsLogic] Debug mode set to: ERROR");
+      break;
+    case tension_cpu::cmd_arguments_parser::DebugModeType::INFO:
+      equinox::trace("[ParsedCmdArgumentsLogic] Debug mode set to: INFO");
+      break;
+    case tension_cpu::cmd_arguments_parser::DebugModeType::TRACE:
+      equinox::trace("[ParsedCmdArgumentsLogic] Debug mode set to: TRACE");
+      break;
+    case tension_cpu::cmd_arguments_parser::DebugModeType::WARNING:
+      equinox::trace("[ParsedCmdArgumentsLogic] Debug mode set to: WARNING");
+      break;
+  }
+}
+
+tension_cpu::cmd_arguments_parser::DebugModeType tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::GetDebugMode() {
+  return debug_mode;
 }
