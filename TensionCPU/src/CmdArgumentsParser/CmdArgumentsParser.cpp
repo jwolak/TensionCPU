@@ -37,12 +37,90 @@
  *
  */
 
+#include <cstdint>
+#include <iostream>
+
+#include <getopt.h>
+
 #include "CmdArgumentsParser.h"
 #include "EquinoxLogger.h"
 
+namespace {
+const int32_t kMinNumberOfArguments = 2;
+const int kFail = -1;
+}
+
+tension_cpu::cmd_arguments_parser::CmdArgumentsParser::CmdArgumentsParser()
+    :
+    cmd_arguments_parserlogic_ { std::make_shared<tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic>() } {
+}
+
+
+tension_cpu::cmd_arguments_parser::CmdArgumentsParser::CmdArgumentsParser(std::shared_ptr<ICmdArgumentsParserLogic> cmd_arguments_parserlogic)
+    :
+    cmd_arguments_parserlogic_ { cmd_arguments_parserlogic } {
+}
+
 bool tension_cpu::cmd_arguments_parser::CmdArgumentsParser::ParseCmdArguments(std::shared_ptr<IParsedCmdArguments> parsed_cmd_arguments, int argc, char **argv)
 {
+  if (argc < kMinNumberOfArguments) {
+    std::cout << "No arguments provided" << std::endl;
+    cmd_arguments_parserlogic_->PrintHelpMenu();
+    return false;
+  }
 
-  equinox::trace("[CmdArgumentsParser] Cmd arguments parsed successfully");
+  static struct option longopts[] = {
+      {"help", no_argument, NULL, 'h' },
+      {"load", required_argument, NULL, 'l' },
+      {"Time", required_argument, NULL, 'T' },
+      {"Sched", required_argument, NULL, 'S'},
+      {"Debug", required_argument, NULL, 'D'},
+      {"Cores", required_argument, NULL, 'C'},
+  };
+
+  int flag = 0;
+  while ((flag = getopt_long(argc, argv, "hl:T:S:D:C:", longopts, NULL)) != kFail) {
+    switch (flag) {
+      case 'h':
+        cmd_arguments_parserlogic_->PrintHelpMenu();
+        return false;
+
+      case 'l':
+        if (!cmd_arguments_parserlogic_->ProcessLoadParameter(atoi(optarg))) {
+          return false;
+        }
+        break;
+
+      case 'T':
+        if (!cmd_arguments_parserlogic_->ProcessTestTimeParameter(atoi(optarg))) {
+          return false;
+        }
+        break;
+
+      case 'S':
+        if (!cmd_arguments_parserlogic_->ProcessSchedulingPolicy(optarg)) {
+          return false;
+        }
+        break;
+
+      case 'D':
+        if (!cmd_arguments_parserlogic_->ProcessdDebugLevelParameter(atoi(optarg))) {
+          return false;
+        }
+        break;
+
+      case 'C':
+        if (!cmd_arguments_parserlogic_->ProcessdCoresNumberParameter(atoi(optarg))) {
+          return false;
+        }
+        break;
+
+      default:
+        cmd_arguments_parserlogic_->PrintHelpMenu();
+        return false;
+    }
+  }
+
+  std::cout << "[CmdArgumentsParser] Cmd arguments parsed successfully" << std::endl;
   return true;
 }

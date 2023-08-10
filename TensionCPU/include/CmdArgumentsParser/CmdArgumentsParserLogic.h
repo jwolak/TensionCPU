@@ -42,13 +42,25 @@
 
 #include <memory>
 
+#include <cstdint>
+
+#include "ICmdArgumentsParserLogic.h"
+
 namespace tension_cpu {
 namespace cmd_arguments_parser {
-class CmdArgumentsParserLogic {
+
+class CmdArgumentsParserLogic : public ICmdArgumentsParserLogic{
  public:
   CmdArgumentsParserLogic() {
   }
+  void PrintHelpMenu() override;
+  bool ProcessLoadParameter(int load_parameter) override;
+  bool ProcessTestTimeParameter(int test_time_parameter) override;
+  bool ProcessSchedulingPolicy(const char* scheduling_policy_parameter) override;
+  bool ProcessdDebugLevelParameter(int debug_level_parameter) override;
+  bool ProcessdCoresNumberParameter(int cores_number_parameter) override;
 };
+
 } /*namespace cmd_arguments_parser*/
 } /*namespace tension_cpu*/
 

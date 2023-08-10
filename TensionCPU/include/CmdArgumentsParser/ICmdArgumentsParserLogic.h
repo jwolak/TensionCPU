@@ -1,5 +1,5 @@
 /*
- * CmdArgumentsParser.h
+ * ICmdArgumentsParserLogic.h
  *
  *  Created on: 2023
  *      Author: Janusz Wolak
@@ -37,30 +37,31 @@
  *
  */
 
-#ifndef INCLUDE_CMDARGUMENTSPARSER_H_
-#define INCLUDE_CMDARGUMENTSPARSER_H_
+#ifndef INCLUDE_CMDARGUMENTSPARSER_ICMDARGUMENTSPARSERLOGIC_H_
+#define INCLUDE_CMDARGUMENTSPARSER_ICMDARGUMENTSPARSERLOGIC_H_
 
 #include <memory>
 
-#include "ParsedCmdArguments.h"
-#include "CmdArgumentsParserLogic.h"
+#include <cstdint>
 
 namespace tension_cpu {
 namespace cmd_arguments_parser {
 
-class CmdArgumentsParser {
+class ICmdArgumentsParserLogic {
  public:
-  CmdArgumentsParser();
-  bool ParseCmdArguments(std::shared_ptr<IParsedCmdArguments> parsed_cmd_arguments, int argc, char **argv);
-
- protected:
-  CmdArgumentsParser(std::shared_ptr<ICmdArgumentsParserLogic> cmd_arguments_parserlogic);
-
- private:
-  std::shared_ptr<ICmdArgumentsParserLogic> cmd_arguments_parserlogic_;
+  virtual ~ICmdArgumentsParserLogic() = default;
+  virtual void PrintHelpMenu() = 0;
+  virtual bool ProcessLoadParameter(int load_parameter) = 0;
+  virtual bool ProcessTestTimeParameter(int test_time_parameter) = 0;
+  virtual bool ProcessSchedulingPolicy(const char* scheduling_policy_parameter) = 0;
+  virtual bool ProcessdDebugLevelParameter(int debug_level_parameter) = 0;
+  virtual bool ProcessdCoresNumberParameter(int cores_number_parameter) = 0;
 };
 
 } /*namespace cmd_arguments_parser*/
 } /*namespace tension_cpu*/
 
-#endif /* INCLUDE_CMDARGUMENTSPARSER_H_ */
+
+
+
+#endif /* INCLUDE_CMDARGUMENTSPARSER_ICMDARGUMENTSPARSERLOGIC_H_ */

@@ -38,3 +38,46 @@
  */
 
 #include "CmdArgumentsParserLogic.h"
+
+#include "EquinoxLogger.h"
+
+void tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::PrintHelpMenu() {
+  equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::PrintHelpMenu]", __FILE__, __LINE__);
+
+  equinox::trace("[CmdArgumentsParserLogic] Help menu printed");
+}
+
+bool tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::ProcessLoadParameter(int load_parameter) {
+  equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::ProcessLoadParameter]", __FILE__, __LINE__);
+
+  equinox::trace("[CmdArgumentsParserLogic] Load parameter processed successfully");
+  return true;
+}
+
+bool tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::ProcessTestTimeParameter(int test_time_parameter) {
+  equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::ProcessTestTimeParameter]", __FILE__, __LINE__);
+
+  equinox::trace("[CmdArgumentsParserLogic] Load parameter processed successfully");
+  return true;
+}
+
+bool tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::ProcessSchedulingPolicy(const char* scheduling_policy_parameter) {
+  equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::ProcessSchedulingPolicy]", __FILE__, __LINE__);
+
+  equinox::trace("[CmdArgumentsParserLogic] Scheduling policy parameter processed successfully");
+  return true;
+}
+
+bool tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::ProcessdDebugLevelParameter(int debug_level_parameter) {
+  equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::ProcessdDebugLevelParameter]", __FILE__, __LINE__);
+
+  equinox::trace("[CmdArgumentsParserLogic] Debug level parameter processed successfully");
+  return true;
+}
+
+bool tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::ProcessdCoresNumberParameter(int cores_number_parameter) {
+  equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::ProcessdCoresNumberParameter]", __FILE__, __LINE__);
+
+  equinox::trace("[CmdArgumentsParserLogic] Cores number parameter processed successfully");
+  return true;
+}
