@@ -47,6 +47,10 @@
 #include "CmdArgumentsParser.h"
 #include "TensionCPU.h"
 
+#ifdef VERBOSE_LOGS
+#include "EquinoxLogger.h"
+#endif
+
 static jmp_buf sigend_jmp_buf;
 
 static void __attribute__ ((noreturn)) SigendHandler(int signal) {
@@ -68,6 +72,9 @@ void CatchSigend(void (*handler)(int)) {
 
 int main(int argc, char **argv)
 {
+#ifdef VERBOSE_LOGS
+  equinox::changeLevel(equinox::level::LOG_LEVEL::trace);
+#endif
 
   std::shared_ptr<tension_cpu::cmd_arguments_parser::IParsedCmdArguments> parsed_cmd_arguments {std::make_shared<tension_cpu::cmd_arguments_parser::ParsedCmdArguments>()};
   tension_cpu::cmd_arguments_parser::CmdArgumentsParser CmdArgumentsParser;

@@ -7,6 +7,10 @@
 #------------------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 3.22.1)
 
+string(ASCII 27 Esc)
+set(Red "${Esc}[31m")
+set(ColourReset "${Esc}[m")
+
 #------------------------------------------------------------------------------------------
 #                                TensionCPU dependencies
 #------------------------------------------------------------------------------------------
@@ -28,8 +32,14 @@ message(STATUS "C++ standard set to: " ${CMAKE_CXX_STANDARD})
 #                                TensionCPU options
 #------------------------------------------------------------------------------------------
 option(TENSION_CPU_TESTS        "Build tests"        ON)
+option(ENABLE_VERBOSE_LOGS_MODE "Verbose logs mode"  ON)
 if(TENSION_CPU_TESTS)
     message(STATUS "Build test enabled")
+endif()
+
+if(ENABLE_VERBOSE_LOGS_MODE)
+message(STATUS "${Red}				[!WARNING!] Verbose mode of logs print enabled [!WARNING!] ${ColourReset}")
+add_definitions (-DVERBOSE_LOGS)
 endif()
 
 #------------------------------------------------------------------------------------------
