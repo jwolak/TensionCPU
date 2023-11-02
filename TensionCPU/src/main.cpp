@@ -49,20 +49,19 @@
 #include "TensionCPU.h"
 #include "EquinoxLogger.h"
 
-#define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 static jmp_buf sigend_jmp_buf;
 
 #ifdef VERBOSE_LOGS
 static void __attribute__ ((noreturn)) SigendHandler(int signal) {
-  equinox::debug("%s, File: %s, Line: %d", "[main] SigendHandler", __FILENAME__, __LINE__);
-  equinox::debug("%s %d %s", "Signal", signal, "caught");
+  equinox::trace("%s, File: %s, Line: %d", "[main] SigendHandler", __FILENAME__, __LINE__);
+  equinox::trace("%s %d %s", "Signal", signal, "caught");
 #endif
   longjmp(sigend_jmp_buf, 1);
 }
 
 void CatchSigend(void (*handler)(int)) {
 #ifdef VERBOSE_LOGS
-  equinox::debug("%s, File: %s, Line: %d", "[main] CatchSigend called...", __FILENAME__, __LINE__);
+  equinox::trace("%s, File: %s, Line: %d", "[main] CatchSigend called...", __FILENAME__, __LINE__);
 #endif
 #ifdef SIGINT
   signal(SIGINT, handler);
@@ -86,15 +85,15 @@ int main(int argc, char **argv) {
   std::shared_ptr<tension_cpu::cmd_arguments_parser::IParsedCmdArguments> parsed_cmd_arguments {std::make_shared<tension_cpu::cmd_arguments_parser::ParsedCmdArguments>()};
   tension_cpu::cmd_arguments_parser::CmdArgumentsParser CmdArgumentsParser;
 #ifdef VERBOSE_LOGS
-  equinox::debug("%s, File: %s, Line: %d", "[main] ParsedCmdArguments and CmdArgumentsParser created...", __FILENAME__, __LINE__);
+  equinox::trace("%s, File: %s, Line: %d", "[main] ParsedCmdArguments and CmdArgumentsParser created...", __FILENAME__, __LINE__);
 #endif
 
   if(!CmdArgumentsParser.ParseCmdArguments(parsed_cmd_arguments, argc, argv)) {
-    printf("%s", "Parse arguments failed");
+    printf("%s", "\n[!!INFO!!] Parse arguments failed or print help requested [!!INFO!!]\n\n");
 #ifdef VERBOSE_LOGS
-    equinox::debug("%s, File: %s, Line: %d", "[main] CmdArgumentsParser::ParseCmdArguments failed", __FILENAME__, __LINE__);
+    equinox::trace("%s, File: %s, Line: %d", "[main] CmdArgumentsParser::ParseCmdArguments failed", __FILENAME__, __LINE__);
     for (int i = 0; i < argc; ++i) {
-      equinox::debug("argv[%d]: %s", i, argv[i]);
+      equinox::trace("[main] argv[%d]: %s", i, argv[i]);
     }
 #endif
     exit(EXIT_FAILURE);
@@ -102,13 +101,13 @@ int main(int argc, char **argv) {
 
   tension_cpu::TensionCpu tension_cpu_instance(parsed_cmd_arguments);
 #ifdef VERBOSE_LOGS
-  equinox::debug("%s, File: %s, Line: %d", "[main] TensionCpu instance created...", __FILENAME__, __LINE__);
+  equinox::trace("%s, File: %s, Line: %d", "[main] TensionCpu instance created...", __FILENAME__, __LINE__);
 #endif
 
   CatchSigend(SigendHandler);
   if (setjmp(sigend_jmp_buf)) {
 #ifdef VERBOSE_LOGS
-    equinox::debug("%s, File: %s, Line: %d", "[main] SigendHandler call", __FILENAME__, __LINE__);
+    equinox::trace("%s, File: %s, Line: %d", "[main] SigendHandler call", __FILENAME__, __LINE__);
 #endif
     if(!tension_cpu_instance.stop()) {
       printf("%s", "TensionCPU stop by interrupt failed");

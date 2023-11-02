@@ -38,33 +38,60 @@
  */
 
 #include "ParsedCmdArguments.h"
+#include "EquinoxLogger.h"
+
+#include <cstring>
 
 void tension_cpu::cmd_arguments_parser::ParsedCmdArguments::SetScheduligMode(tension_cpu::cmd_arguments_parser::SchedulingModeType sched_mode_type)
 {
   parsed_cmd_arguments_logic_.SetScheduligMode(sched_mode_type);
+
+#ifdef VERBOSE_LOGS
+      equinox::trace("%s, File: %s, Line: %d", "[ParsedCmdArguments] SetScheduligMode() called", __FILENAME__, __LINE__);
+#endif
 }
 
 tension_cpu::cmd_arguments_parser::SchedulingModeType tension_cpu::cmd_arguments_parser::ParsedCmdArguments::GetScheduligMode()
 {
+#ifdef VERBOSE_LOGS
+      equinox::trace("%s, File: %s, Line: %d", "[ParsedCmdArguments] GetScheduligMode() called", __FILENAME__, __LINE__);
+#endif
+
    return parsed_cmd_arguments_logic_.GetScheduligMode();
 }
 
 void tension_cpu::cmd_arguments_parser::ParsedCmdArguments::SetLoad(int32_t load)
 {
   parsed_cmd_arguments_logic_.SetLoad(load);
+
+#ifdef VERBOSE_LOGS
+      equinox::trace("%s, File: %s, Line: %d", "[ParsedCmdArguments] SetLoad() called", __FILENAME__, __LINE__);
+#endif
 }
 
 int32_t tension_cpu::cmd_arguments_parser::ParsedCmdArguments::GetLoad()
 {
+#ifdef VERBOSE_LOGS
+      equinox::trace("%s, File: %s, Line: %d", "[ParsedCmdArguments] GetLoad() called", __FILENAME__, __LINE__);
+#endif
+
   return parsed_cmd_arguments_logic_.GetLoad();
 }
 
 void tension_cpu::cmd_arguments_parser::ParsedCmdArguments::SetTestTime(std::chrono::seconds time)
 {
   parsed_cmd_arguments_logic_.SetTestTime(time);
+
+#ifdef VERBOSE_LOGS
+      equinox::trace("%s, File: %s, Line: %d", "[ParsedCmdArguments] SetTestTime() called", __FILENAME__, __LINE__);
+#endif
 }
 
 std::chrono::seconds tension_cpu::cmd_arguments_parser::ParsedCmdArguments::GetTestTime()
 {
+#ifdef VERBOSE_LOGS
+      equinox::trace("%s, File: %s, Line: %d", "[ParsedCmdArguments] GetTestTime() called", __FILENAME__, __LINE__);
+#endif
+
   return parsed_cmd_arguments_logic_.GetTestTime();
 }

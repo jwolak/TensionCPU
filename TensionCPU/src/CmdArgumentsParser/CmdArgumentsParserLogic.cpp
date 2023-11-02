@@ -38,46 +38,71 @@
  */
 
 #include "CmdArgumentsParserLogic.h"
-
 #include "EquinoxLogger.h"
 
-void tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::PrintHelpMenu() {
-  equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::PrintHelpMenu]", __FILE__, __LINE__);
+#include <cstring>
 
-  equinox::trace("[CmdArgumentsParserLogic] Help menu printed");
+void tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::PrintHelpMenu() {
+#ifdef VERBOSE_LOGS
+      equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::PrintHelpMenu]", __FILENAME__, __LINE__);
+#endif
+
+#ifdef VERBOSE_LOGS
+      equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic] Help menu printed", __FILENAME__, __LINE__);
+#endif
 }
 
 bool tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::ProcessLoadParameter(int load_parameter) {
+#ifdef VERBOSE_LOGS
   equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::ProcessLoadParameter]", __FILE__, __LINE__);
+#endif
 
-  equinox::trace("[CmdArgumentsParserLogic] Load parameter processed successfully");
+#ifdef VERBOSE_LOGS
+  equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic] Load parameter processed successfully", __FILE__, __LINE__);
+#endif
   return true;
 }
 
 bool tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::ProcessTestTimeParameter(int test_time_parameter) {
+#ifdef VERBOSE_LOGS
   equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::ProcessTestTimeParameter]", __FILE__, __LINE__);
+#endif
 
-  equinox::trace("[CmdArgumentsParserLogic] Load parameter processed successfully");
+#ifdef VERBOSE_LOGS
+  equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic] Load parameter processed successfully", __FILE__, __LINE__);
+#endif
   return true;
 }
 
 bool tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::ProcessSchedulingPolicy(const char* scheduling_policy_parameter) {
+#ifdef VERBOSE_LOGS
   equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::ProcessSchedulingPolicy]", __FILE__, __LINE__);
+#endif
 
-  equinox::trace("[CmdArgumentsParserLogic] Scheduling policy parameter processed successfully");
+#ifdef VERBOSE_LOGS
+  equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic] Scheduling policy parameter processed successfully", __FILE__, __LINE__);
+#endif
   return true;
 }
 
 bool tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::ProcessdDebugLevelParameter(int debug_level_parameter) {
+#ifdef VERBOSE_LOGS
   equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::ProcessdDebugLevelParameter]", __FILE__, __LINE__);
+#endif
 
-  equinox::trace("[CmdArgumentsParserLogic] Debug level parameter processed successfully");
+#ifdef VERBOSE_LOGS
+  equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic] Debug level parameter processed successfully", __FILE__, __LINE__);
+#endif
   return true;
 }
 
 bool tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::ProcessdCoresNumberParameter(int cores_number_parameter) {
+#ifdef VERBOSE_LOGS
   equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::ProcessdCoresNumberParameter]", __FILE__, __LINE__);
+#endif
 
-  equinox::trace("[CmdArgumentsParserLogic] Cores number parameter processed successfully");
+#ifdef VERBOSE_LOGS
+  equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic] Cores number parameter processed successfully", __FILE__, __LINE__);
+#endif
   return true;
 }
