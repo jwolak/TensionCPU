@@ -56,7 +56,6 @@ tension_cpu::cmd_arguments_parser::CmdArgumentsParser::CmdArgumentsParser()
     cmd_arguments_parserlogic_ { std::make_shared<tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic>() } {
 }
 
-
 tension_cpu::cmd_arguments_parser::CmdArgumentsParser::CmdArgumentsParser(std::shared_ptr<ICmdArgumentsParserLogic> cmd_arguments_parserlogic)
     :
     cmd_arguments_parserlogic_ { cmd_arguments_parserlogic } {
@@ -80,10 +79,11 @@ bool tension_cpu::cmd_arguments_parser::CmdArgumentsParser::ParseCmdArguments(st
       {"Sched", required_argument, NULL, 'S'},
       {"Debug", required_argument, NULL, 'D'},
       {"Cores", required_argument, NULL, 'C'},
+      {"version", no_argument, NULL, 'v' },
   };
 
   int flag = 0;
-  while ((flag = getopt_long(argc, argv, "hl:T:S:D:C:", longopts, NULL)) != kFail) {
+  while ((flag = getopt_long(argc, argv, "hl:T:S:D:C:v", longopts, NULL)) != kFail) {
     switch (flag) {
       case 'h':
         cmd_arguments_parserlogic_->PrintHelpMenu();
@@ -151,6 +151,13 @@ bool tension_cpu::cmd_arguments_parser::CmdArgumentsParser::ParseCmdArguments(st
           equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParser] Process of number of cores parameter successful", __FILENAME__, __LINE__);
 #endif
         break;
+
+      case 'v':
+        cmd_arguments_parserlogic_->PrintVersion();
+#ifdef VERBOSE_LOGS
+          equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParser] Print version successful and false returned", __FILENAME__, __LINE__);
+#endif
+        return false;
 
       default:
         cmd_arguments_parserlogic_->PrintHelpMenu();

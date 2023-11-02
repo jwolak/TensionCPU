@@ -42,13 +42,49 @@
 
 #include <cstring>
 
+namespace {
+
+const char kVersionPrint[] = "\tTensionCpu version 2.0\n\n";
+
+const char kHelpMenuPrint[] = "\t-l [--load]\n"
+                               "\t-T [--Time]  [total time in sec]\n"
+                               "\t-S [--Sched] [scheduling mode]\n"
+                               "\t-D [--Debug] set Debug mode\n"
+                               "\t-C [--Cores] [number of cores]\n"
+                               "\t-h [--help]\n"
+                               "\t-v [--version]\n\n"
+                               "\t-l, --load               CPU load value in percentages\n"
+                               "\t-T, --Time               total load time ['-T 0' -> sets unlimited time] \n"
+                               "\t-D, --Debug               enable debug mode\n"
+                               "\t-C, --Cores               set number of cores to be loaded\n"
+                               "\t-h, --help                print help\n"
+                               "\t-v, --version             print version\n\n"
+                               "\tScheduling mode: [-S, --Sched] :\n"
+                               "\t b, --batch               set SCHED_BATCH scheduler\n"
+                               "\t f, --fifo                set SCHED_FIFO scheduler (real time)\n"
+                               "\t r, --roundr              set SCHED_RR scheduler (real time)\n"
+                               "\t o, --default             set SCHED_OTHER (default) scheduler\n\n"
+                               "\tExample:  tensionCpu -l 90 -T 60 [90% CPU load for 60 seconds time]\n"
+                               "\tExample:  tensionCpu --load 90 --Time 60 --Sched r\n";
+}
+
 void tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::PrintHelpMenu() {
 #ifdef VERBOSE_LOGS
       equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::PrintHelpMenu]", __FILENAME__, __LINE__);
 #endif
-
+      std::cout << kHelpMenuPrint << std::endl;
 #ifdef VERBOSE_LOGS
       equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic] Help menu printed", __FILENAME__, __LINE__);
+#endif
+}
+
+void tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::PrintVersion() {
+#ifdef VERBOSE_LOGS
+      equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::PrintVersion]", __FILENAME__, __LINE__);
+#endif
+      std::cout << kVersionPrint << std::endl;
+#ifdef VERBOSE_LOGS
+      equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic] Version printed", __FILENAME__, __LINE__);
 #endif
 }
 

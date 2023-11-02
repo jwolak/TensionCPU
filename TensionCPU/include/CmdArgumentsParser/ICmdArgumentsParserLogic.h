@@ -51,6 +51,7 @@ class ICmdArgumentsParserLogic {
  public:
   virtual ~ICmdArgumentsParserLogic() = default;
   virtual void PrintHelpMenu() = 0;
+  virtual void PrintVersion() = 0;
   virtual bool ProcessLoadParameter(int load_parameter) = 0;
   virtual bool ProcessTestTimeParameter(int test_time_parameter) = 0;
   virtual bool ProcessSchedulingPolicy(const char* scheduling_policy_parameter) = 0;

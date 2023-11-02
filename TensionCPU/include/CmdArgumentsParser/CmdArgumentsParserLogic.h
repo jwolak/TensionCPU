@@ -54,6 +54,7 @@ class CmdArgumentsParserLogic : public ICmdArgumentsParserLogic{
   CmdArgumentsParserLogic() {
   }
   void PrintHelpMenu() override;
+  void PrintVersion() override;
   bool ProcessLoadParameter(int load_parameter) override;
   bool ProcessTestTimeParameter(int test_time_parameter) override;
   bool ProcessSchedulingPolicy(const char* scheduling_policy_parameter) override;

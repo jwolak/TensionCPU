@@ -89,7 +89,7 @@ int main(int argc, char **argv) {
 #endif
 
   if(!CmdArgumentsParser.ParseCmdArguments(parsed_cmd_arguments, argc, argv)) {
-    printf("%s", "\n[!!INFO!!] Parse arguments failed or print help requested [!!INFO!!]\n\n");
+    printf("%s", "\n[!!INFO!!] Parse arguments failed or print help/version requested [!!INFO!!]\n\n");
 #ifdef VERBOSE_LOGS
     equinox::trace("%s, File: %s, Line: %d", "[main] CmdArgumentsParser::ParseCmdArguments failed", __FILENAME__, __LINE__);
     for (int i = 0; i < argc; ++i) {
