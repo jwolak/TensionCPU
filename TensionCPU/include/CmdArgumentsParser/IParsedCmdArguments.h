@@ -54,8 +54,8 @@ class IParsedCmdArguments {
   virtual ~IParsedCmdArguments() = default;
   virtual void SetScheduligMode(const char* scheduling_policy_parameter) = 0;
   virtual SchedulingModeType GetScheduligMode() = 0;
-  virtual void SetLoad(int32_t) = 0;
-  virtual int32_t GetLoad() = 0;
+  virtual void SetLoad(int) = 0;
+  virtual int GetLoad() = 0;
   virtual void SetTestTime(std::chrono::seconds) = 0;
   virtual std::chrono::seconds GetTestTime() = 0;
   virtual void SetDebugMode(int debug_mode_level) = 0;

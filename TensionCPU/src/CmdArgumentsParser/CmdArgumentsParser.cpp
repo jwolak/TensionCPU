@@ -68,7 +68,7 @@ bool tension_cpu::cmd_arguments_parser::CmdArgumentsParser::ParseCmdArguments(in
     std::cout << "\n[!!ERROR!!] NO ARGUMENTS PROVIDED [!!ERROR!!]\n" << std::endl;
     cmd_arguments_parserlogic_->PrintHelpMenu();
 #ifdef VERBOSE_LOGS
-    equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParser] Help menu printed and false returned", __FILENAME__, __LINE__);
+    equinox::trace("%s, File: %s:%d", "[CmdArgumentsParser] Help menu printed and false returned", __FILENAME__, __LINE__);
 #endif
     return false;
   }
@@ -89,81 +89,81 @@ bool tension_cpu::cmd_arguments_parser::CmdArgumentsParser::ParseCmdArguments(in
       case 'h':
         cmd_arguments_parserlogic_->PrintHelpMenu();
 #ifdef VERBOSE_LOGS
-        equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParser] Help menu printed and false returned", __FILENAME__, __LINE__);
+        equinox::trace("%s, File: %s:%d", "[CmdArgumentsParser] Help menu printed and false returned", __FILENAME__, __LINE__);
 #endif
         return false;
 
       case 'l':
         if (!cmd_arguments_parserlogic_->ProcessLoadParameter(atoi(optarg))) {
 #ifdef VERBOSE_LOGS
-          equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParser] Process of load parameter failed and false returned", __FILENAME__, __LINE__);
+          equinox::trace("%s, File: %s:%d", "[CmdArgumentsParser] Process of load parameter failed and false returned", __FILENAME__, __LINE__);
 #endif
           return false;
         }
 #ifdef VERBOSE_LOGS
-          equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParser] Process of load parameter successful", __FILENAME__, __LINE__);
+          equinox::trace("%s, File: %s:%d", "[CmdArgumentsParser] Process of load parameter successful", __FILENAME__, __LINE__);
 #endif
         break;
 
       case 'T':
         if (!cmd_arguments_parserlogic_->ProcessTestTimeParameter(atoi(optarg))) {
 #ifdef VERBOSE_LOGS
-          equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParser] Process of test time parameter failed and false returned", __FILENAME__, __LINE__);
+          equinox::trace("%s, File: %s:%d", "[CmdArgumentsParser] Process of test time parameter failed and false returned", __FILENAME__, __LINE__);
 #endif
           return false;
         }
 #ifdef VERBOSE_LOGS
-          equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParser] Process of test time parameter successful", __FILENAME__, __LINE__);
+          equinox::trace("%s, File: %s:%d", "[CmdArgumentsParser] Process of test time parameter successful", __FILENAME__, __LINE__);
 #endif
         break;
 
       case 'S':
         if (!cmd_arguments_parserlogic_->ProcessSchedulingPolicy(optarg)) {
 #ifdef VERBOSE_LOGS
-          equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParser] Process of scheduling policy parameter failed and false returned", __FILENAME__, __LINE__);
+          equinox::trace("%s, File: %s:%d", "[CmdArgumentsParser] Process of scheduling policy parameter failed and false returned", __FILENAME__, __LINE__);
 #endif
           return false;
         }
 #ifdef VERBOSE_LOGS
-          equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParser] Process of scheduling policy parameter successful", __FILENAME__, __LINE__);
+          equinox::trace("%s, File: %s:%d", "[CmdArgumentsParser] Process of scheduling policy parameter successful", __FILENAME__, __LINE__);
 #endif
         break;
 
       case 'D':
         if (!cmd_arguments_parserlogic_->ProcessdDebugLevelParameter(atoi(optarg))) {
 #ifdef VERBOSE_LOGS
-          equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParser] Process of debug level parameter failed and false returned", __FILENAME__, __LINE__);
+          equinox::trace("%s, File: %s:%d", "[CmdArgumentsParser] Process of debug level parameter failed and false returned", __FILENAME__, __LINE__);
 #endif
           return false;
         }
 #ifdef VERBOSE_LOGS
-          equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParser] Process of debug level parameter successful", __FILENAME__, __LINE__);
+          equinox::trace("%s, File: %s:%d", "[CmdArgumentsParser] Process of debug level parameter successful", __FILENAME__, __LINE__);
 #endif
         break;
 
       case 'C':
         if (!cmd_arguments_parserlogic_->ProcessdCoresNumberParameter(atoi(optarg))) {
 #ifdef VERBOSE_LOGS
-          equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParser] Process of number of cores parameter failed and false returned", __FILENAME__, __LINE__);
+          equinox::trace("%s, File: %s:%d", "[CmdArgumentsParser] Process of number of cores parameter failed and false returned", __FILENAME__, __LINE__);
 #endif
           return false;
         }
 #ifdef VERBOSE_LOGS
-          equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParser] Process of number of cores parameter successful", __FILENAME__, __LINE__);
+          equinox::trace("%s, File: %s:%d", "[CmdArgumentsParser] Process of number of cores parameter successful", __FILENAME__, __LINE__);
 #endif
         break;
 
       case 'v':
         cmd_arguments_parserlogic_->PrintVersion();
 #ifdef VERBOSE_LOGS
-          equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParser] Print version successful and false returned", __FILENAME__, __LINE__);
+          equinox::trace("%s, File: %s:%d", "[CmdArgumentsParser] Print version successful and false returned", __FILENAME__, __LINE__);
 #endif
         return false;
 
       default:
         cmd_arguments_parserlogic_->PrintHelpMenu();
 #ifdef VERBOSE_LOGS
-        equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParser] Unknown parameter. Help menu printed and false returned", __FILENAME__, __LINE__);
+        equinox::trace("%s, File: %s:%d", "[CmdArgumentsParser] Unknown parameter. Help menu printed and false returned", __FILENAME__, __LINE__);
 #endif
         return false;
     }

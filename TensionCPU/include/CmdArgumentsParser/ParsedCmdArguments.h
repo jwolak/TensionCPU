@@ -73,13 +73,13 @@ class ParsedCmdArguments : public IParsedCmdArguments {
    * SetLoad() method sets CPU load in percentage.
    * @param CPU load in percentage to be set.
    */
-  void SetLoad(int32_t load) override;
+  void SetLoad(int load) override;
 
   /**
    * GetLoad() method returns CPU load in percentage.
    * @return CPU load in percentage parsed form command line.
    */
-  int32_t GetLoad() override;
+  int GetLoad() override;
 
   /**
    * SetTestTime() method sets CPU load time in seconds.
