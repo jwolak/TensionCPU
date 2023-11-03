@@ -46,6 +46,7 @@
 
 #include "ICmdArgumentsParserLogic.h"
 #include "ParsedCmdArguments.h"
+#include "ParameterValidator.h"
 
 namespace tension_cpu {
 namespace cmd_arguments_parser {
@@ -61,8 +62,13 @@ class CmdArgumentsParserLogic : public ICmdArgumentsParserLogic{
   bool ProcessdDebugLevelParameter(int debug_level_parameter) override;
   bool ProcessdCoresNumberParameter(int cores_number_parameter) override;
 
+ protected:
+  CmdArgumentsParserLogic(std::shared_ptr<tension_cpu::cmd_arguments_parser::IParsedCmdArguments> parsed_cmd_arguments,
+                          std::shared_ptr<tension_cpu::cmd_arguments_parser::IParameterValidator> parameter_validator);
+
  private:
   std::shared_ptr<tension_cpu::cmd_arguments_parser::IParsedCmdArguments> parsed_cmd_arguments_;
+  std::shared_ptr<tension_cpu::cmd_arguments_parser::IParameterValidator> parameter_validator_;
 };
 
 } /*namespace cmd_arguments_parser*/

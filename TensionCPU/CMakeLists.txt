@@ -69,6 +69,7 @@ set(TENSION_CPU_SRC
     ${TENSION_CPU_SRC_DIR}/CmdArgumentsParser/ParsedCmdArguments.cpp
     ${TENSION_CPU_SRC_DIR}/CmdArgumentsParser/CmdArgumentsParserLogic.cpp
     ${TENSION_CPU_SRC_DIR}/CmdArgumentsParser/ParsedCmdArgumentsLogic.cpp
+    ${TENSION_CPU_SRC_DIR}/CmdArgumentsParser/ParameterValidator.cpp
 )
 
 #------------------------------------------------------------------------------------------

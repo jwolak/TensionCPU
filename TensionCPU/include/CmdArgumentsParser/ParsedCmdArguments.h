@@ -59,9 +59,9 @@ class ParsedCmdArguments : public IParsedCmdArguments {
 
   /**
    * SetScheduligMode() method sets parameters contains scheduling policy like: FIFO, RoundRobin, BATCH or OTHER
-   * @param sched_mode_type a scheduling mode to be set (FIFO, RR, BATCH, OTHER).
+   * @param sched_mode a scheduling mode to be set (FIFO, RR, BATCH, OTHER).
    */
-  void SetScheduligMode(SchedulingModeType sched_mode_type) override;
+  void SetScheduligMode(const char* sched_mode) override;
 
   /**
    * GetScheduligMode() method returns scheduling policy.
@@ -92,6 +92,18 @@ class ParsedCmdArguments : public IParsedCmdArguments {
    * @return CPU load time in seconds.
    */
   std::chrono::seconds GetTestTime() override;
+
+  /**
+   * SetDebugMode() method sets debug mode.
+   * @param debug_mode_level debug mode level to be set.
+   */
+  void SetDebugMode(int debug_mode_level) override;
+
+  /**
+   * GetDebugMode() method returns debug mode level.
+   * @return debug mode level.
+   */
+  DebugModeType GetDebugMode() override;
 
  private:
   /**

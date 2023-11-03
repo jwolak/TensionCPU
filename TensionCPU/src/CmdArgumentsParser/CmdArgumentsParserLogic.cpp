@@ -41,6 +41,7 @@
 #include "EquinoxLogger.h"
 
 #include <cstring>
+#include <memory>
 
 namespace {
 
@@ -71,7 +72,16 @@ const char kHelpMenuPrint[] = "\t-l [--load]\n"
 tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::CmdArgumentsParserLogic(
     std::shared_ptr<tension_cpu::cmd_arguments_parser::IParsedCmdArguments> parsed_cmd_arguments)
     :
-    parsed_cmd_arguments_ { parsed_cmd_arguments } {
+    parsed_cmd_arguments_ { parsed_cmd_arguments },
+    parameter_validator_ { std::make_shared<tension_cpu::cmd_arguments_parser::ParameterValidator>() } {
+}
+
+tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::CmdArgumentsParserLogic(
+    std::shared_ptr<tension_cpu::cmd_arguments_parser::IParsedCmdArguments> parsed_cmd_arguments,
+    std::shared_ptr<tension_cpu::cmd_arguments_parser::IParameterValidator> parameter_validator)
+    :
+    parsed_cmd_arguments_ { parsed_cmd_arguments },
+    parameter_validator_ { parameter_validator } {
 }
 
 void tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::PrintHelpMenu() {
@@ -98,7 +108,13 @@ bool tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::ProcessLoadPara
 #ifdef VERBOSE_LOGS
   equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::ProcessLoadParameter]", __FILE__, __LINE__);
 #endif
-
+  if(!parameter_validator_->ValidateLoadValue(load_parameter)) {
+#ifdef VERBOSE_LOGS
+  equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic] Load parameter has invalid value", __FILE__, __LINE__);
+#endif
+  return false;
+  }
+  parsed_cmd_arguments_->SetLoad(load_parameter);
 #ifdef VERBOSE_LOGS
   equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic] Load parameter processed successfully", __FILE__, __LINE__);
 #endif
@@ -109,7 +125,13 @@ bool tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::ProcessTestTime
 #ifdef VERBOSE_LOGS
   equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::ProcessTestTimeParameter]", __FILE__, __LINE__);
 #endif
-
+  if(!parameter_validator_->ValidateTestTimeValue(test_time_parameter)) {
+#ifdef VERBOSE_LOGS
+  equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic] Test time has invalid value", __FILE__, __LINE__);
+#endif
+    return false;
+  }
+  parsed_cmd_arguments_->SetTestTime(std::chrono::seconds(test_time_parameter));
 #ifdef VERBOSE_LOGS
   equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic] Load parameter processed successfully", __FILE__, __LINE__);
 #endif
@@ -120,7 +142,13 @@ bool tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::ProcessScheduli
 #ifdef VERBOSE_LOGS
   equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::ProcessSchedulingPolicy]", __FILE__, __LINE__);
 #endif
-
+  if(!parameter_validator_->ValidateSchedulingPolicyValue(scheduling_policy_parameter)) {
+#ifdef VERBOSE_LOGS
+  equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic] Scheduling policy has invalid value", __FILE__, __LINE__);
+#endif
+    return false;
+  }
+  parsed_cmd_arguments_->SetScheduligMode(scheduling_policy_parameter);
 #ifdef VERBOSE_LOGS
   equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic] Scheduling policy parameter processed successfully", __FILE__, __LINE__);
 #endif
@@ -131,7 +159,13 @@ bool tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::ProcessdDebugLe
 #ifdef VERBOSE_LOGS
   equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::ProcessdDebugLevelParameter]", __FILE__, __LINE__);
 #endif
-
+  if(!parameter_validator_->ValidateDebugLevelParameterValue(debug_level_parameter)) {
+#ifdef VERBOSE_LOGS
+  equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic] Debug level has invalid value", __FILE__, __LINE__);
+#endif
+    return false;
+  }
+  parsed_cmd_arguments_->SetDebugMode(debug_level_parameter);
 #ifdef VERBOSE_LOGS
   equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic] Debug level parameter processed successfully", __FILE__, __LINE__);
 #endif
@@ -142,7 +176,12 @@ bool tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::ProcessdCoresNu
 #ifdef VERBOSE_LOGS
   equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::ProcessdCoresNumberParameter]", __FILE__, __LINE__);
 #endif
-
+  if(!parameter_validator_->ValidateCoresNumberParameterValue(cores_number_parameter)) {
+#ifdef VERBOSE_LOGS
+  equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic] Cores number has invalid value", __FILE__, __LINE__);
+#endif
+    return false;
+  }
 #ifdef VERBOSE_LOGS
   equinox::debug("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic] Cores number parameter processed successfully", __FILE__, __LINE__);
 #endif
