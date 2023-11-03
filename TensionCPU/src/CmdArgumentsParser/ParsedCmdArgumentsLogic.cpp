@@ -55,22 +55,22 @@ void tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::SetScheduligMod
   switch(scheduling_mode_type) {
     case tension_cpu::cmd_arguments_parser::SchedulingModeType::BATCH:
 #ifdef VERBOSE_LOGS
-      equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] Scheduling mode set to: BATCH", __FILENAME__, __LINE__);
+      equinox::trace("%s, \t[%s:%d]", "[ParsedCmdArgumentsLogic] Scheduling mode set to: BATCH", __FILENAME__, __LINE__);
 #endif
       break;
     case tension_cpu::cmd_arguments_parser::SchedulingModeType::FIFO:
 #ifdef VERBOSE_LOGS
-      equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] Scheduling mode set to: FIFO", __FILENAME__, __LINE__);
+      equinox::trace("%s, \t[%s:%d]", "[ParsedCmdArgumentsLogic] Scheduling mode set to: FIFO", __FILENAME__, __LINE__);
 #endif
       break;
     case tension_cpu::cmd_arguments_parser::SchedulingModeType::OTHER:
 #ifdef VERBOSE_LOGS
-      equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] Scheduling mode set to: OTHER", __FILENAME__, __LINE__);
+      equinox::trace("%s, \t[%s:%d]", "[ParsedCmdArgumentsLogic] Scheduling mode set to: OTHER", __FILENAME__, __LINE__);
 #endif
       break;
     case tension_cpu::cmd_arguments_parser::SchedulingModeType::RR:
 #ifdef VERBOSE_LOGS
-      equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] Scheduling mode set to: RR", __FILENAME__, __LINE__);
+      equinox::trace("%s, \t[%s:%d]", "[ParsedCmdArgumentsLogic] Scheduling mode set to: RR", __FILENAME__, __LINE__);
 #endif
       break;
   }
@@ -78,7 +78,7 @@ void tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::SetScheduligMod
 
 tension_cpu::cmd_arguments_parser::SchedulingModeType tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::GetScheduligMode() {
 #ifdef VERBOSE_LOGS
-  equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] GetScheduligMode() called", __FILENAME__, __LINE__);
+  equinox::trace("%s, \t[%s:%d]", "[ParsedCmdArgumentsLogic] GetScheduligMode() called", __FILENAME__, __LINE__);
 #endif
   return scheduling_mode_type;
 }
@@ -86,13 +86,13 @@ tension_cpu::cmd_arguments_parser::SchedulingModeType tension_cpu::cmd_arguments
 void tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::SetLoad(int load) {
   cpu_load = load;
 #ifdef VERBOSE_LOGS
-  equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] Cpu load set to: [%d%]", __FILENAME__, __LINE__, load);
+  equinox::trace("%s%d%%, \t\t[%s:%d]", "[ParsedCmdArgumentsLogic] CPU load set to: ", load, __FILENAME__, __LINE__);
 #endif
 }
 
 int tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::GetLoad() {
 #ifdef VERBOSE_LOGS
-  equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] GetLoad() called", __FILENAME__, __LINE__);
+  equinox::trace("%s, \t\t[%s:%d]", "[ParsedCmdArgumentsLogic] GetLoad() called", __FILENAME__, __LINE__);
 #endif
   return cpu_load;
 }
@@ -100,13 +100,13 @@ int tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::GetLoad() {
 void tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::SetTestTime(std::chrono::seconds time) {
   test_time = time;
 #ifdef VERBOSE_LOGS
-  equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] Test time set to: [%ds]", __FILENAME__, __LINE__, test_time);
+  equinox::trace("%s%d [s], \t[%s:%d]", "[ParsedCmdArgumentsLogic] Test time set to: ", test_time.count(), __FILENAME__, __LINE__);
 #endif
 }
 
 std::chrono::seconds tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::GetTestTime() {
 #ifdef VERBOSE_LOGS
-  equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] GetTestTime() called", __FILENAME__, __LINE__);
+  equinox::trace("%s, \t[%s:%d]", "[ParsedCmdArgumentsLogic] GetTestTime() called", __FILENAME__, __LINE__);
 #endif
   return test_time;
 }
@@ -117,32 +117,32 @@ void tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::SetDebugMode(De
   switch (debug_mode) {
     case tension_cpu::cmd_arguments_parser::DebugModeType::CRITICAL:
 #ifdef VERBOSE_LOGS
-      equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] Debug mode set to: CRITICAL", __FILENAME__, __LINE__);
+      equinox::trace("%s, \t[%s:%d]", "[ParsedCmdArgumentsLogic] Debug mode set to: CRITICAL", __FILENAME__, __LINE__);
 #endif
       break;
     case tension_cpu::cmd_arguments_parser::DebugModeType::DEBUG:
 #ifdef VERBOSE_LOGS
-      equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] Debug mode set to: DEBUG", __FILENAME__, __LINE__);
+      equinox::trace("%s, \t[%s:%d]", "[ParsedCmdArgumentsLogic] Debug mode set to: DEBUG", __FILENAME__, __LINE__);
 #endif
       break;
     case tension_cpu::cmd_arguments_parser::DebugModeType::ERROR:
 #ifdef VERBOSE_LOGS
-      equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] Debug mode set to: ERROR", __FILENAME__, __LINE__);
+      equinox::trace("%s, \t[%s:%d]", "[ParsedCmdArgumentsLogic] Debug mode set to: ERROR", __FILENAME__, __LINE__);
 #endif
       break;
     case tension_cpu::cmd_arguments_parser::DebugModeType::INFO:
 #ifdef VERBOSE_LOGS
-      equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] Debug mode set to: INFO", __FILENAME__, __LINE__);
+      equinox::trace("%s, \t[%s:%d]", "[ParsedCmdArgumentsLogic] Debug mode set to: INFO", __FILENAME__, __LINE__);
 #endif
       break;
     case tension_cpu::cmd_arguments_parser::DebugModeType::TRACE:
 #ifdef VERBOSE_LOGS
-      equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] Debug mode set to: TRACE", __FILENAME__, __LINE__);
+      equinox::trace("%s, \t[%s:%d]", "[ParsedCmdArgumentsLogic] Debug mode set to: TRACE", __FILENAME__, __LINE__);
 #endif
       break;
     case tension_cpu::cmd_arguments_parser::DebugModeType::WARNING:
 #ifdef VERBOSE_LOGS
-      equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] Debug mode set to: WARNING", __FILENAME__, __LINE__);
+      equinox::trace("%s, \t[%s:%d]", "[ParsedCmdArgumentsLogic] Debug mode set to: WARNING", __FILENAME__, __LINE__);
 #endif
       break;
   }
@@ -150,7 +150,7 @@ void tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::SetDebugMode(De
 
 tension_cpu::cmd_arguments_parser::DebugModeType tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::GetDebugMode() {
 #ifdef VERBOSE_LOGS
-  equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] GetDebugMode() called", __FILENAME__, __LINE__);
+  equinox::trace("%s, \t[%s:%d]", "[ParsedCmdArgumentsLogic] GetDebugMode() called", __FILENAME__, __LINE__);
 #endif
   return debug_mode;
 }

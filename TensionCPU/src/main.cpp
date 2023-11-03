@@ -53,7 +53,7 @@ static jmp_buf sigend_jmp_buf;
 
 #ifdef VERBOSE_LOGS
 static void __attribute__ ((noreturn)) SigendHandler(int signal) {
-  equinox::trace("%s, File: %s:%d", "[main] SigendHandler", __FILENAME__, __LINE__);
+  equinox::trace("%s, \t[%s:%d]", "[main] SigendHandler", __FILENAME__, __LINE__);
   equinox::trace("%s %d %s", "Signal", signal, "caught");
 #endif
   longjmp(sigend_jmp_buf, 1);
@@ -61,7 +61,7 @@ static void __attribute__ ((noreturn)) SigendHandler(int signal) {
 
 void CatchSigend(void (*handler)(int)) {
 #ifdef VERBOSE_LOGS
-  equinox::trace("%s, File: %s:%d", "[main] CatchSigend called...", __FILENAME__, __LINE__);
+  equinox::trace("%s, \t[%s:%d]", "[main] CatchSigend called...", __FILENAME__, __LINE__);
 #endif
 #ifdef SIGINT
   signal(SIGINT, handler);
@@ -85,13 +85,13 @@ int main(int argc, char **argv) {
   std::shared_ptr<tension_cpu::cmd_arguments_parser::IParsedCmdArguments> parsed_cmd_arguments {std::make_shared<tension_cpu::cmd_arguments_parser::ParsedCmdArguments>()};
   tension_cpu::cmd_arguments_parser::CmdArgumentsParser CmdArgumentsParser(parsed_cmd_arguments);
 #ifdef VERBOSE_LOGS
-  equinox::trace("%s, File: %s:%d", "[main] ParsedCmdArguments and CmdArgumentsParser created...", __FILENAME__, __LINE__);
+  equinox::trace("%s, \t[%s:%d]", "[main] ParsedCmdArguments and CmdArgumentsParser created...", __FILENAME__, __LINE__);
 #endif
 
   if(!CmdArgumentsParser.ParseCmdArguments(argc, argv)) {
     printf("%s", "\n[!!INFO!!] Parse arguments failed or print help/version requested [!!INFO!!]\n\n");
 #ifdef VERBOSE_LOGS
-    equinox::trace("%s, File: %s:%d", "[main] CmdArgumentsParser::ParseCmdArguments failed", __FILENAME__, __LINE__);
+    equinox::trace("%s, \t[%s:%d]", "[main] CmdArgumentsParser::ParseCmdArguments failed", __FILENAME__, __LINE__);
     for (int i = 0; i < argc; ++i) {
       equinox::trace("[main] argv[%d]: %s", i, argv[i]);
     }
@@ -101,13 +101,13 @@ int main(int argc, char **argv) {
 
   tension_cpu::TensionCpu tension_cpu_instance(parsed_cmd_arguments);
 #ifdef VERBOSE_LOGS
-  equinox::trace("%s, File: %s:%d", "[main] TensionCpu instance created...", __FILENAME__, __LINE__);
+  equinox::trace("%s, \t[%s:%d]", "[main] TensionCpu instance created...", __FILENAME__, __LINE__);
 #endif
 
   CatchSigend(SigendHandler);
   if (setjmp(sigend_jmp_buf)) {
 #ifdef VERBOSE_LOGS
-    equinox::trace("%s, File: %s:%d", "[main] SigendHandler call", __FILENAME__, __LINE__);
+    equinox::trace("%s, \t[%s:%d]", "[main] SigendHandler call", __FILENAME__, __LINE__);
 #endif
     if(!tension_cpu_instance.stop()) {
       printf("%s", "TensionCPU stop by interrupt failed");

@@ -125,6 +125,8 @@ class ParsedCmdArgumentsLogic {
    * level of printed logs.
    */
   DebugModeType debug_mode;
+
+  //TODO No Cores number!!!
 };
 
 } /*namespace cmd_arguments_parser*/
