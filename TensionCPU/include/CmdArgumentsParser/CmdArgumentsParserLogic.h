@@ -45,14 +45,14 @@
 #include <cstdint>
 
 #include "ICmdArgumentsParserLogic.h"
+#include "ParsedCmdArguments.h"
 
 namespace tension_cpu {
 namespace cmd_arguments_parser {
 
 class CmdArgumentsParserLogic : public ICmdArgumentsParserLogic{
  public:
-  CmdArgumentsParserLogic() {
-  }
+  CmdArgumentsParserLogic(std::shared_ptr<tension_cpu::cmd_arguments_parser::IParsedCmdArguments> parsed_cmd_arguments);
   void PrintHelpMenu() override;
   void PrintVersion() override;
   bool ProcessLoadParameter(int load_parameter) override;
@@ -60,6 +60,9 @@ class CmdArgumentsParserLogic : public ICmdArgumentsParserLogic{
   bool ProcessSchedulingPolicy(const char* scheduling_policy_parameter) override;
   bool ProcessdDebugLevelParameter(int debug_level_parameter) override;
   bool ProcessdCoresNumberParameter(int cores_number_parameter) override;
+
+ private:
+  std::shared_ptr<tension_cpu::cmd_arguments_parser::IParsedCmdArguments> parsed_cmd_arguments_;
 };
 
 } /*namespace cmd_arguments_parser*/

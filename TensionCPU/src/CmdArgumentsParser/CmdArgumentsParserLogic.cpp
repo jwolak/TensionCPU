@@ -68,6 +68,12 @@ const char kHelpMenuPrint[] = "\t-l [--load]\n"
                                "\tExample:  tensionCpu --load 90 --Time 60 --Sched r\n";
 }
 
+tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::CmdArgumentsParserLogic(
+    std::shared_ptr<tension_cpu::cmd_arguments_parser::IParsedCmdArguments> parsed_cmd_arguments)
+    :
+    parsed_cmd_arguments_ { parsed_cmd_arguments } {
+}
+
 void tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::PrintHelpMenu() {
 #ifdef VERBOSE_LOGS
       equinox::trace("%s, File: %s, Line: %d", "[CmdArgumentsParserLogic::PrintHelpMenu]", __FILENAME__, __LINE__);

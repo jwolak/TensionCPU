@@ -83,12 +83,12 @@ int main(int argc, char **argv) {
 #endif
 
   std::shared_ptr<tension_cpu::cmd_arguments_parser::IParsedCmdArguments> parsed_cmd_arguments {std::make_shared<tension_cpu::cmd_arguments_parser::ParsedCmdArguments>()};
-  tension_cpu::cmd_arguments_parser::CmdArgumentsParser CmdArgumentsParser;
+  tension_cpu::cmd_arguments_parser::CmdArgumentsParser CmdArgumentsParser(parsed_cmd_arguments);
 #ifdef VERBOSE_LOGS
   equinox::trace("%s, File: %s, Line: %d", "[main] ParsedCmdArguments and CmdArgumentsParser created...", __FILENAME__, __LINE__);
 #endif
 
-  if(!CmdArgumentsParser.ParseCmdArguments(parsed_cmd_arguments, argc, argv)) {
+  if(!CmdArgumentsParser.ParseCmdArguments(argc, argv)) {
     printf("%s", "\n[!!INFO!!] Parse arguments failed or print help/version requested [!!INFO!!]\n\n");
 #ifdef VERBOSE_LOGS
     equinox::trace("%s, File: %s, Line: %d", "[main] CmdArgumentsParser::ParseCmdArguments failed", __FILENAME__, __LINE__);

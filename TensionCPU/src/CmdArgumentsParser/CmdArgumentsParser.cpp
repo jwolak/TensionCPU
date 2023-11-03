@@ -51,9 +51,10 @@ const int32_t kMinNumberOfArguments = 2;
 const int kFail = -1;
 }
 
-tension_cpu::cmd_arguments_parser::CmdArgumentsParser::CmdArgumentsParser()
+tension_cpu::cmd_arguments_parser::CmdArgumentsParser::CmdArgumentsParser(std::shared_ptr<IParsedCmdArguments> parsed_cmd_arguments)
     :
-    cmd_arguments_parserlogic_ { std::make_shared<tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic>() } {
+    parsed_cmd_arguments_ { parsed_cmd_arguments } ,
+    cmd_arguments_parserlogic_ { std::make_shared<tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic>(parsed_cmd_arguments) } {
 }
 
 tension_cpu::cmd_arguments_parser::CmdArgumentsParser::CmdArgumentsParser(std::shared_ptr<ICmdArgumentsParserLogic> cmd_arguments_parserlogic)
@@ -61,7 +62,7 @@ tension_cpu::cmd_arguments_parser::CmdArgumentsParser::CmdArgumentsParser(std::s
     cmd_arguments_parserlogic_ { cmd_arguments_parserlogic } {
 }
 
-bool tension_cpu::cmd_arguments_parser::CmdArgumentsParser::ParseCmdArguments(std::shared_ptr<IParsedCmdArguments> parsed_cmd_arguments, int argc, char **argv)
+bool tension_cpu::cmd_arguments_parser::CmdArgumentsParser::ParseCmdArguments(int argc, char **argv)
 {
   if (argc < kMinNumberOfArguments) {
     std::cout << "\n[!!ERROR!!] NO ARGUMENTS PROVIDED [!!ERROR!!]\n" << std::endl;

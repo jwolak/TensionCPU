@@ -50,13 +50,15 @@ namespace cmd_arguments_parser {
 
 class CmdArgumentsParser {
  public:
-  CmdArgumentsParser();
-  bool ParseCmdArguments(std::shared_ptr<IParsedCmdArguments> parsed_cmd_arguments, int argc, char **argv);
+  CmdArgumentsParser(std::shared_ptr<IParsedCmdArguments> parsed_cmd_arguments);
+
+  bool ParseCmdArguments(int argc, char **argv);
 
  protected:
   CmdArgumentsParser(std::shared_ptr<ICmdArgumentsParserLogic> cmd_arguments_parserlogic);
 
  private:
+  std::shared_ptr<tension_cpu::cmd_arguments_parser::IParsedCmdArguments> parsed_cmd_arguments_;
   std::shared_ptr<ICmdArgumentsParserLogic> cmd_arguments_parserlogic_;
 };
 
