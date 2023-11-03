@@ -169,6 +169,9 @@ bool tension_cpu::cmd_arguments_parser::CmdArgumentsParser::ParseCmdArguments(in
     }
   }
 
-  std::cout << "[CmdArgumentsParser] Cmd arguments parsed successfully" << std::endl;
+#ifdef VERBOSE_LOGS
+        equinox::trace("%s, File: %s:%d", "[CmdArgumentsParser] Cmd arguments parsed successfully", __FILENAME__, __LINE__);
+#endif
+
   return true;
 }
