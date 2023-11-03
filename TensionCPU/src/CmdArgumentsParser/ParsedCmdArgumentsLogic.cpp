@@ -83,14 +83,14 @@ tension_cpu::cmd_arguments_parser::SchedulingModeType tension_cpu::cmd_arguments
   return scheduling_mode_type;
 }
 
-void tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::SetLoad(int32_t load) {
+void tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::SetLoad(int load) {
   cpu_load = load;
 #ifdef VERBOSE_LOGS
-  equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] Cpu load set to: [%d%]", load, __FILENAME__, __LINE__);
+  equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] Cpu load set to: [%d%]", __FILENAME__, __LINE__, load);
 #endif
 }
 
-int32_t tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::GetLoad() {
+int tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::GetLoad() {
 #ifdef VERBOSE_LOGS
   equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] GetLoad() called", __FILENAME__, __LINE__);
 #endif
@@ -100,7 +100,7 @@ int32_t tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::GetLoad() {
 void tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::SetTestTime(std::chrono::seconds time) {
   test_time = time;
 #ifdef VERBOSE_LOGS
-  equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] Test time set to: [%ds]", test_time, __FILENAME__, __LINE__);
+  equinox::trace("%s, File: %s:%d", "[ParsedCmdArgumentsLogic] Test time set to: [%ds]", __FILENAME__, __LINE__, test_time);
 #endif
 }
 

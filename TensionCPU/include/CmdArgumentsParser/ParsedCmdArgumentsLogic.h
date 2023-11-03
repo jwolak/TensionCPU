@@ -74,13 +74,13 @@ class ParsedCmdArgumentsLogic {
    * SetLoad() method sets CPU load in percentage.
    * @param load CPU load in percentage to be set.
    */
-  void SetLoad(int32_t load);
+  void SetLoad(int load);
 
   /**
    * GetLoad() method returns CPU load in percentage.
    * @return CPU load in percentage parsed form command line.
    */
-  int32_t GetLoad();
+  int GetLoad();
 
   /**
    * SetTestTime() method sets CPU load time in seconds.
@@ -114,7 +114,7 @@ class ParsedCmdArgumentsLogic {
   /**
    * cpu_load contains a CPU in percentage.
    */
-  int32_t cpu_load;
+  int cpu_load;
 
   /**
    * test_time contains a CPU load time.
