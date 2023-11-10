@@ -60,6 +60,8 @@ class IParsedCmdArguments {
   virtual std::chrono::seconds GetTestTime() = 0;
   virtual void SetDebugMode(int debug_mode_level) = 0;
   virtual DebugModeType GetDebugMode() = 0;
+  virtual void SetNumberOfCores(int) = 0;
+  virtual int GetNumberOfCores() = 0;
 };
 } /*namespace cmd_arguments_parser*/
 } /*namespace tension_cpu*/

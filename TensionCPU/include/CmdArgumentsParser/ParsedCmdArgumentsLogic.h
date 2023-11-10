@@ -107,6 +107,18 @@ class ParsedCmdArgumentsLogic {
   DebugModeType GetDebugMode();
 
   /**
+   * SetNumberOfCores() method to set number of CPU cores that are loaded.
+   * @params number_of_cores number of cores to be loaded.
+   */
+  void SetNumberOfCores(int number_of_cores_to_set);
+
+  /**
+   * GetNumberOfCores() method to get number of CPU cores that are loaded.
+   * @return number of CPU cores.
+   */
+  int GetNumberOfCores();
+
+  /**
    * scheduling_mode_type contains a scheduling policy.
    */
   SchedulingModeType scheduling_mode_type;
@@ -126,7 +138,10 @@ class ParsedCmdArgumentsLogic {
    */
   DebugModeType debug_mode;
 
-  //TODO No Cores number!!!
+  /**
+   * number of CPU cores.
+   */
+  int number_of_cores;
 };
 
 } /*namespace cmd_arguments_parser*/

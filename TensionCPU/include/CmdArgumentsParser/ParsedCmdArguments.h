@@ -105,6 +105,18 @@ class ParsedCmdArguments : public IParsedCmdArguments {
    */
   DebugModeType GetDebugMode() override;
 
+  /**
+   * SetNumberOfCores() method to set number of CPU cores that are loaded.
+   * @params number_of_cores number of cores to be loaded.
+   */
+  void SetNumberOfCores(int number_of_cores_to_set) override;
+
+  /**
+   * GetNumberOfCores() method to get number of CPU cores that are loaded.
+   * @return number of CPU cores.
+   */
+  int GetNumberOfCores() override;
+
  private:
   /**
    * parsed_cmd_arguments_logic_ contains a functionality implementation for ParsedCmdArguments.

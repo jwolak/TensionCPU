@@ -182,6 +182,7 @@ bool tension_cpu::cmd_arguments_parser::CmdArgumentsParserLogic::ProcessdCoresNu
 #endif
     return false;
   }
+  parsed_cmd_arguments_->SetNumberOfCores(cores_number_parameter);
 #ifdef VERBOSE_LOGS
   equinox::trace("%s, \t[%s:%d]", "[CmdArgumentsParserLogic] Cores number parameter processed successfully", __FILENAME__, __LINE__);
 #endif

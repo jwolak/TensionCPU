@@ -179,3 +179,17 @@ tension_cpu::cmd_arguments_parser::DebugModeType tension_cpu::cmd_arguments_pars
 #endif
   return parsed_cmd_arguments_logic_.GetDebugMode();
 }
+
+void tension_cpu::cmd_arguments_parser::ParsedCmdArguments::SetNumberOfCores(int number_of_cores_to_set) {
+#ifdef VERBOSE_LOGS
+      equinox::trace("%s, \t[%s:%d]", "[ParsedCmdArguments] SetNumberOfCores() called", __FILENAME__, __LINE__);
+#endif
+      parsed_cmd_arguments_logic_.SetNumberOfCores(number_of_cores_to_set);
+}
+
+int tension_cpu::cmd_arguments_parser::ParsedCmdArguments::GetNumberOfCores() {
+#ifdef VERBOSE_LOGS
+      equinox::trace("%s, \t[%s:%d]", "[ParsedCmdArguments] GetNumberOfCores() called", __FILENAME__, __LINE__);
+#endif
+      return parsed_cmd_arguments_logic_.GetNumberOfCores();
+}

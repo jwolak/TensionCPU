@@ -46,7 +46,8 @@ tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::ParsedCmdArgumentsLo
 : scheduling_mode_type {},
   cpu_load {},
   test_time {},
-  debug_mode {} {
+  debug_mode {},
+  number_of_cores {} {
 }
 
 void tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::SetScheduligMode(tension_cpu::cmd_arguments_parser::SchedulingModeType sched_mode_type) {
@@ -153,4 +154,18 @@ tension_cpu::cmd_arguments_parser::DebugModeType tension_cpu::cmd_arguments_pars
   equinox::trace("%s, \t[%s:%d]", "[ParsedCmdArgumentsLogic] GetDebugMode() called", __FILENAME__, __LINE__);
 #endif
   return debug_mode;
+}
+
+void tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::SetNumberOfCores(int number_of_cores_to_set) {
+  number_of_cores = number_of_cores_to_set;
+#ifdef VERBOSE_LOGS
+  equinox::trace("%s%d [s], \t[%s:%d]", "[ParsedCmdArgumentsLogic] Number of cores set to: ", number_of_cores, __FILENAME__, __LINE__);
+#endif
+}
+
+int tension_cpu::cmd_arguments_parser::ParsedCmdArgumentsLogic::GetNumberOfCores() {
+#ifdef VERBOSE_LOGS
+  equinox::trace("%s, \t[%s:%d]", "[ParsedCmdArgumentsLogic] GetNumberOfCores() called", __FILENAME__, __LINE__);
+#endif
+  return number_of_cores;
 }
